@@ -3,8 +3,6 @@ const db = {};
 const sequelize = new Sequelize("tfe", "root", "Jslmdpmlrdc3419$", {
   host: "localhost",
   dialect: "mysql",
-  operatorsAliases: false,
-
   pool: {
     max: 5,
     min: 0,
