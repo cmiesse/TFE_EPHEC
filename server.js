@@ -1,6 +1,8 @@
 var express = require("express");
 var cors = require("cors");
 var bodyParser = require("body-parser");
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 var app = express();
 var port = process.env.PORT || 5000;
 const mysql = require("mysql");
@@ -10,6 +12,8 @@ const connection = mysql.createConnection({
   password: "Jslmdpmlrdc3419$",
   database: "tfe"
 });
+
+process.env.SECRET_KEY = "secret";
 
 // Connexion à la DB
 connection.connect(err => {
@@ -28,8 +32,93 @@ app.use(
 );
 
 //Retravailler partie utilisateurs
-var Users = require("./routes/Users");
-app.use("/users", Users);
+//var Users = require("./routes/Users");
+//app.use("/users", Users);
+
+// Enregister un utilisateur
+app.post("/users/register", (req, res) => {
+  const userData = {
+    Prenom: req.body.Prenom,
+    Nom: req.body.Nom,
+    Pseudo: req.body.Pseudo,
+    MotDePasse: req.body.MotDePasse,
+    Email: req.body.Email,
+    Ville: req.body.Ville
+  };
+  const FIND_USER = `SELECT * FROM utilisateurs WHERE Pseudo ='${userData.Pseudo}'`;
+  connection.query(FIND_USER, (err, rows) => {
+    if (err) {
+      return res.send(err);
+    } else if (rows != 0) {
+      return res.send("l'utilisateur existe déjà");
+    } else {
+      bcrypt.hash(req.body.MotDePasse, 10, (err, hash) => {
+        userData.MotDePasse = hash;
+        const CREATE_USER = `INSERT INTO utilisateurs(Prenom, Nom, Pseudo, MotDePasse, Email, Ville) 
+        VALUES('${userData.Prenom}', '${userData.Nom}', '${userData.Pseudo}', '${userData.MotDePasse}', '${userData.Email}', '${userData.Ville}')`;
+        connection.query(CREATE_USER, (err, results) => {
+          if (err) {
+            return res.send(err);
+          } else {
+            return res.send("Utilisateur ajouté");
+          }
+        });
+      });
+    }
+  });
+});
+
+// Login
+app.post("/users/login", (req, res) => {
+  const userData = {
+    Pseudo: req.body.Pseudo,
+    MotDePasse: req.body.MotDePasse
+  };
+  const FIND_USER = `SELECT * FROM utilisateurs WHERE Pseudo ='${userData.Pseudo}'`;
+  connection.query(FIND_USER, (err, rows, fields) => {
+    if (err) {
+      return res.send(err);
+    } else if (rows == 0) {
+      return res.status(400).json({ error: "L'utilisateur n'existe pas" });
+    } else {
+      if (bcrypt.compareSync(req.body.MotDePasse, rows[0].MotDePasse)) {
+        const utilisateurs = {
+          UtilisateurID: rows[0].UtilisateurID,
+          Prenom: rows[0].Prenom,
+          Nom: rows[0].Nom,
+          Pseudo: rows[0].Pseudo,
+          MotDePasse: rows[0].MotDePasse,
+          Email: rows[0].Email,
+          Ville: rows[0].Ville,
+          JourCreation: rows[0].JourCreation
+        };
+        let token = jwt.sign(utilisateurs, process.env.SECRET_KEY, {
+          expiresIn: 1440
+        });
+        res.send(token);
+      }
+    }
+  });
+});
+
+// profil
+app.get("/users/profile", (req, res) => {
+  var decoded = jwt.verify(
+    req.headers["authorization"],
+    process.env.SECRET_KEY
+  );
+
+  const FIND_USER = `SELECT * FROM utilisateurs WHERE Pseudo ='${decoded.Pseudo}'`;
+  connection.query(FIND_USER, (err, rows, fields) => {
+    if (err) {
+      return res.send(err);
+    } else if (rows == 0) {
+      return res.status(400).json({ error: "L'utilisateur n'existe pas" });
+    } else {
+      return res.json(rows);
+    }
+  });
+});
 
 // Obtenir toutes les annonces
 app.get("/api/annonces", (req, res) => {
