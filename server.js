@@ -31,10 +31,6 @@ app.use(
   })
 );
 
-//Retravailler partie utilisateurs
-//var Users = require("./routes/Users");
-//app.use("/users", Users);
-
 // Enregister un utilisateur
 app.post("/users/register", (req, res) => {
   const userData = {
