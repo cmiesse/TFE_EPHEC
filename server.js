@@ -145,6 +145,25 @@ app.get("/api/annonces/:id", (req, res) => {
   });
 });
 
+// Ajouter une annonce
+app.post("/api/annonces", (req, res) => {
+  const AnnonceData = {
+    Titre: req.body.Titre,
+    Quantite: req.body.Quantite,
+    UtilisateurID: req.body.UtilisateurID,
+    MagasinID: req.body.MagasinID,
+    DenreeID: req.body.DenreeID
+  };
+  const ADD_ANNONCE_QUERY = `INSERT INTO annonces(Titre, Quantite, UtilisateurID, MagasinID, DenreeID) VALUES('${AnnonceData.Titre}','${AnnonceData.Quantite}','${AnnonceData.UtilisateurID}','${AnnonceData.MagasinID}','${AnnonceData.DenreeID}')`;
+  connection.query(ADD_ANNONCE_QUERY, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.send("Annonce ajouté");
+    }
+  });
+});
+
 // Obtenir toutes les denrées
 app.get("/api/denrees", (req, res) => {
   const SELECT_ALL_DENREES_QUERY = "SELECT * from denrees";
