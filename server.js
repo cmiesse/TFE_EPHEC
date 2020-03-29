@@ -145,6 +145,21 @@ app.get("/api/annonces/:id", (req, res) => {
   });
 });
 
+// Obtenir l'annonce avec l'id donné
+app.get("/api/annonces/user/:id", (req, res) => {
+  const UtilisateurID = req.params.id;
+  const SELECT_ANNONCE_BY_ID_QUERY = `SELECT * from annonces WHERE UtilisateurID=${UtilisateurID}`;
+  connection.query(SELECT_ANNONCE_BY_ID_QUERY, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.json({
+        data: results
+      });
+    }
+  });
+});
+
 // Ajouter une annonce
 app.post("/api/annonces", (req, res) => {
   const AnnonceData = {

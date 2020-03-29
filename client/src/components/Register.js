@@ -50,6 +50,7 @@ class Register extends Component {
                   className="form-control"
                   name="Prenom"
                   id="Prenom"
+                  autoComplete="Prenom"
                   placeholder="Entrez votre prénom"
                   value={this.state.Prenom}
                   onChange={this.onChange}
@@ -62,6 +63,7 @@ class Register extends Component {
                   className="form-control"
                   name="Nom"
                   id="Nom"
+                  autoComplete="Nom"
                   placeholder="Entrez votre nom"
                   value={this.state.Nom}
                   onChange={this.onChange}
@@ -75,6 +77,7 @@ class Register extends Component {
                   className="form-control"
                   name="Pseudo"
                   id="Pseudo"
+                  autoComplete="Pseudo"
                   placeholder="Entrez votre pseudo"
                   value={this.state.Pseudo}
                   onChange={this.onChange}
@@ -87,6 +90,7 @@ class Register extends Component {
                   className="form-control"
                   name="MotDePasse"
                   id="MotDePasse"
+                  autoComplete="MotDePasse"
                   placeholder="Entrez votre mot de passe"
                   value={this.state.MotDePasse}
                   onChange={this.onChange}
@@ -99,6 +103,7 @@ class Register extends Component {
                   className="form-control"
                   name="Email"
                   id="Email"
+                  autoComplete="Email"
                   placeholder="Entrez votre email"
                   value={this.state.Email}
                   onChange={this.onChange}
@@ -111,6 +116,7 @@ class Register extends Component {
                   className="form-control"
                   name="Ville"
                   id="Ville"
+                  autoComplete="Ville"
                   placeholder="Ville"
                   value={this.state.Ville}
                   onChange={this.onChange}

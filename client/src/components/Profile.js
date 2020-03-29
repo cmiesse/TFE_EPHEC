@@ -1,24 +1,42 @@
 import React, { Component } from "react";
 import jwt_decode from "jwt-decode";
+import axios from "axios";
 
 class Profile extends Component {
   constructor() {
     super();
     this.state = {
+      UtilisateurID: 1,
       Prenom: "",
       Nom: "",
       Email: "",
       Pseudo: "",
       Ville: "",
       JourCreation: "",
+      Annonces: [],
       errors: {}
     };
   }
 
+  getAnnoncesUser = _ => {
+    axios
+      .get(`/api/annonces/user/${this.state.UtilisateurID}`)
+      .then(res => this.setState({ Annonces: res.data }))
+      .then(console.log(this.state.Annonces))
+      .catch(error => {
+        console.log(error);
+      });
+  };
+  /*<ul>
+  {Annonces.map(annonce => (
+    <li key={annonce.AnnonceID}>{annonce.Titre}</li>
+  ))}
+</ul>*/
   componentDidMount() {
     const token = localStorage.usertoken;
     const decoded = jwt_decode(token);
     this.setState({
+      UtilisateurID: decoded.UtilisateurID,
       Prenom: decoded.Prenom,
       Nom: decoded.Nom,
       Email: decoded.Email,
@@ -26,6 +44,7 @@ class Profile extends Component {
       Ville: decoded.Ville,
       JourCreation: decoded.JourCreation
     });
+    this.getAnnoncesUser(this.state.UtilisateurID);
   }
 
   render() {
@@ -59,6 +78,7 @@ class Profile extends Component {
               </tr>
             </tbody>
           </table>
+          <h2 className="text-center">Mes annonces</h2>
         </div>
       </div>
     );
