@@ -8,9 +8,11 @@ class NewAnnonce extends Component {
     this.state = {
       Titre: "",
       Quantite: "",
-      UtilisateurID: "",
-      MagasinID: "",
-      DenreeID: "",
+      UtilisateurID: 1,
+      MagasinID: 1,
+      DenreeID: 1,
+      Magasins: [],
+      Denrees: [],
       errors: {}
     };
 
@@ -36,10 +38,25 @@ class NewAnnonce extends Component {
       this.props.history.push(`/profile`);
     });
   }
+  getMagasins() {
+    fetch(`/api/magasins`)
+      .then(res => res.json())
+      .then(res => this.setState({ Magasins: res.data }))
+      .catch(err => console.log(err));
+  }
+
+  getDenrees() {
+    fetch(`/api/denrees`)
+      .then(res => res.json())
+      .then(res => this.setState({ Denrees: res.data }))
+      .catch(err => console.log(err));
+  }
   componentDidMount() {
     const token = localStorage.usertoken;
     const decoded = jwt_decode(token);
     this.setState({ UtilisateurID: decoded.UtilisateurID });
+    this.getMagasins();
+    this.getDenrees();
   }
 
   render() {
@@ -70,7 +87,7 @@ class NewAnnonce extends Component {
                   value={this.state.Quantite}
                   onChange={this.onChange}
                 >
-                  <option value="" selected>
+                  <option value="" defaultValue>
                     --Choisissez une option--
                   </option>
                   <option value="Vide">Vide</option>
@@ -80,27 +97,35 @@ class NewAnnonce extends Component {
               </div>
               <div className="form-group">
                 <label htmlFor="MagasinID">Magasin</label>
-                <input
-                  type="number"
+                <select
                   className="form-control"
                   name="MagasinID"
                   id="MagasinID"
-                  placeholder="Entrez le magasin"
                   value={this.state.MagasinID}
                   onChange={this.onChange}
-                />
+                >
+                  {this.state.Magasins.map(magasin => (
+                    <option key={magasin.MagasinNom} value={magasin.MagasinID}>
+                      {magasin.MagasinNom}
+                    </option>
+                  ))}
+                </select>
               </div>
               <div className="form-group">
                 <label htmlFor="DenreeID">Denrée</label>
-                <input
-                  type="number"
+                <select
                   className="form-control"
                   name="DenreeID"
                   id="DenreeID"
-                  placeholder="Entrez votre denrée"
                   value={this.state.DenreeID}
                   onChange={this.onChange}
-                />
+                >
+                  {this.state.Denrees.map(denree => (
+                    <option key={denree.DenreeNom} value={denree.DenreeID}>
+                      {denree.DenreeNom}
+                    </option>
+                  ))}
+                </select>
               </div>
               <button
                 type="submit"
