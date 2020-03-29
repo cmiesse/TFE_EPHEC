@@ -70,7 +70,7 @@ app.post("/users/login", (req, res) => {
     Pseudo: req.body.Pseudo,
     MotDePasse: req.body.MotDePasse
   };
-  const FIND_USER = `SELECT * FROM utilisateurs WHERE Pseudo ='${userData.Pseudo}'`;
+  const FIND_USER = `SELECT UtilisateurID, Prenom, Nom, Pseudo, MotDePasse, Email, Ville,  DATE_FORMAT(JourCreation, '%d/%m/%Y') AS JourCreation FROM utilisateurs WHERE Pseudo ='${userData.Pseudo}'`;
   connection.query(FIND_USER, (err, rows, fields) => {
     if (err) {
       return res.send(err);

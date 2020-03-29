@@ -22,7 +22,6 @@ class Profile extends Component {
     axios
       .get(`/api/annonces/user/${this.state.UtilisateurID}`)
       .then(res => this.setState({ Annonces: res.data }))
-      .then(console.log(this.state.Annonces))
       .catch(error => {
         console.log(error);
       });

@@ -1,3 +1,5 @@
+@import url("~leaflet/dist/leaflet.css");
+
 .App {
   text-align: center;
 }
@@ -26,6 +28,15 @@
 
 .App-link {
   color: #61dafb;
+}
+
+#map {
+  height: 60vh;
+  width: 90vw;
+}
+.carte {
+  justify-content: center;
+  display: flex;
 }
 
 @keyframes App-logo-spin {
