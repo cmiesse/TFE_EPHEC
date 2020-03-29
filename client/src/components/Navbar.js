@@ -32,6 +32,11 @@ class Landing extends Component {
           </Link>
         </li>
         <li className="nav-item">
+          <Link to="/newAnnonce" className="nav-link">
+            Ajout annonce
+          </Link>
+        </li>
+        <li className="nav-item">
           <a onClick={this.logOut.bind(this)} className="nav-link">
             Déconnexion
           </a>
