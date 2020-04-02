@@ -26,6 +26,7 @@ class Profile extends Component {
         console.log(error);
       });
   };
+
   /*<ul>
   {Annonces.map(annonce => (
     <li key={annonce.AnnonceID}>{annonce.Titre}</li>
@@ -47,6 +48,8 @@ class Profile extends Component {
   }
 
   render() {
+    const AnnoncesUser = this.state.Annonces;
+    console.log(AnnoncesUser);
     return (
       <div className="container">
         <div className="jumbotron mt-5">
