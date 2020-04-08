@@ -9,6 +9,8 @@ class Register extends Component {
       Nom: "",
       email: "",
       MotDePasse: "",
+      Types: [],
+      Denrees: [],
       errors: {}
     };
 
@@ -36,13 +38,31 @@ class Register extends Component {
     });
   }
 
+  getTypes() {
+    fetch(`/api/types`)
+      .then(res => res.json())
+      .then(res => this.setState({ Types: res.data }))
+      .catch(err => console.log(err));
+  }
+
+  getDenrees() {
+    fetch(`/api/denrees`)
+      .then(res => res.json())
+      .then(res => this.setState({ Denrees: res.data }))
+      .catch(err => console.log(err));
+  }
+
+  componentDidMount() {
+    this.getTypes();
+    this.getDenrees();
+  }
   render() {
     return (
       <div className="container">
         <div className="row">
           <div className="col-md-6 mt-5 mx-auto">
             <form noValidate onSubmit={this.onSubmit}>
-              <h1 className="h3 mb-3 font-weight-normal">Register</h1>
+              <h1 className="h3 mb-3 font-weight-normal">Inscription</h1>
               <div className="form-group">
                 <label htmlFor="Prenom">Prénom</label>
                 <input
