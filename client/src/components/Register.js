@@ -10,8 +10,10 @@ class Register extends Component {
       email: "",
       MotDePasse: "",
       Types: [],
+      TypesSelect: "",
       Denrees: [],
-      errors: {}
+      DenreesSelect: "",
+      errors: {},
     };
 
     this.onChange = this.onChange.bind(this);
@@ -30,26 +32,26 @@ class Register extends Component {
       Pseudo: this.state.Pseudo,
       MotDePasse: this.state.MotDePasse,
       Email: this.state.Email,
-      Ville: this.state.Ville
+      Ville: this.state.Ville,
     };
 
-    register(newUser).then(res => {
+    register(newUser).then((res) => {
       this.props.history.push(`/login`);
     });
   }
 
   getTypes() {
     fetch(`/api/types`)
-      .then(res => res.json())
-      .then(res => this.setState({ Types: res.data }))
-      .catch(err => console.log(err));
+      .then((res) => res.json())
+      .then((res) => this.setState({ Types: res.data }))
+      .catch((err) => console.log(err));
   }
 
   getDenrees() {
     fetch(`/api/denrees`)
-      .then(res => res.json())
-      .then(res => this.setState({ Denrees: res.data }))
-      .catch(err => console.log(err));
+      .then((res) => res.json())
+      .then((res) => this.setState({ Denrees: res.data }))
+      .catch((err) => console.log(err));
   }
 
   componentDidMount() {
@@ -141,6 +143,39 @@ class Register extends Component {
                   value={this.state.Ville}
                   onChange={this.onChange}
                 />
+              </div>
+              <div className="form-group">
+                <label htmlFor="TypesSelect">Types</label>
+                <select
+                  className="form-control"
+                  name="TypesSelect"
+                  id="TypesSelect"
+                  value={this.state.DenreeID}
+                  onChange={this.onChange}
+                  multiple
+                >
+                  {this.state.Types.map((type) => (
+                    <option key={type.TypeNom} value={type.TypeID}>
+                      {type.TypeNom}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="form-group">
+                <label htmlFor="DenreesSelect">Denrées</label>
+                <select
+                  className="form-control"
+                  name="DenreesSelect"
+                  id="DenreesSelect"
+                  value={this.state.DenreeID}
+                  onChange={this.onChange}
+                >
+                  {this.state.Denrees.map((denree) => (
+                    <option key={denree.DenreeNom} value={denree.DenreeID}>
+                      {denree.DenreeNom}
+                    </option>
+                  ))}
+                </select>
               </div>
               <button
                 type="submit"
