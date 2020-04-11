@@ -10,13 +10,13 @@ const connection = mysql.createConnection({
   host: "localhost",
   user: "root",
   password: "Jslmdpmlrdc3419$",
-  database: "tfe"
+  database: "tfe",
 });
 
 process.env.SECRET_KEY = "secret";
 
 // Connexion à la DB
-connection.connect(err => {
+connection.connect((err) => {
   if (err) {
     return err;
   }
@@ -27,7 +27,7 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(
   bodyParser.urlencoded({
-    extended: false
+    extended: false,
   })
 );
 
@@ -39,7 +39,7 @@ app.post("/users/register", (req, res) => {
     Pseudo: req.body.Pseudo,
     MotDePasse: req.body.MotDePasse,
     Email: req.body.Email,
-    Ville: req.body.Ville
+    Ville: req.body.Ville,
   };
   const FIND_USER = `SELECT * FROM utilisateurs WHERE Pseudo ='${userData.Pseudo}'`;
   connection.query(FIND_USER, (err, rows) => {
@@ -68,7 +68,7 @@ app.post("/users/register", (req, res) => {
 app.post("/users/login", (req, res) => {
   const userData = {
     Pseudo: req.body.Pseudo,
-    MotDePasse: req.body.MotDePasse
+    MotDePasse: req.body.MotDePasse,
   };
   const FIND_USER = `SELECT UtilisateurID, Prenom, Nom, Pseudo, MotDePasse, Email, Ville,  DATE_FORMAT(JourCreation, '%d/%m/%Y') AS JourCreation FROM utilisateurs WHERE Pseudo ='${userData.Pseudo}'`;
   connection.query(FIND_USER, (err, rows, fields) => {
@@ -86,10 +86,10 @@ app.post("/users/login", (req, res) => {
           MotDePasse: rows[0].MotDePasse,
           Email: rows[0].Email,
           Ville: rows[0].Ville,
-          JourCreation: rows[0].JourCreation
+          JourCreation: rows[0].JourCreation,
         };
         let token = jwt.sign(utilisateurs, process.env.SECRET_KEY, {
-          expiresIn: 1440
+          expiresIn: 1440,
         });
         res.send(token);
       }
@@ -124,7 +124,7 @@ app.get("/api/annonces", (req, res) => {
       return res.send(err);
     } else {
       return res.json({
-        data: results
+        data: results,
       });
     }
   });
@@ -139,7 +139,7 @@ app.get("/api/annonces/:id", (req, res) => {
       return res.send(err);
     } else {
       return res.json({
-        data: results
+        data: results,
       });
     }
   });
@@ -154,7 +154,7 @@ app.get("/api/annonces/user/:id", (req, res) => {
       return res.send(err);
     } else {
       return res.json({
-        data: results
+        data: results,
       });
     }
   });
@@ -167,7 +167,7 @@ app.post("/api/annonces", (req, res) => {
     Quantite: req.body.Quantite,
     UtilisateurID: req.body.UtilisateurID,
     MagasinID: req.body.MagasinID,
-    DenreeID: req.body.DenreeID
+    DenreeID: req.body.DenreeID,
   };
   const ADD_ANNONCE_QUERY = `INSERT INTO annonces(Titre, Quantite, UtilisateurID, MagasinID, DenreeID) VALUES('${AnnonceData.Titre}','${AnnonceData.Quantite}','${AnnonceData.UtilisateurID}','${AnnonceData.MagasinID}','${AnnonceData.DenreeID}')`;
   connection.query(ADD_ANNONCE_QUERY, (err, results) => {
@@ -181,13 +181,14 @@ app.post("/api/annonces", (req, res) => {
 
 // Obtenir toutes les denrées
 app.get("/api/denrees", (req, res) => {
-  const SELECT_ALL_DENREES_QUERY = "SELECT * from denrees";
+  const SELECT_ALL_DENREES_QUERY =
+    "SELECT DenreeID AS value, DenreeNom AS label, TypeID from denrees";
   connection.query(SELECT_ALL_DENREES_QUERY, (err, results) => {
     if (err) {
       return res.send(err);
     } else {
       return res.json({
-        data: results
+        data: results,
       });
     }
   });
@@ -202,7 +203,7 @@ app.get("/api/denrees/:id", (req, res) => {
       return res.send(err);
     } else {
       return res.json({
-        data: results
+        data: results,
       });
     }
   });
@@ -210,13 +211,14 @@ app.get("/api/denrees/:id", (req, res) => {
 
 // Obtenir tous les types de denrée
 app.get("/api/types", (req, res) => {
-  const SELECT_ALL_TYPES_QUERY = "SELECT * from types";
+  const SELECT_ALL_TYPES_QUERY =
+    "SELECT TypeID AS value, TypeNom AS label from types";
   connection.query(SELECT_ALL_TYPES_QUERY, (err, results) => {
     if (err) {
       return res.send(err);
     } else {
       return res.json({
-        data: results
+        data: results,
       });
     }
   });
@@ -231,7 +233,7 @@ app.get("/api/types/:id", (req, res) => {
       return res.send(err);
     } else {
       return res.json({
-        data: results
+        data: results,
       });
     }
   });
@@ -245,7 +247,7 @@ app.get("/api/magasins", (req, res) => {
       return res.send(err);
     } else {
       return res.json({
-        data: results
+        data: results,
       });
     }
   });
@@ -260,12 +262,12 @@ app.get("/api/magasins/:id", (req, res) => {
       return res.send(err);
     } else {
       return res.json({
-        data: results
+        data: results,
       });
     }
   });
 });
 
-app.listen(port, function() {
+app.listen(port, function () {
   console.log("Server is running on port: " + port);
 });

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Select from "react-select";
 import { register } from "./UserFunctions";
 
 class Register extends Component {
@@ -144,44 +145,36 @@ class Register extends Component {
                   name="Ville"
                   id="Ville"
                   autoComplete="Ville"
-                  placeholder="Ville"
+                  placeholder="Entrez votre ville"
                   value={this.state.Ville}
                   onChange={this.onChange}
                 />
               </div>
               <div className="form-group">
                 <label htmlFor="TypesSelect">Types</label>
-                <select
-                  className="form-control"
-                  name="TypesSelect"
+                <Select
+                  className="mb-3"
+                  options={this.state.Types}
+                  name="TypeSelect"
                   id="TypesSelect"
-                  value={this.state.TypesSelect}
-                  onChange={this.onChange}
-                  multiple
-                >
-                  {this.state.Types.map((type) => (
-                    <option key={type.TypeNom} value={type.TypeID}>
-                      {type.TypeNom}
-                    </option>
-                  ))}
-                </select>
+                  onChange={this.state.TypesSelect}
+                  isMulti
+                  placeholder="Choissez les types de denrées qui vous intéressent"
+                  noOptionsMessage={() => "Pas d'autres types"}
+                ></Select>
               </div>
               <div className="form-group">
                 <label htmlFor="DenreesSelect">Denrées</label>
-                <select
-                  className="form-control"
+                <Select
+                  className="mb-3"
+                  options={this.state.Denrees}
                   name="DenreesSelect"
                   id="DenreesSelect"
-                  value={this.state.DenreesSelect}
-                  onChange={this.onChange}
-                  multiple
-                >
-                  {this.state.Denrees.map((denree) => (
-                    <option key={denree.DenreeNom} value={denree.DenreeID}>
-                      {denree.DenreeNom}
-                    </option>
-                  ))}
-                </select>
+                  onChange={this.state.DenreesSelect}
+                  isMulti
+                  placeholder="Choissez les denrées qui vous intéressent"
+                  noOptionsMessage={() => "Pas d'autres denrées"}
+                ></Select>
               </div>
               <button
                 type="submit"
