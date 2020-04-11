@@ -10,14 +10,19 @@ class Register extends Component {
       email: "",
       MotDePasse: "",
       Types: [],
-      TypesSelect: "",
+      TypesSelect: [],
       Denrees: [],
-      DenreesSelect: "",
+      DenreesSelect: [],
       errors: {},
     };
 
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
+  }
+  handleChange(evt) {
+    this.setState({
+      multiValue: [...evt.target.selectedOptions].map((o) => o.value),
+    });
   }
 
   onChange(e) {
@@ -150,7 +155,7 @@ class Register extends Component {
                   className="form-control"
                   name="TypesSelect"
                   id="TypesSelect"
-                  value={this.state.DenreeID}
+                  value={this.state.TypesSelect}
                   onChange={this.onChange}
                   multiple
                 >
@@ -167,8 +172,9 @@ class Register extends Component {
                   className="form-control"
                   name="DenreesSelect"
                   id="DenreesSelect"
-                  value={this.state.DenreeID}
+                  value={this.state.DenreesSelect}
                   onChange={this.onChange}
+                  multiple
                 >
                   {this.state.Denrees.map((denree) => (
                     <option key={denree.DenreeNom} value={denree.DenreeID}>
