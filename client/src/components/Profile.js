@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import jwt_decode from "jwt-decode";
-import axios from "axios";
 
 class Profile extends Component {
   constructor() {
@@ -14,18 +13,18 @@ class Profile extends Component {
       Ville: "",
       JourCreation: "",
       Annonces: [],
-      errors: {}
+      errors: {},
     };
   }
 
-  getAnnoncesUser = _ => {
-    axios
-      .get(`/api/annonces/user/${this.state.UtilisateurID}`)
-      .then(res => this.setState({ Annonces: res.data }))
-      .catch(error => {
+  getAnnoncesUser(user) {
+    fetch(`/api/annoncesUser/${user}`)
+      .then((res) => res.json())
+      .then((res) => this.setState({ Annonces: res.data }))
+      .catch((error) => {
         console.log(error);
       });
-  };
+  }
 
   /*<ul>
   {Annonces.map(annonce => (
@@ -42,14 +41,13 @@ class Profile extends Component {
       Email: decoded.Email,
       Pseudo: decoded.Pseudo,
       Ville: decoded.Ville,
-      JourCreation: decoded.JourCreation
+      JourCreation: decoded.JourCreation,
     });
+    console.log(this.state.UtilisateurID);
     this.getAnnoncesUser(this.state.UtilisateurID);
   }
 
   render() {
-    const AnnoncesUser = this.state.Annonces;
-    console.log(AnnoncesUser);
     return (
       <div className="container">
         <div className="jumbotron mt-5">
@@ -81,6 +79,9 @@ class Profile extends Component {
             </tbody>
           </table>
           <h2 className="text-center">Mes annonces</h2>
+          {this.state.Annonces.map((annonce) => (
+            <li key={annonce.AnnonceID}>{annonce.Titre}</li>
+          ))}
         </div>
       </div>
     );

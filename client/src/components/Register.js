@@ -47,14 +47,14 @@ class Register extends Component {
   }
 
   getTypes() {
-    fetch(`/api/types`)
+    fetch(`/api/typesSelect`)
       .then((res) => res.json())
       .then((res) => this.setState({ Types: res.data }))
       .catch((err) => console.log(err));
   }
 
   getDenrees() {
-    fetch(`/api/denrees`)
+    fetch(`/api/denreesSelect`)
       .then((res) => res.json())
       .then((res) => this.setState({ Denrees: res.data }))
       .catch((err) => console.log(err));

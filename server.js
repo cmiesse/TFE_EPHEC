@@ -145,8 +145,8 @@ app.get("/api/annonces/:id", (req, res) => {
   });
 });
 
-// Obtenir l'annonce avec l'id donné
-app.get("/api/annonces/user/:id", (req, res) => {
+// Obtenir les annonces d'un utilisateur donné
+app.get("/api/annoncesUser/:id", (req, res) => {
   const UtilisateurID = req.params.id;
   const SELECT_ANNONCE_BY_ID_QUERY = `SELECT * from annonces WHERE UtilisateurID=${UtilisateurID}`;
   connection.query(SELECT_ANNONCE_BY_ID_QUERY, (err, results) => {
@@ -181,6 +181,20 @@ app.post("/api/annonces", (req, res) => {
 
 // Obtenir toutes les denrées
 app.get("/api/denrees", (req, res) => {
+  const SELECT_ALL_DENREES_QUERY = "SELECT * from denrees";
+  connection.query(SELECT_ALL_DENREES_QUERY, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.json({
+        data: results,
+      });
+    }
+  });
+});
+
+// Obtenir toutes les denrées
+app.get("/api/denreesSelect", (req, res) => {
   const SELECT_ALL_DENREES_QUERY =
     "SELECT DenreeID AS value, DenreeNom AS label, TypeID from denrees";
   connection.query(SELECT_ALL_DENREES_QUERY, (err, results) => {
@@ -199,6 +213,20 @@ app.get("/api/denrees/:id", (req, res) => {
   const DenreeID = req.params.id;
   const SELECT_DENREE_BY_ID_QUERY = `SELECT * from denrees WHERE DenreeID=${DenreeID}`;
   connection.query(SELECT_DENREE_BY_ID_QUERY, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.json({
+        data: results,
+      });
+    }
+  });
+});
+
+// Obtenir tous les types de denrée
+app.get("/api/types", (req, res) => {
+  const SELECT_ALL_TYPES_QUERY = "SELECT * from types";
+  connection.query(SELECT_ALL_TYPES_QUERY, (err, results) => {
     if (err) {
       return res.send(err);
     } else {
