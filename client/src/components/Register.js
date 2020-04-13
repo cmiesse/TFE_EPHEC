@@ -82,6 +82,7 @@ class Register extends Component {
                   placeholder="Entrez votre prénom"
                   value={this.state.Prenom}
                   onChange={this.onChange}
+                  required
                 />
               </div>
               <div className="form-group">
@@ -95,6 +96,7 @@ class Register extends Component {
                   placeholder="Entrez votre nom"
                   value={this.state.Nom}
                   onChange={this.onChange}
+                  required
                 />
               </div>
 
@@ -109,6 +111,7 @@ class Register extends Component {
                   placeholder="Entrez votre pseudo"
                   value={this.state.Pseudo}
                   onChange={this.onChange}
+                  required
                 />
               </div>
               <div className="form-group">
@@ -122,6 +125,7 @@ class Register extends Component {
                   placeholder="Entrez votre mot de passe"
                   value={this.state.MotDePasse}
                   onChange={this.onChange}
+                  required
                 />
               </div>
               <div className="form-group">
@@ -135,6 +139,7 @@ class Register extends Component {
                   placeholder="Entrez votre email"
                   value={this.state.Email}
                   onChange={this.onChange}
+                  required
                 />
               </div>
               <div className="form-group">
@@ -148,6 +153,7 @@ class Register extends Component {
                   placeholder="Entrez votre ville"
                   value={this.state.Ville}
                   onChange={this.onChange}
+                  required
                 />
               </div>
               <div className="form-group">

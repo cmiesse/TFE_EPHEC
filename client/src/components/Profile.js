@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import jwt_decode from "jwt-decode";
+import "./Profile.css";
 
 class Profile extends Component {
   constructor() {
@@ -79,9 +80,19 @@ class Profile extends Component {
             </tbody>
           </table>
           <h2 className="text-center">Mes annonces</h2>
-          {this.state.Annonces.map((annonce) => (
-            <li key={annonce.AnnonceID}>{annonce.Titre}</li>
-          ))}
+          <table align="center">
+            <tbody>
+              {this.state.Annonces.map((annonce) => (
+                <tr key={annonce.AnnonceID}>
+                  <td>{annonce.Titre}</td>
+                  <td>{annonce.Quantite}</td>
+                  <td>{annonce.DenreeNom}</td>
+                  <td>{annonce.MagasinNom}</td>
+                  <td>{annonce.JourCreation}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     );

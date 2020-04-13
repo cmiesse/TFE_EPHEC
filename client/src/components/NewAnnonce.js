@@ -13,7 +13,7 @@ class NewAnnonce extends Component {
       DenreeID: 1,
       Magasins: [],
       Denrees: [],
-      errors: {}
+      errors: {},
     };
 
     this.onChange = this.onChange.bind(this);
@@ -31,25 +31,25 @@ class NewAnnonce extends Component {
       Quantite: this.state.Quantite,
       UtilisateurID: this.state.UtilisateurID,
       MagasinID: this.state.MagasinID,
-      DenreeID: this.state.DenreeID
+      DenreeID: this.state.DenreeID,
     };
 
-    annonces(annonce).then(res => {
+    annonces(annonce).then((res) => {
       this.props.history.push(`/profile`);
     });
   }
   getMagasins() {
     fetch(`/api/magasins`)
-      .then(res => res.json())
-      .then(res => this.setState({ Magasins: res.data }))
-      .catch(err => console.log(err));
+      .then((res) => res.json())
+      .then((res) => this.setState({ Magasins: res.data }))
+      .catch((err) => console.log(err));
   }
 
   getDenrees() {
     fetch(`/api/denrees`)
-      .then(res => res.json())
-      .then(res => this.setState({ Denrees: res.data }))
-      .catch(err => console.log(err));
+      .then((res) => res.json())
+      .then((res) => this.setState({ Denrees: res.data }))
+      .catch((err) => console.log(err));
   }
   componentDidMount() {
     const token = localStorage.usertoken;
@@ -76,6 +76,7 @@ class NewAnnonce extends Component {
                   placeholder="Entrez un titre"
                   value={this.state.Titre}
                   onChange={this.onChange}
+                  required
                 />
               </div>
               <div className="form-group">
@@ -86,6 +87,7 @@ class NewAnnonce extends Component {
                   id="Quantite"
                   value={this.state.Quantite}
                   onChange={this.onChange}
+                  required
                 >
                   <option value="" defaultValue>
                     --Choisissez une option--
@@ -103,8 +105,9 @@ class NewAnnonce extends Component {
                   id="MagasinID"
                   value={this.state.MagasinID}
                   onChange={this.onChange}
+                  required
                 >
-                  {this.state.Magasins.map(magasin => (
+                  {this.state.Magasins.map((magasin) => (
                     <option key={magasin.MagasinNom} value={magasin.MagasinID}>
                       {magasin.MagasinNom}
                     </option>
@@ -119,8 +122,9 @@ class NewAnnonce extends Component {
                   id="DenreeID"
                   value={this.state.DenreeID}
                   onChange={this.onChange}
+                  required
                 >
-                  {this.state.Denrees.map(denree => (
+                  {this.state.Denrees.map((denree) => (
                     <option key={denree.DenreeNom} value={denree.DenreeID}>
                       {denree.DenreeNom}
                     </option>

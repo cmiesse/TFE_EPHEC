@@ -7,7 +7,7 @@ class Login extends Component {
     this.state = {
       Pseudo: "",
       MotDePasse: "",
-      errors: {}
+      errors: {},
     };
 
     this.onChange = this.onChange.bind(this);
@@ -22,10 +22,10 @@ class Login extends Component {
 
     const user = {
       Pseudo: this.state.Pseudo,
-      MotDePasse: this.state.MotDePasse
+      MotDePasse: this.state.MotDePasse,
     };
 
-    login(user).then(res => {
+    login(user).then((res) => {
       if (res) {
         this.props.history.push(`/profile`);
       }
@@ -52,6 +52,7 @@ class Login extends Component {
                   placeholder="Pseudo"
                   value={this.state.Pseudo}
                   onChange={this.onChange}
+                  required
                 />
               </div>
               <div className="form-group">
@@ -65,6 +66,7 @@ class Login extends Component {
                   placeholder="Mot de passe"
                   value={this.state.MotDePasse}
                   onChange={this.onChange}
+                  required
                 />
               </div>
               <button

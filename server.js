@@ -148,7 +148,7 @@ app.get("/api/annonces/:id", (req, res) => {
 // Obtenir les annonces d'un utilisateur donné
 app.get("/api/annoncesUser/:id", (req, res) => {
   const UtilisateurID = req.params.id;
-  const SELECT_ANNONCE_BY_ID_QUERY = `SELECT * from annonces WHERE UtilisateurID=${UtilisateurID}`;
+  const SELECT_ANNONCE_BY_ID_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DATECreation, '%d/%m/%Y') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m WHERE a.DenreeID = d.DenreeID AND a.MagasinID=m.MagasinID AND UtilisateurID=${UtilisateurID}`;
   connection.query(SELECT_ANNONCE_BY_ID_QUERY, (err, results) => {
     if (err) {
       return res.send(err);
