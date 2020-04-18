@@ -238,7 +238,7 @@ app.get("/api/types", (req, res) => {
 });
 
 // Obtenir tous les types de denrée
-app.get("/api/types", (req, res) => {
+app.get("/api/typesSelect", (req, res) => {
   const SELECT_ALL_TYPES_QUERY =
     "SELECT TypeID AS value, TypeNom AS label from types";
   connection.query(SELECT_ALL_TYPES_QUERY, (err, results) => {

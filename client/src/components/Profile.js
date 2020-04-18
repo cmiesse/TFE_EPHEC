@@ -1,12 +1,13 @@
 import React, { Component } from "react";
 import jwt_decode from "jwt-decode";
+import { Link } from "react-router-dom";
 import "./Profile.css";
 
 class Profile extends Component {
   constructor() {
     super();
     this.state = {
-      UtilisateurID: 1,
+      UtilisateurID: 11,
       Prenom: "",
       Nom: "",
       Email: "",
@@ -14,6 +15,8 @@ class Profile extends Component {
       Ville: "",
       JourCreation: "",
       Annonces: [],
+      Types: "vide",
+      Denrees: "vide",
       errors: {},
     };
   }
@@ -27,11 +30,6 @@ class Profile extends Component {
       });
   }
 
-  /*<ul>
-  {Annonces.map(annonce => (
-    <li key={annonce.AnnonceID}>{annonce.Titre}</li>
-  ))}
-</ul>*/
   componentDidMount() {
     const token = localStorage.usertoken;
     const decoded = jwt_decode(token);
@@ -44,14 +42,15 @@ class Profile extends Component {
       Ville: decoded.Ville,
       JourCreation: decoded.JourCreation,
     });
-    console.log(this.state.UtilisateurID);
-    this.getAnnoncesUser(this.state.UtilisateurID);
+    setTimeout(() => {
+      this.getAnnoncesUser(this.state.UtilisateurID);
+    }, 1);
   }
 
   render() {
     return (
       <div className="container">
-        <div className="jumbotron mt-5">
+        <div className="jumbotron mt-4">
           <div className="col-sm-8 mx-auto">
             <h1 className="text-center">Profil de {this.state.Pseudo}</h1>
           </div>
@@ -79,6 +78,23 @@ class Profile extends Component {
               </tr>
             </tbody>
           </table>
+          <h2 className="text-center">Mes préférences</h2>
+          <Link to="/choicetd">
+            <button>Modifier mes préférences</button>
+          </Link>
+          <table className="table col-md-6 mx-auto">
+            <tbody>
+              <tr>
+                <td>Types</td>
+                <td>{this.state.Types}</td>
+              </tr>
+              <tr>
+                <td>Denrées</td>
+                <td>{this.state.Denrees}</td>
+              </tr>
+            </tbody>
+          </table>
+
           <h2 className="text-center">Mes annonces</h2>
           <table align="center">
             <tbody>

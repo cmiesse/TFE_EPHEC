@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Select from "react-select";
 import { register } from "./UserFunctions";
 
 class Register extends Component {
@@ -8,8 +7,10 @@ class Register extends Component {
     this.state = {
       Prenom: "",
       Nom: "",
-      email: "",
+      Pseudo: "",
+      Email: "",
       MotDePasse: "",
+      Ville: "",
       Types: [],
       TypesSelect: [],
       Denrees: [],
@@ -20,12 +21,6 @@ class Register extends Component {
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
-  handleChange(evt) {
-    this.setState({
-      multiValue: [...evt.target.selectedOptions].map((o) => o.value),
-    });
-  }
-
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
@@ -46,24 +41,6 @@ class Register extends Component {
     });
   }
 
-  getTypes() {
-    fetch(`/api/typesSelect`)
-      .then((res) => res.json())
-      .then((res) => this.setState({ Types: res.data }))
-      .catch((err) => console.log(err));
-  }
-
-  getDenrees() {
-    fetch(`/api/denreesSelect`)
-      .then((res) => res.json())
-      .then((res) => this.setState({ Denrees: res.data }))
-      .catch((err) => console.log(err));
-  }
-
-  componentDidMount() {
-    this.getTypes();
-    this.getDenrees();
-  }
   render() {
     return (
       <div className="container">
@@ -155,32 +132,6 @@ class Register extends Component {
                   onChange={this.onChange}
                   required
                 />
-              </div>
-              <div className="form-group">
-                <label htmlFor="TypesSelect">Types</label>
-                <Select
-                  className="mb-3"
-                  options={this.state.Types}
-                  name="TypeSelect"
-                  id="TypesSelect"
-                  onChange={this.state.TypesSelect}
-                  isMulti
-                  placeholder="Choissez les types de denrées qui vous intéressent"
-                  noOptionsMessage={() => "Pas d'autres types"}
-                ></Select>
-              </div>
-              <div className="form-group">
-                <label htmlFor="DenreesSelect">Denrées</label>
-                <Select
-                  className="mb-3"
-                  options={this.state.Denrees}
-                  name="DenreesSelect"
-                  id="DenreesSelect"
-                  onChange={this.state.DenreesSelect}
-                  isMulti
-                  placeholder="Choissez les denrées qui vous intéressent"
-                  noOptionsMessage={() => "Pas d'autres denrées"}
-                ></Select>
               </div>
               <button
                 type="submit"

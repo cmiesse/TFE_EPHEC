@@ -7,6 +7,7 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import Profile from "./components/Profile";
 import NewAnnonce from "./components/NewAnnonce";
+import ChoixTypeDenree from "./components/ChoixTypeDenree";
 
 class App extends Component {
   render() {
@@ -19,6 +20,7 @@ class App extends Component {
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/profile" component={Profile} />
+            <Route exact path="/choicetd" component={ChoixTypeDenree} />
             <Route exact path="/newAnnonce" component={NewAnnonce} />
           </div>
         </div>

@@ -37,9 +37,9 @@ class Landing extends Component {
           </Link>
         </li>
         <li className="nav-item">
-          <a onClick={this.logOut.bind(this)} className="nav-link">
+          <Link to="/" onClick={this.logOut.bind(this)} className="nav-link">
             Déconnexion
-          </a>
+          </Link>
         </li>
       </ul>
     );
