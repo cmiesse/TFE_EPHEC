@@ -15,8 +15,8 @@ class Profile extends Component {
       Ville: "",
       JourCreation: "",
       Annonces: [],
-      Types: "vide",
-      Denrees: "vide",
+      Types: [],
+      Denrees: [],
       errors: {},
     };
   }
@@ -25,6 +25,24 @@ class Profile extends Component {
     fetch(`/api/annoncesUser/${user}`)
       .then((res) => res.json())
       .then((res) => this.setState({ Annonces: res.data }))
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  getUserTypes(user) {
+    fetch(`/api/userTypes/${user}`)
+      .then((res) => res.json())
+      .then((res) => this.setState({ Types: res.data }))
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  getUserDenrees(user) {
+    fetch(`/api/userDenrees/${user}`)
+      .then((res) => res.json())
+      .then((res) => this.setState({ Denrees: res.data }))
       .catch((error) => {
         console.log(error);
       });
@@ -44,7 +62,14 @@ class Profile extends Component {
     });
     setTimeout(() => {
       this.getAnnoncesUser(this.state.UtilisateurID);
+      this.getUserTypes(this.state.UtilisateurID);
+      this.getUserDenrees(this.state.UtilisateurID);
     }, 1);
+    /*
+    setTimeout(() => {
+      this.getUserTypes(this.state.UtilisateurID);
+    }, 1);
+    */
   }
 
   render() {
@@ -80,17 +105,25 @@ class Profile extends Component {
           </table>
           <h2 className="text-center">Mes préférences</h2>
           <Link to="/choicetd">
-            <button>Modifier mes préférences</button>
+            <button>Ajouter des préférences</button>
           </Link>
           <table className="table col-md-6 mx-auto">
             <tbody>
               <tr>
                 <td>Types</td>
-                <td>{this.state.Types}</td>
+                <td>
+                  {this.state.Types.map((type) => (
+                    <li key={type.TypeNom}>{type.TypeNom}</li>
+                  ))}
+                </td>
               </tr>
               <tr>
                 <td>Denrées</td>
-                <td>{this.state.Denrees}</td>
+                <td>
+                  {this.state.Denrees.map((denree) => (
+                    <li key={denree.DenreeNom}>{denree.DenreeNom}</li>
+                  ))}
+                </td>
               </tr>
             </tbody>
           </table>

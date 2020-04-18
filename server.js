@@ -314,7 +314,7 @@ app.get("/api/userTypes", (req, res) => {
 // Obtenir tous les choix de type d'un utilisateur donné
 app.get("/api/userTypes/:id", (req, res) => {
   const UserID = req.params.id;
-  const SELECT_USER_TYPE_QUERY = `SELECT TypeID FROM utilisateurstypes WHERE UtilisateurID=${UserID}`;
+  const SELECT_USER_TYPE_QUERY = `SELECT ut.TypeID, t.TypeNom FROM utilisateurstypes ut, types t WHERE ut.UtilisateurID=${UserID} AND t.TypeID=ut.TypeID`;
   connection.query(SELECT_USER_TYPE_QUERY, (err, results) => {
     if (err) {
       return res.send(err);
@@ -360,7 +360,7 @@ app.get("/api/userDenrees", (req, res) => {
 // Obtenir tous les choix de denrées d'un utilisateur donné
 app.get("/api/userDenrees/:id", (req, res) => {
   const UserID = req.params.id;
-  const SELECT_USER_DENREES_QUERY = `SELECT DenreeID FROM utilisateursdenrees WHERE UtilisateurID=${UserID}`;
+  const SELECT_USER_DENREES_QUERY = `SELECT ud.DenreeID, d.DenreeNom FROM utilisateursdenrees ud, denrees d WHERE ud.UtilisateurID=${UserID} AND ud.DenreeID=d.DenreeID`;
   connection.query(SELECT_USER_DENREES_QUERY, (err, results) => {
     if (err) {
       return res.send(err);
