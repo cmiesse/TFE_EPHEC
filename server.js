@@ -296,6 +296,98 @@ app.get("/api/magasins/:id", (req, res) => {
   });
 });
 
+/***********UtilisateursTypes********* */
+// Obtenir toutes les liens utilisateur-type
+app.get("/api/userTypes", (req, res) => {
+  const SELECT_USER_TYPE_QUERY = `SELECT * FROM utilisateurstypes`;
+  connection.query(SELECT_USER_TYPE_QUERY, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.json({
+        data: results,
+      });
+    }
+  });
+});
+
+// Obtenir tous les choix de type d'un utilisateur donné
+app.get("/api/userTypes/:id", (req, res) => {
+  const UserID = req.params.id;
+  const SELECT_USER_TYPE_QUERY = `SELECT TypeID FROM utilisateurstypes WHERE UtilisateurID=${UserID}`;
+  connection.query(SELECT_USER_TYPE_QUERY, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.json({
+        data: results,
+      });
+    }
+  });
+});
+
+// Ajouter un choix de type à un utilisateur
+app.post("/api/userTypes", (req, res) => {
+  const UserTypeData = {
+    User: req.body.User,
+    Type: req.body.Type,
+  };
+  const ADD_USER_TYPE_QUERY = `INSERT INTO utilisateurstypes(UtilisateurID, TypeID) VALUES('${UserTypeData.User}','${UserTypeData.Type}')`;
+  connection.query(ADD_USER_TYPE_QUERY, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.send("Type ajouté pour l'utilisateur");
+    }
+  });
+});
+
+/***********UtilisateursDenrees********* */
+// Obtenir tous les liens utilisateurs-denrées
+app.get("/api/userDenrees", (req, res) => {
+  const SELECT_USER_DENREES_QUERY = `SELECT * FROM utilisateursdenrees`;
+  connection.query(SELECT_USER_DENREES_QUERY, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.json({
+        data: results,
+      });
+    }
+  });
+});
+
+// Obtenir tous les choix de denrées d'un utilisateur donné
+app.get("/api/userDenrees/:id", (req, res) => {
+  const UserID = req.params.id;
+  const SELECT_USER_DENREES_QUERY = `SELECT DenreeID FROM utilisateursdenrees WHERE UtilisateurID=${UserID}`;
+  connection.query(SELECT_USER_DENREES_QUERY, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.json({
+        data: results,
+      });
+    }
+  });
+});
+
+// Ajouter un choix de denrée à un utilisateur
+app.post("/api/userDenrees", (req, res) => {
+  const UserDenreeData = {
+    User: req.body.User,
+    Denree: req.body.Denree,
+  };
+  const ADD_USER_DENREE_QUERY = `INSERT INTO utilisateursdenrees(UtilisateurID, DenreeID) VALUES('${UserDenreeData.User}','${UserDenreeData.Denree}')`;
+  connection.query(ADD_USER_DENREE_QUERY, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.send("Denrée ajoutée pour l'utilisateur");
+    }
+  });
+});
+
 app.listen(port, function () {
   console.log("Server is running on port: " + port);
 });
