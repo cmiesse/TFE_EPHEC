@@ -15,7 +15,7 @@ class Register extends Component {
       TypesSelect: [],
       Denrees: [],
       DenreesSelect: [],
-      errors: {},
+      setError: null,
     };
 
     this.onChange = this.onChange.bind(this);
@@ -36,9 +36,18 @@ class Register extends Component {
       Ville: this.state.Ville,
     };
 
-    register(newUser).then((res) => {
-      this.props.history.push(`/login`);
-    });
+    register(newUser)
+      .then((res) => {
+        this.props.history.push(`/profile`);
+      })
+      .catch((error) => {
+        if (error.response.status === 401) {
+          this.setState({
+            setError: "L'utilisateur existe déjà",
+          });
+        } else
+          this.setState({ setError: "Un ou plusieurs champs sont manquants" });
+      });
   }
 
   render() {
@@ -133,6 +142,12 @@ class Register extends Component {
                   required
                 />
               </div>
+              {this.state.setError && (
+                <>
+                  <small style={{ color: "red" }}>{this.state.setError}</small>
+                  <br />
+                </>
+              )}
               <button
                 type="submit"
                 className="btn btn-lg btn-primary btn-block"

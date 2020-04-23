@@ -8,7 +8,7 @@ class NewAnnonce extends Component {
     this.state = {
       Titre: "",
       Quantite: "",
-      UtilisateurID: 1,
+      UtilisateurID: "",
       MagasinID: 1,
       DenreeID: 1,
       Magasins: [],
@@ -54,7 +54,9 @@ class NewAnnonce extends Component {
   componentDidMount() {
     const token = localStorage.usertoken;
     const decoded = jwt_decode(token);
-    this.setState({ UtilisateurID: decoded.UtilisateurID });
+    setTimeout(() => {
+      this.setState({ UtilisateurID: decoded.UtilisateurID });
+    }, 1);
     this.getMagasins();
     this.getDenrees();
   }

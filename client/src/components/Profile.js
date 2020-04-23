@@ -7,7 +7,7 @@ class Profile extends Component {
   constructor() {
     super();
     this.state = {
-      UtilisateurID: 11,
+      UtilisateurID: "",
       Prenom: "",
       Nom: "",
       Email: "",
@@ -65,11 +65,6 @@ class Profile extends Component {
       this.getUserTypes(this.state.UtilisateurID);
       this.getUserDenrees(this.state.UtilisateurID);
     }, 1);
-    /*
-    setTimeout(() => {
-      this.getUserTypes(this.state.UtilisateurID);
-    }, 1);
-    */
   }
 
   render() {

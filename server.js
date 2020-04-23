@@ -41,12 +41,24 @@ app.post("/users/register", (req, res) => {
     Email: req.body.Email,
     Ville: req.body.Ville,
   };
+  if (
+    !userData.Prenom ||
+    !userData.Nom ||
+    !userData.Pseudo ||
+    !userData.MotDePasse ||
+    !userData.Email ||
+    !userData.Ville
+  ) {
+    return res
+      .status(400)
+      .json({ error: "Un ou plusieurs champs sont manquants" });
+  }
   const FIND_USER = `SELECT * FROM utilisateurs WHERE Pseudo ='${userData.Pseudo}'`;
   connection.query(FIND_USER, (err, rows) => {
     if (err) {
       return res.send(err);
     } else if (rows != 0) {
-      return res.send("l'utilisateur existe déjà");
+      return res.status(401).json({ error: "L'utilisateur n'existe pas" });
     } else {
       bcrypt.hash(req.body.MotDePasse, 10, (err, hash) => {
         userData.MotDePasse = hash;
@@ -54,7 +66,7 @@ app.post("/users/register", (req, res) => {
         VALUES('${userData.Prenom}', '${userData.Nom}', '${userData.Pseudo}', '${userData.MotDePasse}', '${userData.Email}', '${userData.Ville}')`;
         connection.query(CREATE_USER, (err, results) => {
           if (err) {
-            return res.send(err);
+            return res.status(400).json({ error: "Autre erreur" });
           } else {
             return res.send("Utilisateur ajouté");
           }
@@ -75,7 +87,7 @@ app.post("/users/login", (req, res) => {
     if (err) {
       return res.send(err);
     } else if (rows == 0) {
-      return res.status(400).json({ error: "L'utilisateur n'existe pas" });
+      return res.status(401).json({ error: "L'utilisateur n'existe pas" });
     } else {
       if (bcrypt.compareSync(req.body.MotDePasse, rows[0].MotDePasse)) {
         const utilisateurs = {
@@ -92,6 +104,10 @@ app.post("/users/login", (req, res) => {
           expiresIn: 1440,
         });
         res.send(token);
+      } else {
+        return res
+          .status(400)
+          .json({ error: "Le pseudo et/ou le mot de passe sont incorrects." });
       }
     }
   });

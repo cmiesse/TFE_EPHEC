@@ -7,7 +7,7 @@ class Login extends Component {
     this.state = {
       Pseudo: "",
       MotDePasse: "",
-      errors: {},
+      setError: null,
     };
 
     this.onChange = this.onChange.bind(this);
@@ -25,11 +25,22 @@ class Login extends Component {
       MotDePasse: this.state.MotDePasse,
     };
 
-    login(user).then((res) => {
-      if (res) {
-        this.props.history.push(`/profile`);
-      }
-    });
+    login(user)
+      .then((res) => {
+        if (res) {
+          this.props.history.push(`/profile`);
+        }
+      })
+      .catch((error) => {
+        if (error.response.status === 401) {
+          this.setState({
+            setError: "L'utilisateur n'existe pas",
+          });
+        } else
+          this.setState({
+            setError: "Des données sont manquantes ou incorrects",
+          });
+      });
   }
 
   render() {
@@ -69,6 +80,12 @@ class Login extends Component {
                   required
                 />
               </div>
+              {this.state.setError && (
+                <>
+                  <small style={{ color: "red" }}>{this.state.setError}</small>
+                  <br />
+                </>
+              )}
               <button
                 type="submit"
                 className="btn btn-lg btn-primary btn-block"
