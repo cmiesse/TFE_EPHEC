@@ -32,7 +32,7 @@ app.use(
 );
 
 // Enregister un utilisateur
-app.post("/users/register", (req, res) => {
+app.post("/api/users/register", (req, res) => {
   const userData = {
     Prenom: req.body.Prenom,
     Nom: req.body.Nom,
@@ -77,7 +77,7 @@ app.post("/users/register", (req, res) => {
 });
 
 // Login
-app.post("/users/login", (req, res) => {
+app.post("/api/users/login", (req, res) => {
   const userData = {
     Pseudo: req.body.Pseudo,
     MotDePasse: req.body.MotDePasse,
@@ -114,7 +114,8 @@ app.post("/users/login", (req, res) => {
 });
 
 // profil
-app.get("/users/profile", (req, res) => {
+/*
+app.get("/api/users/profile", (req, res) => {
   var decoded = jwt.verify(
     req.headers["authorization"],
     process.env.SECRET_KEY
@@ -131,6 +132,7 @@ app.get("/users/profile", (req, res) => {
     }
   });
 });
+*/
 
 // Obtenir toutes les annonces
 app.get("/api/annonces", (req, res) => {

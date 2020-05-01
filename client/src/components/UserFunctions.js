@@ -1,31 +1,31 @@
 import axios from "axios";
 
-export const register = newUser => {
+export const register = (newUser) => {
   return axios
-    .post("users/register", {
+    .post("/api/users/register", {
       Prenom: newUser.Prenom,
       Nom: newUser.Nom,
       Pseudo: newUser.Pseudo,
       MotDePasse: newUser.MotDePasse,
       Email: newUser.Email,
-      Ville: newUser.Ville
+      Ville: newUser.Ville,
     })
-    .then(response => {
+    .then((response) => {
       console.log("Enregisté");
     });
 };
 
-export const login = user => {
+export const login = (user) => {
   return axios
-    .post("users/login", {
+    .post("/api/users/login", {
       Pseudo: user.Pseudo,
-      MotDePasse: user.MotDePasse
+      MotDePasse: user.MotDePasse,
     })
-    .then(response => {
+    .then((response) => {
       localStorage.setItem("usertoken", response.data);
       return response.data;
     })
-    .catch(err => {
+    .catch((err) => {
       console.log(err);
     });
 };
