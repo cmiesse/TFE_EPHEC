@@ -15,10 +15,24 @@ class AnnonceDetails extends Component {
 
   componentDidMount() {
     const AnnonceID = this.props.match.params.AnnonceID;
-    this.getAnnonce(AnnonceID);
+    setTimeout(() => {
+      this.getAnnonce(AnnonceID);
+    }, 1);
   }
   render() {
-    return <div className="container"></div>;
+    return (
+      <div className="container">
+        {this.state.Annonce.map((annonce) => (
+          <div key="Annonce">
+            <h1>{annonce.Titre}</h1>
+            <h2>
+              {annonce.Quantite} de {annonce.DenreeNom} à {annonce.MagasinNom}
+            </h2>
+            <h3>Annonce créé le : {annonce.JourCreation}</h3>
+          </div>
+        ))}
+      </div>
+    );
   }
 }
 

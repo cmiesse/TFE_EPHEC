@@ -35,9 +35,17 @@ class NewAnnonce extends Component {
       DenreeID: this.state.DenreeID,
     };
 
-    annonces(annonce).then((res) => {
-      this.props.history.push(`/profile`);
-    });
+    annonces(annonce)
+      .then((res) => {
+        this.props.history.push(`/profile`);
+      })
+      .catch((error) => {
+        if (error.response.status === 400) {
+          this.setState({
+            setError: "Un ou plusieurs champs sont manquants",
+          });
+        } else this.setState({ setError: "Une erreur s'est produite" });
+      });
   }
   getMagasins() {
     fetch(`/api/magasins`)
@@ -144,6 +152,12 @@ class NewAnnonce extends Component {
                   ))}
                 </select>
               </div>
+              {this.state.setError && (
+                <>
+                  <small style={{ color: "red" }}>{this.state.setError}</small>
+                  <br />
+                </>
+              )}
               <button
                 type="submit"
                 className="btn btn-lg btn-primary btn-block"

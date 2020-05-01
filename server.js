@@ -151,7 +151,7 @@ app.get("/api/annonces", (req, res) => {
 // Obtenir l'annonce avec l'id donné
 app.get("/api/annonces/:id", (req, res) => {
   const AnnonceID = req.params.id;
-  const SELECT_ANNONCE_BY_ID_QUERY = `SELECT * from annonces WHERE AnnonceID=${AnnonceID}`;
+  const SELECT_ANNONCE_BY_ID_QUERY = `SELECT a.Titre, a.Quantite, d.DenreeNom, m.MagasinNom, DATE_FORMAT(a.DATECreation, '%d/%m/%Y') AS JourCreation from annonces a, denrees d, magasins m WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND AnnonceID=${AnnonceID}`;
   connection.query(SELECT_ANNONCE_BY_ID_QUERY, (err, results) => {
     if (err) {
       return res.send(err);
@@ -200,10 +200,21 @@ app.post("/api/annonces", (req, res) => {
     MagasinID: req.body.MagasinID,
     DenreeID: req.body.DenreeID,
   };
+  if (
+    !AnnonceData.Titre ||
+    !AnnonceData.Quantite ||
+    !AnnonceData.UtilisateurID ||
+    !AnnonceData.MagasinID ||
+    !AnnonceData.DenreeID
+  ) {
+    return res
+      .status(400)
+      .json({ error: "Un ou plusieurs champs sont manquants" });
+  }
   const ADD_ANNONCE_QUERY = `INSERT INTO annonces(Titre, Quantite, UtilisateurID, MagasinID, DenreeID) VALUES('${AnnonceData.Titre}','${AnnonceData.Quantite}','${AnnonceData.UtilisateurID}','${AnnonceData.MagasinID}','${AnnonceData.DenreeID}')`;
   connection.query(ADD_ANNONCE_QUERY, (err, results) => {
     if (err) {
-      return res.send(err);
+      return res.status(401).json({ error: "Une erreur s'est produite" });
     } else {
       return res.send("Annonce ajouté");
     }

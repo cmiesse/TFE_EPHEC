@@ -125,6 +125,15 @@ class Profile extends Component {
 
           <h2 className="text-center">Mes annonces</h2>
           <table align="center">
+            <thead>
+              <tr>
+                <th>Titre</th>
+                <th>Quantité</th>
+                <th>Denrée</th>
+                <th>Magasin</th>
+                <th>Créé le</th>
+              </tr>
+            </thead>
             <tbody>
               {this.state.Annonces.map((annonce) => (
                 <tr key={annonce.AnnonceID}>

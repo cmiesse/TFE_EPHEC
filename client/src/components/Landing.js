@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import "../App.css";
 
 class Landing extends Component {
@@ -35,7 +36,11 @@ class Landing extends Component {
           <tbody>
             {this.state.Annonces.map((annonce) => (
               <tr key={annonce.AnnonceID}>
-                <td>{annonce.Titre}</td>
+                <td>
+                  <Link to={`/annonce/${annonce.AnnonceID}`}>
+                    {annonce.Titre}
+                  </Link>
+                </td>
                 <td>{annonce.Quantite}</td>
                 <td>{annonce.DenreeNom}</td>
                 <td>{annonce.MagasinNom}</td>
