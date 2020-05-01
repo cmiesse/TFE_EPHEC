@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { annonces } from "./AnnonceFunctions";
 import jwt_decode from "jwt-decode";
+import "../App.css";
 
 class NewAnnonce extends Component {
   constructor() {
