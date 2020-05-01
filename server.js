@@ -419,6 +419,22 @@ app.post("/api/userDenrees", (req, res) => {
   });
 });
 
+/********magasinsdenrees**************/
+// Retourner les denrées avec nom d'un magasin donné
+app.get("/api/denreesMagasin/:id", (req, res) => {
+  const MagasinID = req.params.id;
+  const DENREES_MAGASIN_QUERY = `SELECT md.DenreeID, d.DenreeNom FROM magasinsdenrees md, denrees d WHERE md.DenreeID=d.DenreeID AND md.MagasinID=${MagasinID}`;
+  connection.query(DENREES_MAGASIN_QUERY, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.json({
+        data: results,
+      });
+    }
+  });
+});
+
 app.listen(port, function () {
   console.log("Server is running on port: " + port);
 });
