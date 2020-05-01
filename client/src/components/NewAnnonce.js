@@ -10,11 +10,11 @@ class NewAnnonce extends Component {
       Titre: "",
       Quantite: "",
       UtilisateurID: "",
-      MagasinID: 1,
-      DenreeID: 1,
+      MagasinID: "",
+      DenreeID: "",
       Magasins: [],
       Denrees: [],
-      errors: {},
+      setError: null,
     };
 
     this.onChange = this.onChange.bind(this);
@@ -46,8 +46,8 @@ class NewAnnonce extends Component {
       .catch((err) => console.log(err));
   }
 
-  getDenrees() {
-    fetch(`/api/denrees`)
+  getDenreesMagasin(magasin) {
+    fetch(`/api/denreesMagasin/${magasin}`)
       .then((res) => res.json())
       .then((res) => this.setState({ Denrees: res.data }))
       .catch((err) => console.log(err));
@@ -59,7 +59,11 @@ class NewAnnonce extends Component {
       this.setState({ UtilisateurID: decoded.UtilisateurID });
     }, 1);
     this.getMagasins();
-    this.getDenrees();
+  }
+  componentDidUpdate() {
+    if (this.state.MagasinID !== "") {
+      this.getDenreesMagasin(this.state.MagasinID);
+    }
   }
 
   render() {
@@ -110,6 +114,9 @@ class NewAnnonce extends Component {
                   onChange={this.onChange}
                   required
                 >
+                  <option value="" defaultValue>
+                    --Choix de magasin à effectuer--
+                  </option>
                   {this.state.Magasins.map((magasin) => (
                     <option key={magasin.MagasinNom} value={magasin.MagasinID}>
                       {magasin.MagasinNom}
@@ -127,6 +134,9 @@ class NewAnnonce extends Component {
                   onChange={this.onChange}
                   required
                 >
+                  <option value="" defaultValue>
+                    --Choix de denrée à effectuer--
+                  </option>
                   {this.state.Denrees.map((denree) => (
                     <option key={denree.DenreeNom} value={denree.DenreeID}>
                       {denree.DenreeNom}

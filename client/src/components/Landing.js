@@ -23,6 +23,15 @@ class Landing extends Component {
       <div className="container">
         <h1>Page d'accueil</h1>
         <table align="center">
+          <thead>
+            <tr>
+              <th>Titre</th>
+              <th>Quantité</th>
+              <th>Denrée</th>
+              <th>Magasin</th>
+              <th>Créé le</th>
+            </tr>
+          </thead>
           <tbody>
             {this.state.Annonces.map((annonce) => (
               <tr key={annonce.AnnonceID}>

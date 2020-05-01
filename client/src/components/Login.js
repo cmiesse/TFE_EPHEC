@@ -60,7 +60,7 @@ class Login extends Component {
                   name="Pseudo"
                   id="Pseudo"
                   autoComplete="username"
-                  placeholder="Pseudo"
+                  placeholder="Entrez votre pseudo"
                   value={this.state.Pseudo}
                   onChange={this.onChange}
                   required
@@ -74,7 +74,7 @@ class Login extends Component {
                   name="MotDePasse"
                   id="MotDePasse"
                   autoComplete="current-password"
-                  placeholder="Mot de passe"
+                  placeholder="Entrez votre mot de passe"
                   value={this.state.MotDePasse}
                   onChange={this.onChange}
                   required

@@ -8,6 +8,7 @@ import Register from "./components/Register";
 import Profile from "./components/Profile";
 import NewAnnonce from "./components/NewAnnonce";
 import ChoixTypeDenree from "./components/ChoixTypeDenree";
+import AnnonceDetails from "./components/AnnonceDetails";
 
 class App extends Component {
   render() {
@@ -22,6 +23,11 @@ class App extends Component {
             <Route exact path="/profile" component={Profile} />
             <Route exact path="/choicetd" component={ChoixTypeDenree} />
             <Route exact path="/newAnnonce" component={NewAnnonce} />
+            <Route
+              exact
+              path="/annonce/:AnnonceID"
+              component={AnnonceDetails}
+            />
           </div>
         </div>
       </Router>
