@@ -39,7 +39,7 @@ app.post("/api/users/register", (req, res) => {
     Pseudo: req.body.Pseudo,
     MotDePasse: req.body.MotDePasse,
     Email: req.body.Email,
-    Ville: req.body.Ville,
+    VilleID: req.body.VilleID,
     ProvinceID: req.body.ProvinceID,
   };
   if (
@@ -48,7 +48,7 @@ app.post("/api/users/register", (req, res) => {
     !userData.Pseudo ||
     !userData.MotDePasse ||
     !userData.Email ||
-    !userData.Ville ||
+    !userData.VilleID ||
     !userData.ProvinceID
   ) {
     return res
@@ -64,8 +64,8 @@ app.post("/api/users/register", (req, res) => {
     } else {
       bcrypt.hash(req.body.MotDePasse, 10, (err, hash) => {
         userData.MotDePasse = hash;
-        const CREATE_USER = `INSERT INTO utilisateurs(Prenom, Nom, Pseudo, MotDePasse, Email, Ville, ProvinceID) 
-        VALUES('${userData.Prenom}', '${userData.Nom}', '${userData.Pseudo}', '${userData.MotDePasse}', '${userData.Email}', '${userData.Ville}', '${userData.ProvinceID}')`;
+        const CREATE_USER = `INSERT INTO utilisateurs(Prenom, Nom, Pseudo, MotDePasse, Email, VilleID, ProvinceID) 
+        VALUES('${userData.Prenom}', '${userData.Nom}', '${userData.Pseudo}', '${userData.MotDePasse}', '${userData.Email}', '${userData.VilleID}', '${userData.ProvinceID}')`;
         connection.query(CREATE_USER, (err, results) => {
           if (err) {
             return res.status(400).json({ error: "Autre erreur" });
@@ -84,7 +84,7 @@ app.post("/api/users/login", (req, res) => {
     Pseudo: req.body.Pseudo,
     MotDePasse: req.body.MotDePasse,
   };
-  const FIND_USER = `SELECT UtilisateurID, Prenom, Nom, Pseudo, MotDePasse, Email, Ville, ProvinceID, DATE_FORMAT(JourCreation, '%d/%m/%Y') AS JourCreation FROM utilisateurs WHERE Pseudo ='${userData.Pseudo}'`;
+  const FIND_USER = `SELECT UtilisateurID, Prenom, Nom, Pseudo, MotDePasse, Email, VilleID, ProvinceID, DATE_FORMAT(JourCreation, '%d/%m/%Y') AS JourCreation FROM utilisateurs WHERE Pseudo ='${userData.Pseudo}'`;
   connection.query(FIND_USER, (err, rows, fields) => {
     if (err) {
       return res.send(err);
@@ -99,7 +99,7 @@ app.post("/api/users/login", (req, res) => {
           Pseudo: rows[0].Pseudo,
           MotDePasse: rows[0].MotDePasse,
           Email: rows[0].Email,
-          Ville: rows[0].Ville,
+          VilleID: rows[0].VilleID,
           ProvinceID: rows[0].ProvinceID,
           JourCreation: rows[0].JourCreation,
         };
@@ -208,9 +208,9 @@ app.get("/api/annoncesProvince/:id", (req, res) => {
   });
 });
 
-app.get("/api/annoncesVille/:ville", (req, res) => {
-  const Ville = req.params.ville;
-  const SELECT_ANNONCES_BY_VILLE_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DATECreation, '%d/%m/%Y') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND m.Ville='${Ville}'`;
+app.get("/api/annoncesVille/:id", (req, res) => {
+  const VilleID = req.params.id;
+  const SELECT_ANNONCES_BY_VILLE_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DATECreation, '%d/%m/%Y') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND m.VilleID='${VilleID}'`;
   connection.query(SELECT_ANNONCES_BY_VILLE_QUERY, (err, results) => {
     if (err) {
       return res.send(err);
@@ -514,6 +514,48 @@ app.get("/api/provinceNom/:id", (req, res) => {
     } else {
       return res.json({
         data: results[0],
+      });
+    }
+  });
+});
+
+/*******************************************************/
+app.get("/api/villes", (req, res) => {
+  const SELECT_VILLES_QUERY = `SELECT * FROM villes`;
+  connection.query(SELECT_VILLES_QUERY, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.json({
+        data: results,
+      });
+    }
+  });
+});
+
+app.get("/api/villeNom/:id", (req, res) => {
+  const VilleID = req.params.id;
+  const SELECT_VILLE_NOM_QUERY = `SELECT VilleNom FROM villes WHERE VilleID=${VilleID}`;
+  connection.query(SELECT_VILLE_NOM_QUERY, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.json({
+        data: results[0],
+      });
+    }
+  });
+});
+
+app.get("/api/villesProvince/:id", (req, res) => {
+  const ProvinceID = req.params.id;
+  const SELECT_VILLE_BY_PROVINCE_QUERY = `SELECT VilleID, VilleNom FROM villes WHERE ProvinceID=${ProvinceID}`;
+  connection.query(SELECT_VILLE_BY_PROVINCE_QUERY, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.json({
+        data: results,
       });
     }
   });

@@ -61,43 +61,45 @@ class ChoixTypeDenree extends Component {
   render() {
     return (
       <div className="container">
-        <div className="row">
-          <div className="col-md-6 mt-5 mx-auto">
-            <form noValidate onSubmit={this.onSubmit}>
-              <p>Choisissez vos types et denrées, {this.state.Pseudo}</p>
-              <div className="form-group">
-                <label htmlFor="TypesSelect">Types</label>
-                <Select
-                  className="mb-3"
-                  options={this.state.Types}
-                  name="TypeSelect"
-                  id="TypesSelect"
-                  onChange={this.state.TypesSelect}
-                  isMulti
-                  placeholder="Choissez les types de denrées qui vous intéressent"
-                  noOptionsMessage={() => "Pas d'autres types"}
-                ></Select>
-              </div>
-              <div className="form-group">
-                <label htmlFor="DenreesSelect">Denrées</label>
-                <Select
-                  className="mb-3"
-                  options={this.state.Denrees}
-                  name="DenreesSelect"
-                  id="DenreesSelect"
-                  onChange={this.state.DenreesSelect}
-                  isMulti
-                  placeholder="Choissez les denrées qui vous intéressent"
-                  noOptionsMessage={() => "Pas d'autres denrées"}
-                ></Select>
-              </div>
-              <button
-                type="submit"
-                className="btn btn-lg btn-primary btn-block"
-              >
-                Enregistrer vos choix
-              </button>
-            </form>
+        <div className="jumbotron mt-2">
+          <div className="row">
+            <div className="col-md-6 mt-2 mx-auto">
+              <form noValidate onSubmit={this.onSubmit}>
+                <p>Choisissez vos types et denrées, {this.state.Pseudo}</p>
+                <div className="form-group">
+                  <label htmlFor="TypesSelect">Types</label>
+                  <Select
+                    className="mb-3"
+                    options={this.state.Types}
+                    name="TypeSelect"
+                    id="TypesSelect"
+                    onChange={this.state.TypesSelect}
+                    isMulti
+                    placeholder="Choissez les types de denrées qui vous intéressent"
+                    noOptionsMessage={() => "Pas d'autres types"}
+                  ></Select>
+                </div>
+                <div className="form-group">
+                  <label htmlFor="DenreesSelect">Denrées</label>
+                  <Select
+                    className="mb-3"
+                    options={this.state.Denrees}
+                    name="DenreesSelect"
+                    id="DenreesSelect"
+                    onChange={this.state.DenreesSelect}
+                    isMulti
+                    placeholder="Choissez les denrées qui vous intéressent"
+                    noOptionsMessage={() => "Pas d'autres denrées"}
+                  ></Select>
+                </div>
+                <button
+                  type="submit"
+                  className="btn btn-lg btn-primary btn-block"
+                >
+                  Enregistrer vos choix
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </div>

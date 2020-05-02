@@ -8,7 +8,8 @@ export const register = (newUser) => {
       Pseudo: newUser.Pseudo,
       MotDePasse: newUser.MotDePasse,
       Email: newUser.Email,
-      Ville: newUser.Ville,
+      ProvinceID: newUser.ProvinceID,
+      VilleID: newUser.VilleID,
     })
     .then((response) => {
       console.log("Enregisté");

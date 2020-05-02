@@ -77,94 +77,101 @@ class NewAnnonce extends Component {
   render() {
     return (
       <div className="container">
-        <div className="row">
-          <div className="col-md-6 mt-5 mx-auto">
-            <form noValidate onSubmit={this.onSubmit}>
-              <h1 className="h3 mb-3 font-weight-normal">Ajout d'annonce</h1>
-              <div className="form-group">
-                <label htmlFor="Titre">Titre</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="Titre"
-                  id="Titre"
-                  placeholder="Entrez un titre"
-                  value={this.state.Titre}
-                  onChange={this.onChange}
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="Quantite">Quantité</label>
-                <select
-                  className="form-control"
-                  name="Quantite"
-                  id="Quantite"
-                  value={this.state.Quantite}
-                  onChange={this.onChange}
-                  required
-                >
-                  <option value="" defaultValue>
-                    --Choisissez une option--
-                  </option>
-                  <option value="Vide">Vide</option>
-                  <option value="Peu">Peu</option>
-                  <option value="Beaucoup">Beaucoup</option>
-                </select>
-              </div>
-              <div className="form-group">
-                <label htmlFor="MagasinID">Magasin</label>
-                <select
-                  className="form-control"
-                  name="MagasinID"
-                  id="MagasinID"
-                  value={this.state.MagasinID}
-                  onChange={this.onChange}
-                  required
-                >
-                  <option value="" defaultValue>
-                    --Choix de magasin à effectuer--
-                  </option>
-                  {this.state.Magasins.map((magasin) => (
-                    <option key={magasin.MagasinNom} value={magasin.MagasinID}>
-                      {magasin.MagasinNom}
+        <div className="jumbotron mt-2">
+          <div className="row">
+            <div className="col-md-6 mt-2 mx-auto">
+              <form noValidate onSubmit={this.onSubmit}>
+                <h1 className="h3 mb-3 font-weight-normal">Ajout d'annonce</h1>
+                <div className="form-group">
+                  <label htmlFor="Titre">Titre</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="Titre"
+                    id="Titre"
+                    placeholder="Entrez un titre"
+                    value={this.state.Titre}
+                    onChange={this.onChange}
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="Quantite">Quantité</label>
+                  <select
+                    className="form-control"
+                    name="Quantite"
+                    id="Quantite"
+                    value={this.state.Quantite}
+                    onChange={this.onChange}
+                    required
+                  >
+                    <option value="" defaultValue>
+                      --Choisissez une option--
                     </option>
-                  ))}
-                </select>
-              </div>
-              <div className="form-group">
-                <label htmlFor="DenreeID">Denrée</label>
-                <select
-                  className="form-control"
-                  name="DenreeID"
-                  id="DenreeID"
-                  value={this.state.DenreeID}
-                  onChange={this.onChange}
-                  required
-                >
-                  <option value="" defaultValue>
-                    --Choix de denrée à effectuer--
-                  </option>
-                  {this.state.Denrees.map((denree) => (
-                    <option key={denree.DenreeNom} value={denree.DenreeID}>
-                      {denree.DenreeNom}
+                    <option value="Vide">Vide</option>
+                    <option value="Peu">Peu</option>
+                    <option value="Beaucoup">Beaucoup</option>
+                  </select>
+                </div>
+                <div className="form-group">
+                  <label htmlFor="MagasinID">Magasin</label>
+                  <select
+                    className="form-control"
+                    name="MagasinID"
+                    id="MagasinID"
+                    value={this.state.MagasinID}
+                    onChange={this.onChange}
+                    required
+                  >
+                    <option value="" defaultValue>
+                      --Choix de magasin à effectuer--
                     </option>
-                  ))}
-                </select>
-              </div>
-              {this.state.setError && (
-                <>
-                  <small style={{ color: "red" }}>{this.state.setError}</small>
-                  <br />
-                </>
-              )}
-              <button
-                type="submit"
-                className="btn btn-lg btn-primary btn-block"
-              >
-                Ajouter
-              </button>
-            </form>
+                    {this.state.Magasins.map((magasin) => (
+                      <option
+                        key={magasin.MagasinNom}
+                        value={magasin.MagasinID}
+                      >
+                        {magasin.MagasinNom}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="form-group">
+                  <label htmlFor="DenreeID">Denrée</label>
+                  <select
+                    className="form-control"
+                    name="DenreeID"
+                    id="DenreeID"
+                    value={this.state.DenreeID}
+                    onChange={this.onChange}
+                    required
+                  >
+                    <option value="" defaultValue>
+                      --Choix de denrée à effectuer--
+                    </option>
+                    {this.state.Denrees.map((denree) => (
+                      <option key={denree.DenreeNom} value={denree.DenreeID}>
+                        {denree.DenreeNom}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                {this.state.setError && (
+                  <>
+                    <small style={{ color: "red" }}>
+                      {this.state.setError}
+                    </small>
+                    <br />
+                  </>
+                )}
+                <button
+                  type="submit"
+                  className="btn btn-lg btn-primary btn-block"
+                >
+                  Ajouter
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </div>

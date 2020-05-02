@@ -8,8 +8,6 @@ class Landing extends Component {
     super();
     this.state = {
       UtilisateurID: "",
-      //userLongitude: "",
-      //userLatitude: "",
       Annonces: [],
       rayon: 20,
     };
@@ -58,33 +56,35 @@ class Landing extends Component {
   render() {
     return (
       <div className="container">
-        <h1>Page d'accueil</h1>
-        <table align="center">
-          <thead>
-            <tr>
-              <th>Titre</th>
-              <th>Quantité</th>
-              <th>Denrée</th>
-              <th>Magasin</th>
-              <th>Créé le</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.Annonces.map((annonce) => (
-              <tr key={annonce.AnnonceID}>
-                <td>
-                  <Link to={`/annonce/${annonce.AnnonceID}`}>
-                    {annonce.Titre}
-                  </Link>
-                </td>
-                <td>{annonce.Quantite}</td>
-                <td>{annonce.DenreeNom}</td>
-                <td>{annonce.MagasinNom}</td>
-                <td>{annonce.JourCreation}</td>
+        <div className="jumbotron mt-2">
+          <h1>Page d'accueil</h1>
+          <table align="center">
+            <thead>
+              <tr>
+                <th>Titre</th>
+                <th>Quantité</th>
+                <th>Denrée</th>
+                <th>Magasin</th>
+                <th>Créé le</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {this.state.Annonces.map((annonce) => (
+                <tr key={annonce.AnnonceID}>
+                  <td>
+                    <Link to={`/annonce/${annonce.AnnonceID}`}>
+                      {annonce.Titre}
+                    </Link>
+                  </td>
+                  <td>{annonce.Quantite}</td>
+                  <td>{annonce.DenreeNom}</td>
+                  <td>{annonce.MagasinNom}</td>
+                  <td>{annonce.JourCreation}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     );
   }

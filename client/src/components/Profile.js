@@ -12,7 +12,8 @@ class Profile extends Component {
       Nom: "",
       Email: "",
       Pseudo: "",
-      Ville: "",
+      VilleID: "",
+      VilleNom: "",
       ProvinceID: "",
       ProvinceNom: "",
       JourCreation: "",
@@ -22,6 +23,15 @@ class Profile extends Component {
       errors: {},
     };
   }
+  getVilleNom(id) {
+    fetch(`/api/villeNom/${id}`)
+      .then((res) => res.json())
+      .then((res) => this.setState({ VilleNom: res.data.VilleNom }))
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   getProvinceName(id) {
     fetch(`/api/provinceNom/${id}`)
       .then((res) => res.json())
@@ -67,12 +77,13 @@ class Profile extends Component {
       Nom: decoded.Nom,
       Email: decoded.Email,
       Pseudo: decoded.Pseudo,
-      Ville: decoded.Ville,
+      VilleID: decoded.VilleID,
       ProvinceID: decoded.ProvinceID,
       JourCreation: decoded.JourCreation,
     });
     setTimeout(() => {
       this.getProvinceName(this.state.ProvinceID);
+      this.getVilleNom(this.state.VilleID);
       this.getAnnoncesUser(this.state.UtilisateurID);
       this.getUserTypes(this.state.UtilisateurID);
       this.getUserDenrees(this.state.UtilisateurID);
@@ -102,7 +113,7 @@ class Profile extends Component {
               </tr>
               <tr>
                 <td>Ville</td>
-                <td>{this.state.Ville}</td>
+                <td>{this.state.VilleNom}</td>
               </tr>
               <tr>
                 <td>Province</td>

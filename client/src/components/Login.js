@@ -46,53 +46,57 @@ class Login extends Component {
   render() {
     return (
       <div className="container">
-        <div className="row">
-          <div className="col-md-6 mt-5 mx-auto">
-            <form noValidate onSubmit={this.onSubmit}>
-              <h1 className="h3 mb-3 font-weight-normal">
-                Veuillez vous connecter
-              </h1>
-              <div className="form-group">
-                <label htmlFor="Pseudo">Pseudo</label>
-                <input
-                  type="text"
-                  className="form-control"
-                  name="Pseudo"
-                  id="Pseudo"
-                  autoComplete="username"
-                  placeholder="Entrez votre pseudo"
-                  value={this.state.Pseudo}
-                  onChange={this.onChange}
-                  required
-                />
-              </div>
-              <div className="form-group">
-                <label htmlFor="MotDePasse">Mot de passe</label>
-                <input
-                  type="password"
-                  className="form-control"
-                  name="MotDePasse"
-                  id="MotDePasse"
-                  autoComplete="current-password"
-                  placeholder="Entrez votre mot de passe"
-                  value={this.state.MotDePasse}
-                  onChange={this.onChange}
-                  required
-                />
-              </div>
-              {this.state.setError && (
-                <>
-                  <small style={{ color: "red" }}>{this.state.setError}</small>
-                  <br />
-                </>
-              )}
-              <button
-                type="submit"
-                className="btn btn-lg btn-primary btn-block"
-              >
-                Se connecter
-              </button>
-            </form>
+        <div className="jumbotron mt-2">
+          <div className="row">
+            <div className="col-md-6 mt-3 mx-auto">
+              <form noValidate onSubmit={this.onSubmit}>
+                <h1 className="h3 mb-3 font-weight-normal">
+                  Veuillez vous connecter
+                </h1>
+                <div className="form-group">
+                  <label htmlFor="Pseudo">Pseudo</label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    name="Pseudo"
+                    id="Pseudo"
+                    autoComplete="username"
+                    placeholder="Entrez votre pseudo"
+                    value={this.state.Pseudo}
+                    onChange={this.onChange}
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="MotDePasse">Mot de passe</label>
+                  <input
+                    type="password"
+                    className="form-control"
+                    name="MotDePasse"
+                    id="MotDePasse"
+                    autoComplete="current-password"
+                    placeholder="Entrez votre mot de passe"
+                    value={this.state.MotDePasse}
+                    onChange={this.onChange}
+                    required
+                  />
+                </div>
+                {this.state.setError && (
+                  <>
+                    <small style={{ color: "red" }}>
+                      {this.state.setError}
+                    </small>
+                    <br />
+                  </>
+                )}
+                <button
+                  type="submit"
+                  className="btn btn-lg btn-primary btn-block"
+                >
+                  Se connecter
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
