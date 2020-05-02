@@ -20,19 +20,7 @@ class Landing extends Component {
       .then((res) => this.setState({ Annonces: res.data }))
       .catch((err) => console.log(err));
   }
-  /*getUserLocation = () => {
-    navigator.geolocation.getCurrentPosition(
-      (position, options = { enableHighAccuracy: true }) => {
-        console.log(position.coords.latitude);
-        console.log(position.coords.longitude);
-        console.log(`La précision est de ${position.coords.accuracy} mètres.`);
-        const latitude = position.coords.latitude;
-        const longitude = position.coords.longitude;
-        this.setState({ userLatitude: latitude });
-        this.setState({ userLongitude: longitude });
-      }
-    );
-  };*/
+
   getUserTypes(user) {
     fetch(`/api/userTypes/${user}`)
       .then((res) => res.json())

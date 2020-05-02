@@ -194,6 +194,48 @@ app.get("/api/annoncesLanding", (req, res) => {
   });
 });
 
+app.get("/api/annoncesProvince/:id", (req, res) => {
+  const ProvinceID = req.params.id;
+  const SELECT_ANNONCES_BY_PROVINCE_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DATECreation, '%d/%m/%Y') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND m.ProvinceID=${ProvinceID}`;
+  connection.query(SELECT_ANNONCES_BY_PROVINCE_QUERY, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.json({
+        data: results,
+      });
+    }
+  });
+});
+
+app.get("/api/annoncesVille/:ville", (req, res) => {
+  const Ville = req.params.ville;
+  const SELECT_ANNONCES_BY_VILLE_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DATECreation, '%d/%m/%Y') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND m.Ville='${Ville}'`;
+  connection.query(SELECT_ANNONCES_BY_VILLE_QUERY, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.json({
+        data: results,
+      });
+    }
+  });
+});
+
+app.get("/api/annoncesMagasin/:id", (req, res) => {
+  const MagasinID = req.params.id;
+  const SELECT_ANNONCES_BY_MAGASIN_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DATECreation, '%d/%m/%Y') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND a.MagasinID=${MagasinID}`;
+  connection.query(SELECT_ANNONCES_BY_MAGASIN_QUERY, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.json({
+        data: results,
+      });
+    }
+  });
+});
+
 // Ajouter une annonce
 app.post("/api/annonces", (req, res) => {
   const AnnonceData = {
