@@ -137,6 +137,8 @@ app.get("/api/users/profile", (req, res) => {
 });
 */
 
+/*******************annonces*********************************/
+
 // Obtenir toutes les annonces
 app.get("/api/annonces", (req, res) => {
   const SELECT_ALL_ANNONCES_QUERY = "SELECT * from annonces";
@@ -208,10 +210,24 @@ app.get("/api/annoncesProvince/:id", (req, res) => {
   });
 });
 
-app.get("/api/annoncesVille/:id", (req, res) => {
-  const VilleID = req.params.id;
-  const SELECT_ANNONCES_BY_VILLE_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DATECreation, '%d/%m/%Y') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND m.VilleID='${VilleID}'`;
+app.get("/api/annoncesVille/:nom", (req, res) => {
+  const VilleNom = req.params.nom;
+  const SELECT_ANNONCES_BY_VILLE_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DATECreation, '%d/%m/%Y') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m, villes v WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND v.VilleID=m.VilleID AND v.VilleNom='${VilleNom}'`;
   connection.query(SELECT_ANNONCES_BY_VILLE_QUERY, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.json({
+        data: results,
+      });
+    }
+  });
+});
+
+app.get("/api/annoncesCodePostal/:id", (req, res) => {
+  const CodePostal = req.params.id;
+  const SELECT_ANNONCES_BY_CODEPOSTAL_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DATECreation, '%d/%m/%Y') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m, villes v WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND v.VilleID=m.VilleID AND v.CodePostal=${CodePostal}`;
+  connection.query(SELECT_ANNONCES_BY_CODEPOSTAL_QUERY, (err, results) => {
     if (err) {
       return res.send(err);
     } else {
@@ -266,6 +282,8 @@ app.post("/api/annonces", (req, res) => {
   });
 });
 
+/********************denrees********************************/
+
 // Obtenir toutes les denrées
 app.get("/api/denrees", (req, res) => {
   const SELECT_ALL_DENREES_QUERY = "SELECT * from denrees";
@@ -309,6 +327,8 @@ app.get("/api/denrees/:id", (req, res) => {
     }
   });
 });
+
+/*************************types********************************************/
 
 // Obtenir tous les types de denrée
 app.get("/api/types", (req, res) => {
@@ -354,6 +374,7 @@ app.get("/api/types/:id", (req, res) => {
   });
 });
 
+/*******************magasins*****************************/
 // Obtenir tous les magasins
 app.get("/api/magasins", (req, res) => {
   const SELECT_ALL_MAGASINS_QUERY = "SELECT * from magasins";
