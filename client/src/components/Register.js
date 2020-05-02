@@ -11,10 +11,8 @@ class Register extends Component {
       Email: "",
       MotDePasse: "",
       Ville: "",
-      Types: [],
-      TypesSelect: [],
-      Denrees: [],
-      DenreesSelect: [],
+      ProvinceID: "",
+      Provinces: [],
       setError: null,
     };
 
@@ -48,6 +46,17 @@ class Register extends Component {
         } else
           this.setState({ setError: "Un ou plusieurs champs sont manquants" });
       });
+  }
+
+  getProvinces() {
+    fetch(`/api/provinces`)
+      .then((res) => res.json())
+      .then((res) => this.setState({ Provinces: res.data }))
+      .catch((err) => console.log(err));
+  }
+
+  componentDidMount() {
+    this.getProvinces();
   }
 
   render() {
@@ -141,6 +150,29 @@ class Register extends Component {
                   onChange={this.onChange}
                   required
                 />
+              </div>
+              <div className="form-group">
+                <label htmlFor="Province">Province</label>
+                <select
+                  className="form-control"
+                  name="ProvinceID"
+                  id="ProvinceID"
+                  value={this.state.ProvinceID}
+                  onChange={this.onChange}
+                  required
+                >
+                  <option value="" defaultValue>
+                    Entrez votre province
+                  </option>
+                  {this.state.Provinces.map((province) => (
+                    <option
+                      key={province.ProvinceNom}
+                      value={province.ProvinceID}
+                    >
+                      {province.ProvinceNom}
+                    </option>
+                  ))}
+                </select>
               </div>
               {this.state.setError && (
                 <>

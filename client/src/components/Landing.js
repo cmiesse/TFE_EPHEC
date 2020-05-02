@@ -8,8 +8,8 @@ class Landing extends Component {
     super();
     this.state = {
       UtilisateurID: "",
-      userLongitude: "",
-      userLatitude: "",
+      //userLongitude: "",
+      //userLatitude: "",
       Annonces: [],
       rayon: 20,
     };
@@ -20,7 +20,7 @@ class Landing extends Component {
       .then((res) => this.setState({ Annonces: res.data }))
       .catch((err) => console.log(err));
   }
-  getUserLocation = () => {
+  /*getUserLocation = () => {
     navigator.geolocation.getCurrentPosition(
       (position, options = { enableHighAccuracy: true }) => {
         console.log(position.coords.latitude);
@@ -32,7 +32,7 @@ class Landing extends Component {
         this.setState({ userLongitude: longitude });
       }
     );
-  };
+  };*/
   getUserTypes(user) {
     fetch(`/api/userTypes/${user}`)
       .then((res) => res.json())
@@ -71,33 +71,6 @@ class Landing extends Component {
     return (
       <div className="container">
         <h1>Page d'accueil</h1>
-        <div>
-          <input
-            type="button"
-            onClick={this.getUserLocation}
-            value={"Ma position"}
-            id="positionButton"
-          />
-        </div>
-        <div className="rayon">
-          <label className="labelRayon" htmlFor="rayon">
-            Choisissez le rayon de recherche :
-          </label>
-          <select
-            id="rayon"
-            value={this.state.rayon}
-            onChange={(e) =>
-              this.setState({
-                rayon: e.target.value,
-              })
-            }
-          >
-            <option value="5">5 km</option>
-            <option value="10">10 km</option>
-            <option value="20">20 km</option>
-          </select>
-        </div>
-
         <table align="center">
           <thead>
             <tr>

@@ -40,6 +40,7 @@ app.post("/api/users/register", (req, res) => {
     MotDePasse: req.body.MotDePasse,
     Email: req.body.Email,
     Ville: req.body.Ville,
+    ProvinceID: req.body.ProvinceID,
   };
   if (
     !userData.Prenom ||
@@ -47,7 +48,8 @@ app.post("/api/users/register", (req, res) => {
     !userData.Pseudo ||
     !userData.MotDePasse ||
     !userData.Email ||
-    !userData.Ville
+    !userData.Ville ||
+    !userData.ProvinceID
   ) {
     return res
       .status(400)
@@ -62,8 +64,8 @@ app.post("/api/users/register", (req, res) => {
     } else {
       bcrypt.hash(req.body.MotDePasse, 10, (err, hash) => {
         userData.MotDePasse = hash;
-        const CREATE_USER = `INSERT INTO utilisateurs(Prenom, Nom, Pseudo, MotDePasse, Email, Ville) 
-        VALUES('${userData.Prenom}', '${userData.Nom}', '${userData.Pseudo}', '${userData.MotDePasse}', '${userData.Email}', '${userData.Ville}')`;
+        const CREATE_USER = `INSERT INTO utilisateurs(Prenom, Nom, Pseudo, MotDePasse, Email, Ville, ProvinceID) 
+        VALUES('${userData.Prenom}', '${userData.Nom}', '${userData.Pseudo}', '${userData.MotDePasse}', '${userData.Email}', '${userData.Ville}', '${userData.ProvinceID}')`;
         connection.query(CREATE_USER, (err, results) => {
           if (err) {
             return res.status(400).json({ error: "Autre erreur" });
@@ -82,7 +84,7 @@ app.post("/api/users/login", (req, res) => {
     Pseudo: req.body.Pseudo,
     MotDePasse: req.body.MotDePasse,
   };
-  const FIND_USER = `SELECT UtilisateurID, Prenom, Nom, Pseudo, MotDePasse, Email, Ville,  DATE_FORMAT(JourCreation, '%d/%m/%Y') AS JourCreation FROM utilisateurs WHERE Pseudo ='${userData.Pseudo}'`;
+  const FIND_USER = `SELECT UtilisateurID, Prenom, Nom, Pseudo, MotDePasse, Email, Ville, ProvinceID, DATE_FORMAT(JourCreation, '%d/%m/%Y') AS JourCreation FROM utilisateurs WHERE Pseudo ='${userData.Pseudo}'`;
   connection.query(FIND_USER, (err, rows, fields) => {
     if (err) {
       return res.send(err);
@@ -98,6 +100,7 @@ app.post("/api/users/login", (req, res) => {
           MotDePasse: rows[0].MotDePasse,
           Email: rows[0].Email,
           Ville: rows[0].Ville,
+          ProvinceID: rows[0].ProvinceID,
           JourCreation: rows[0].JourCreation,
         };
         let token = jwt.sign(utilisateurs, process.env.SECRET_KEY, {
@@ -441,6 +444,34 @@ app.get("/api/denreesMagasin/:id", (req, res) => {
     } else {
       return res.json({
         data: results,
+      });
+    }
+  });
+});
+
+/*****************provinces*******************/
+app.get("/api/provinces", (req, res) => {
+  const SELECT_PROVINCES_QUERY = `SELECT * FROM provinces`;
+  connection.query(SELECT_PROVINCES_QUERY, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.json({
+        data: results,
+      });
+    }
+  });
+});
+
+app.get("/api/provinceNom/:id", (req, res) => {
+  const ProvinceID = req.params.id;
+  const SELECT_PROVINCE_NOM_QUERY = `SELECT ProvinceNom FROM provinces WHERE ProvinceID=${ProvinceID}`;
+  connection.query(SELECT_PROVINCE_NOM_QUERY, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.json({
+        data: results[0],
       });
     }
   });

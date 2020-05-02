@@ -13,12 +13,22 @@ class Profile extends Component {
       Email: "",
       Pseudo: "",
       Ville: "",
+      ProvinceID: "",
+      ProvinceNom: "",
       JourCreation: "",
       Annonces: [],
       Types: [],
       Denrees: [],
       errors: {},
     };
+  }
+  getProvinceName(id) {
+    fetch(`/api/provinceNom/${id}`)
+      .then((res) => res.json())
+      .then((res) => this.setState({ ProvinceNom: res.data.ProvinceNom }))
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   getAnnoncesUser(user) {
@@ -58,9 +68,11 @@ class Profile extends Component {
       Email: decoded.Email,
       Pseudo: decoded.Pseudo,
       Ville: decoded.Ville,
+      ProvinceID: decoded.ProvinceID,
       JourCreation: decoded.JourCreation,
     });
     setTimeout(() => {
+      this.getProvinceName(this.state.ProvinceID);
       this.getAnnoncesUser(this.state.UtilisateurID);
       this.getUserTypes(this.state.UtilisateurID);
       this.getUserDenrees(this.state.UtilisateurID);
@@ -91,6 +103,10 @@ class Profile extends Component {
               <tr>
                 <td>Ville</td>
                 <td>{this.state.Ville}</td>
+              </tr>
+              <tr>
+                <td>Province</td>
+                <td>{this.state.ProvinceNom}</td>
               </tr>
               <tr>
                 <td>Compte créé le </td>
