@@ -38,7 +38,7 @@ class Register extends Component {
 
     register(newUser)
       .then((res) => {
-        this.props.history.push(`/profile`);
+        this.props.history.push(`/choicetd`);
       })
       .catch((error) => {
         if (error.response.status === 401) {

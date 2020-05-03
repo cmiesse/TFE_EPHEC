@@ -29,14 +29,43 @@ class Landing extends Component {
       <div className="container">
         <div className="jumbotron mt-2">
           <h1>Page d'accueil</h1>
-          <Link to={"/annoncesCodePostal"}>Recherche par code postal</Link>
-          <br />
-          <Link to={"/annoncesVille"}>Recherche par ville</Link>
-          <br />
-          <Link to={"/annoncesProvince"}>Recherche par province</Link>
-          <br />
-          <Link to={"/annoncesMagasin"}>Recherche par magasin</Link>
-          <br />
+          <div className="AnnoncesRecherche">
+            <Link to={"/annoncesCodePostal"}>
+              <button
+                type="button"
+                className="btn btn-lg btn-primary btn-block"
+              >
+                Recherche d'annonces par code postal
+              </button>
+            </Link>
+            <br />
+            <Link to={"/annoncesVille"}>
+              <button
+                type="button"
+                className="btn btn-lg btn-primary btn-block"
+              >
+                Recherche d'annonces par ville
+              </button>
+            </Link>
+            <br />
+            <Link to={"/annoncesProvince"}>
+              <button
+                type="button"
+                className="btn btn-lg btn-primary btn-block"
+              >
+                Recherche d'annonces par province
+              </button>
+            </Link>
+            <br />
+            <Link to={"/annoncesMagasin"}>
+              <button
+                type="button"
+                className="btn btn-lg btn-primary btn-block"
+              >
+                Recherche d'annonces par magasin
+              </button>
+            </Link>
+          </div>
         </div>
       </div>
     );

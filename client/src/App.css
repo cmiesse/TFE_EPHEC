@@ -33,9 +33,19 @@ select {
 }
 
 input[type="text"],
+input[type="number"],
 input[type="email"],
 input[type="password"] {
   text-align: center;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+.AnnoncesRecherche {
+  margin-left: 25%;
+  margin-right: 25%;
 }
 
 .flexBox {
