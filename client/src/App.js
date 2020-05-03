@@ -9,6 +9,10 @@ import Profile from "./components/Profile";
 import NewAnnonce from "./components/NewAnnonce";
 import ChoixTypeDenree from "./components/ChoixTypeDenree";
 import AnnonceDetails from "./components/AnnonceDetails";
+import AnnoncesCodePostal from "./components/AnnoncesCodePostal";
+import AnnoncesVille from "./components/AnnoncesVille";
+import AnnoncesProvince from "./components/AnnoncesProvince";
+import AnnoncesMagasin from "./components/AnnoncesMagasin";
 
 class App extends Component {
   render() {
@@ -28,6 +32,18 @@ class App extends Component {
               path="/annonce/:AnnonceID"
               component={AnnonceDetails}
             />
+            <Route
+              exact
+              path="/annoncesCodePostal"
+              component={AnnoncesCodePostal}
+            />
+            <Route exact path="/annoncesVille" component={AnnoncesVille} />
+            <Route
+              exact
+              path="/annoncesProvince"
+              component={AnnoncesProvince}
+            />
+            <Route exact path="/annoncesMagasin" component={AnnoncesMagasin} />
           </div>
         </div>
       </Router>
