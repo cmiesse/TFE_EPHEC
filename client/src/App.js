@@ -13,6 +13,7 @@ import AnnoncesCodePostal from "./components/AnnoncesCodePostal";
 import AnnoncesVille from "./components/AnnoncesVille";
 import AnnoncesProvince from "./components/AnnoncesProvince";
 import AnnoncesMagasin from "./components/AnnoncesMagasin";
+import Admin from "./components/Admin";
 
 class App extends Component {
   render() {
@@ -44,6 +45,7 @@ class App extends Component {
               component={AnnoncesProvince}
             />
             <Route exact path="/annoncesMagasin" component={AnnoncesMagasin} />
+            <Route exact path="/admin" component={Admin} />
           </div>
         </div>
       </Router>
