@@ -84,7 +84,7 @@ app.post("/api/users/login", (req, res) => {
     Pseudo: req.body.Pseudo,
     MotDePasse: req.body.MotDePasse,
   };
-  const FIND_USER = `SELECT UtilisateurID, Prenom, Nom, Pseudo, MotDePasse, Email, VilleID, ProvinceID, DATE_FORMAT(JourCreation, '%d/%m/%Y') AS JourCreation FROM utilisateurs WHERE Pseudo ='${userData.Pseudo}'`;
+  const FIND_USER = `SELECT UtilisateurID, Prenom, Nom, Pseudo, MotDePasse, Email, VilleID, ProvinceID, DATE_FORMAT(JourCreation, '%d/%m/%Y') AS JourCreation, Admin FROM utilisateurs WHERE Pseudo ='${userData.Pseudo}'`;
   connection.query(FIND_USER, (err, rows, fields) => {
     if (err) {
       return res.send(err);
@@ -102,6 +102,7 @@ app.post("/api/users/login", (req, res) => {
           VilleID: rows[0].VilleID,
           ProvinceID: rows[0].ProvinceID,
           JourCreation: rows[0].JourCreation,
+          Admin: rows[0].Admin,
         };
         let token = jwt.sign(utilisateurs, process.env.SECRET_KEY, {
           expiresIn: 1440,
