@@ -14,6 +14,7 @@ import AnnoncesVille from "./components/AnnoncesVille";
 import AnnoncesProvince from "./components/AnnoncesProvince";
 import AnnoncesMagasin from "./components/AnnoncesMagasin";
 import Admin from "./components/Admin";
+import PrivateRoute from "./Utils/PrivateRoute";
 
 class App extends Component {
   render() {
@@ -25,9 +26,9 @@ class App extends Component {
           <div className="container">
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
-            <Route exact path="/profile" component={Profile} />
-            <Route exact path="/choicetd" component={ChoixTypeDenree} />
-            <Route exact path="/newAnnonce" component={NewAnnonce} />
+            <PrivateRoute exact path="/profile" component={Profile} />
+            <PrivateRoute exact path="/choicetd" component={ChoixTypeDenree} />
+            <PrivateRoute exact path="/newAnnonce" component={NewAnnonce} />
             <Route
               exact
               path="/annonce/:AnnonceID"
@@ -45,7 +46,7 @@ class App extends Component {
               component={AnnoncesProvince}
             />
             <Route exact path="/annoncesMagasin" component={AnnoncesMagasin} />
-            <Route exact path="/admin" component={Admin} />
+            <PrivateRoute exact path="/admin" component={Admin} />
           </div>
         </div>
       </Router>

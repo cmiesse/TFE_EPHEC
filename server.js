@@ -142,7 +142,8 @@ app.get("/api/users/profile", (req, res) => {
 
 // Obtenir toutes les annonces
 app.get("/api/annonces", (req, res) => {
-  const SELECT_ALL_ANNONCES_QUERY = "SELECT * from annonces";
+  const SELECT_ALL_ANNONCES_QUERY =
+    "SELECT a.AnnonceID, a.Titre, d.DenreeNom, m.MagasinNom, a.Quantite, u.Pseudo, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS DateCreation from annonces a, denrees d, utilisateurs u, magasins m WHERE u.UtilisateurID=a.UtilisateurID AND d.DenreeID=a.DenreeID AND m.MagasinID=a.MagasinID";
   connection.query(SELECT_ALL_ANNONCES_QUERY, (err, results) => {
     if (err) {
       return res.send(err);
@@ -157,7 +158,7 @@ app.get("/api/annonces", (req, res) => {
 // Obtenir l'annonce avec l'id donné
 app.get("/api/annonces/:id", (req, res) => {
   const AnnonceID = req.params.id;
-  const SELECT_ANNONCE_BY_ID_QUERY = `SELECT a.Titre, a.Quantite, d.DenreeNom, m.MagasinNom, DATE_FORMAT(a.DATECreation, '%d/%m/%Y') AS JourCreation from annonces a, denrees d, magasins m WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND AnnonceID=${AnnonceID}`;
+  const SELECT_ANNONCE_BY_ID_QUERY = `SELECT a.Titre, a.Quantite, d.DenreeNom, m.MagasinNom, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation from annonces a, denrees d, magasins m WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND AnnonceID=${AnnonceID}`;
   connection.query(SELECT_ANNONCE_BY_ID_QUERY, (err, results) => {
     if (err) {
       return res.send(err);
@@ -169,10 +170,23 @@ app.get("/api/annonces/:id", (req, res) => {
   });
 });
 
+// Supprimer l'annonce avec l'id donné
+app.delete("/api/annonces/:id", (req, res) => {
+  const AnnonceID = req.params.id;
+  const DELETE_ANNONCE_QUERY = `DELETE FROM annonces WHERE AnnonceID=${AnnonceID}`;
+  connection.query(DELETE_ANNONCE_QUERY, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.send("Successfully deleted annonce");
+    }
+  });
+});
+
 // Obtenir les annonces d'un utilisateur donné
 app.get("/api/annoncesUser/:id", (req, res) => {
   const UtilisateurID = req.params.id;
-  const SELECT_ANNONCE_BY_ID_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DATECreation, '%d/%m/%Y') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m WHERE a.DenreeID = d.DenreeID AND a.MagasinID=m.MagasinID AND UtilisateurID=${UtilisateurID}`;
+  const SELECT_ANNONCE_BY_ID_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m WHERE a.DenreeID = d.DenreeID AND a.MagasinID=m.MagasinID AND UtilisateurID=${UtilisateurID}`;
   connection.query(SELECT_ANNONCE_BY_ID_QUERY, (err, results) => {
     if (err) {
       return res.send(err);
@@ -185,7 +199,7 @@ app.get("/api/annoncesUser/:id", (req, res) => {
 });
 
 app.get("/api/annoncesLanding", (req, res) => {
-  const SELECT_ANNONCE_LANDING_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DATECreation, '%d/%m/%Y') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m WHERE a.DenreeID = d.DenreeID AND a.MagasinID=m.MagasinID`;
+  const SELECT_ANNONCE_LANDING_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m WHERE a.DenreeID = d.DenreeID AND a.MagasinID=m.MagasinID`;
   connection.query(SELECT_ANNONCE_LANDING_QUERY, (err, results) => {
     if (err) {
       return res.send(err);
@@ -199,7 +213,7 @@ app.get("/api/annoncesLanding", (req, res) => {
 
 app.get("/api/annoncesProvince/:id", (req, res) => {
   const ProvinceID = req.params.id;
-  const SELECT_ANNONCES_BY_PROVINCE_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DATECreation, '%d/%m/%Y') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND m.ProvinceID=${ProvinceID}`;
+  const SELECT_ANNONCES_BY_PROVINCE_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND m.ProvinceID=${ProvinceID}`;
   connection.query(SELECT_ANNONCES_BY_PROVINCE_QUERY, (err, results) => {
     if (err) {
       return res.send(err);
@@ -213,7 +227,7 @@ app.get("/api/annoncesProvince/:id", (req, res) => {
 
 app.get("/api/annoncesVille/:nom", (req, res) => {
   const VilleNom = req.params.nom;
-  const SELECT_ANNONCES_BY_VILLE_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DATECreation, '%d/%m/%Y') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m, villes v WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND v.VilleID=m.VilleID AND v.VilleNom='${VilleNom}'`;
+  const SELECT_ANNONCES_BY_VILLE_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m, villes v WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND v.VilleID=m.VilleID AND v.VilleNom='${VilleNom}'`;
   connection.query(SELECT_ANNONCES_BY_VILLE_QUERY, (err, results) => {
     if (err) {
       return res.send(err);
@@ -227,7 +241,7 @@ app.get("/api/annoncesVille/:nom", (req, res) => {
 
 app.get("/api/annoncesCodePostal/:id", (req, res) => {
   const CodePostal = req.params.id;
-  const SELECT_ANNONCES_BY_CODEPOSTAL_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DATECreation, '%d/%m/%Y') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m, villes v WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND v.VilleID=m.VilleID AND v.CodePostal=${CodePostal}`;
+  const SELECT_ANNONCES_BY_CODEPOSTAL_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m, villes v WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND v.VilleID=m.VilleID AND v.CodePostal=${CodePostal}`;
   connection.query(SELECT_ANNONCES_BY_CODEPOSTAL_QUERY, (err, results) => {
     if (err) {
       return res.send(err);
@@ -241,7 +255,7 @@ app.get("/api/annoncesCodePostal/:id", (req, res) => {
 
 app.get("/api/annoncesMagasin/:id", (req, res) => {
   const MagasinID = req.params.id;
-  const SELECT_ANNONCES_BY_MAGASIN_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DATECreation, '%d/%m/%Y') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND a.MagasinID=${MagasinID}`;
+  const SELECT_ANNONCES_BY_MAGASIN_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND a.MagasinID=${MagasinID}`;
   connection.query(SELECT_ANNONCES_BY_MAGASIN_QUERY, (err, results) => {
     if (err) {
       return res.send(err);
