@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import jwt_decode from "jwt-decode";
 import Select from "react-select";
+import { Helmet } from "react-helmet";
 
 class ChoixTypeDenree extends Component {
   constructor() {
@@ -64,6 +65,9 @@ class ChoixTypeDenree extends Component {
         <div className="jumbotron mt-2">
           <div className="row">
             <div className="col-md-6 mt-2 mx-auto">
+              <Helmet>
+                <title>Choix de types et denrées</title>
+              </Helmet>
               <form noValidate onSubmit={this.onSubmit}>
                 <p>Choisissez vos types et denrées, {this.state.Pseudo}</p>
                 <div className="form-group">

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "../App.css";
+import { Helmet } from "react-helmet";
 
 export default class AnnoncesCodePostal extends Component {
   constructor() {
@@ -33,6 +34,9 @@ export default class AnnoncesCodePostal extends Component {
         <div className="jumbotron mt-2">
           <div className="row">
             <div className="col-md-6 mt-3 mx-auto">
+              <Helmet>
+                <title>Recherche d'annonces par code postal</title>
+              </Helmet>
               <h1 className="h3 mb-3 font-weight-normal">
                 Recherche par code postal
               </h1>

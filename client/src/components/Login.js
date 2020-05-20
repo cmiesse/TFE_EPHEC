@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { login } from "./UserFunctions";
+import { Helmet } from "react-helmet";
 
 class Login extends Component {
   constructor() {
@@ -49,6 +50,9 @@ class Login extends Component {
         <div className="jumbotron mt-2">
           <div className="row">
             <div className="col-md-6 mt-3 mx-auto">
+              <Helmet>
+                <title>Connexion</title>
+              </Helmet>
               <form noValidate onSubmit={this.onSubmit}>
                 <h1 className="h3 mb-3 font-weight-normal">
                   Veuillez vous connecter

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import jwt_decode from "jwt-decode";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet";
 import "./Profile.css";
 
 class Profile extends Component {
@@ -95,6 +96,9 @@ class Profile extends Component {
       <div className="container">
         <div className="jumbotron mt-4">
           <div className="col-sm-8 mx-auto">
+            <Helmet>
+              <title>Profil</title>
+            </Helmet>
             <h1 className="text-center">Profil de {this.state.Pseudo}</h1>
           </div>
           <table className="table col-md-6 mx-auto">

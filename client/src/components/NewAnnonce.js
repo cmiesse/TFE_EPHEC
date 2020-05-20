@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { annonces } from "./AnnonceFunctions";
 import jwt_decode from "jwt-decode";
+import { Helmet } from "react-helmet";
 import "../App.css";
 
 class NewAnnonce extends Component {
@@ -80,6 +81,9 @@ class NewAnnonce extends Component {
         <div className="jumbotron mt-2">
           <div className="row">
             <div className="col-md-6 mt-2 mx-auto">
+              <Helmet>
+                <title>Ajout d'annonce</title>
+              </Helmet>
               <form noValidate onSubmit={this.onSubmit}>
                 <h1 className="h3 mb-3 font-weight-normal">Ajout d'annonce</h1>
                 <div className="form-group">

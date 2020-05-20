@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "../App.css";
+import { Helmet } from "react-helmet";
 
 class AnnonceDetails extends Component {
   constructor() {
@@ -23,6 +24,9 @@ class AnnonceDetails extends Component {
     return (
       <div className="container">
         <div className="jumbotron mt-2">
+          <Helmet>
+            <title>Détails de l'annonce</title>
+          </Helmet>
           {this.state.Annonce.map((annonce) => (
             <div key="Annonce">
               <h1>{annonce.Titre}</h1>

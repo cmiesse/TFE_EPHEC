@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import jwt_decode from "jwt-decode";
+import { Helmet } from "react-helmet";
 import "../App.css";
 
 class Landing extends Component {
@@ -28,6 +29,9 @@ class Landing extends Component {
     return (
       <div className="container">
         <div className="jumbotron mt-2">
+          <Helmet>
+            <title>Accueil</title>
+          </Helmet>
           <h1>Page d'accueil</h1>
           <div className="AnnoncesRecherche">
             <Link to={"/annoncesCodePostal"}>
