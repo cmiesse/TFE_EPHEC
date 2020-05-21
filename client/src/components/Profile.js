@@ -163,7 +163,18 @@ class Profile extends Component {
               {this.state.Types.map((type) => (
                 <tr key={type.TypeNom}>
                   <td>{type.TypeNom}</td>
-                  <td>X</td>
+                  <td>
+                    <button
+                      onClick={() =>
+                        this.deleteUserType(
+                          this.state.UtilisateurID,
+                          type.TypeID
+                        )
+                      }
+                    >
+                      Supprimer type
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -179,7 +190,19 @@ class Profile extends Component {
               {this.state.Denrees.map((denree) => (
                 <tr key={denree.DenreeNom}>
                   <td>{denree.DenreeNom}</td>
-                  <td>X</td>
+                  <td>
+                    {" "}
+                    <button
+                      onClick={() =>
+                        this.deleteUserDenree(
+                          this.state.UtilisateurID,
+                          denree.DenreeID
+                        )
+                      }
+                    >
+                      Supprimer denree
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
