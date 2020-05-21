@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import jwt_decode from "jwt-decode";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import axios from "axios";
 import "./Profile.css";
 
 class Profile extends Component {
@@ -60,6 +61,14 @@ class Profile extends Component {
       });
   }
 
+  deleteUserType(user, type) {
+    axios.delete("/api/userTypes", {
+      User: user,
+      Type: type,
+    });
+    this.getUserTypes(user);
+  }
+
   getUserDenrees(user) {
     fetch(`/api/userDenrees/${user}`)
       .then((res) => res.json())
@@ -67,6 +76,14 @@ class Profile extends Component {
       .catch((error) => {
         console.log(error);
       });
+  }
+
+  deleteUserDenree(user, denree) {
+    axios.delete("/api/userDenrees", {
+      User: user,
+      Denree: denree,
+    });
+    this.getUserDenrees(user);
   }
 
   componentDidMount() {
@@ -101,31 +118,31 @@ class Profile extends Component {
             </Helmet>
             <h1 className="text-center">Profil de {this.state.Pseudo}</h1>
           </div>
-          <table className="table col-md-6 mx-auto">
+          <table className="table col-md-6 mx-auto no-border">
             <tbody>
-              <tr>
-                <td>Prénom</td>
-                <td>{this.state.Prenom}</td>
+              <tr className="no-border">
+                <td className="no-border">Prénom</td>
+                <td className="no-border">{this.state.Prenom}</td>
               </tr>
-              <tr>
-                <td>Nom</td>
-                <td>{this.state.Nom}</td>
+              <tr className="no-border">
+                <td className="no-border">Nom</td>
+                <td className="no-border">{this.state.Nom}</td>
               </tr>
-              <tr>
-                <td>Email</td>
-                <td>{this.state.Email}</td>
+              <tr className="no-border">
+                <td className="no-border">Email</td>
+                <td className="no-border">{this.state.Email}</td>
               </tr>
-              <tr>
-                <td>Ville</td>
-                <td>{this.state.VilleNom}</td>
+              <tr className="no-border">
+                <td className="no-border">Ville</td>
+                <td className="no-border">{this.state.VilleNom}</td>
               </tr>
-              <tr>
-                <td>Province</td>
-                <td>{this.state.ProvinceNom}</td>
+              <tr className="no-border">
+                <td className="no-border">Province</td>
+                <td className="no-border">{this.state.ProvinceNom}</td>
               </tr>
-              <tr>
-                <td>Compte créé le </td>
-                <td>{this.state.JourCreation}</td>
+              <tr className="no-border">
+                <td className="no-border">Compte créé le </td>
+                <td className="no-border">{this.state.JourCreation}</td>
               </tr>
             </tbody>
           </table>
@@ -134,29 +151,42 @@ class Profile extends Component {
             <button>Ajouter des préférences</button>
           </Link>
           <br />
-          <table className="table col-md-6 mx-auto">
+          <br />
+          <table className="table mx-auto">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Supprimer</th>
+              </tr>
+            </thead>
             <tbody>
+              {this.state.Types.map((type) => (
+                <tr key={type.TypeNom}>
+                  <td>{type.TypeNom}</td>
+                  <td>X</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <table className="table mx-auto">
+            <thead>
               <tr>
-                <td>Types</td>
-                <td>
-                  {this.state.Types.map((type) => (
-                    <li key={type.TypeNom}>{type.TypeNom}</li>
-                  ))}
-                </td>
+                <th>Denrée</th>
+                <th>Supprimer</th>
               </tr>
-              <tr>
-                <td>Denrées</td>
-                <td>
-                  {this.state.Denrees.map((denree) => (
-                    <li key={denree.DenreeNom}>{denree.DenreeNom}</li>
-                  ))}
-                </td>
-              </tr>
+            </thead>
+            <tbody>
+              {this.state.Denrees.map((denree) => (
+                <tr key={denree.DenreeNom}>
+                  <td>{denree.DenreeNom}</td>
+                  <td>X</td>
+                </tr>
+              ))}
             </tbody>
           </table>
 
           <h2 className="text-center">Mes annonces</h2>
-          <table align="center">
+          <table align="center" className="table mx-auto">
             <thead>
               <tr>
                 <th>Titre</th>

@@ -465,6 +465,21 @@ app.post("/api/userTypes", (req, res) => {
   });
 });
 
+app.delete("/api/userTypes", (req, res) => {
+  const UserTypeData = {
+    User: req.body.User,
+    Type: req.body.Type,
+  };
+  const DELETE_USER_TYPE_QUERY = `DELETE FROM utilisateurstypes WHERE UtilisateurID='${UserTypeData.User}' AND TypeID='${UserTypeData.Type}'`;
+  connection.query(DELETE_USER_TYPE_QUERY, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.send("Type supprimé pour l'utilisateur");
+    }
+  });
+});
+
 /***********UtilisateursDenrees********* */
 // Obtenir tous les liens utilisateurs-denrées
 app.get("/api/userDenrees", (req, res) => {
@@ -507,6 +522,22 @@ app.post("/api/userDenrees", (req, res) => {
       return res.send(err);
     } else {
       return res.send("Denrée ajoutée pour l'utilisateur");
+    }
+  });
+});
+
+// Supprimer une denrée pour l'utilisateur donné
+app.delete("/api/userDenrees", (req, res) => {
+  const UserTypeData = {
+    User: req.body.User,
+    Denree: req.body.Denree,
+  };
+  const DELETE_USER_DENREE_QUERY = `DELETE FROM utilisateursdenrees WHERE UtilisateurID='${UserTypeData.User}' AND DenreeID='${UserTypeData.Denree}'`;
+  connection.query(DELETE_USER_DENREE_QUERY, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.send("Denrée supprimée pour l'utilisateur");
     }
   });
 });

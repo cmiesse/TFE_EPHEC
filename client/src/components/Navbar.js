@@ -22,9 +22,6 @@ class Landing extends Component {
       const decoded = jwt_decode(localStorage.usertoken);
       this.setState({ Admin: decoded.Admin });
     }
-    setTimeout(() => {
-      console.log(this.state.Admin);
-    }, 1);
   }
 
   render() {
