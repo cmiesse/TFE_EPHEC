@@ -53,6 +53,11 @@ a:hover {
   justify-content: space-around;
 }
 
+.divideByThree {
+  column-count: 3;
+  column-gap: 10px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

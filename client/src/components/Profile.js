@@ -133,6 +133,7 @@ class Profile extends Component {
           <Link to="/choicetd">
             <button>Ajouter des préférences</button>
           </Link>
+          <br />
           <table className="table col-md-6 mx-auto">
             <tbody>
               <tr>

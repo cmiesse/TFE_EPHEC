@@ -1,62 +1,64 @@
 import React, { Component } from "react";
 import jwt_decode from "jwt-decode";
-import Select from "react-select";
+import { getToken } from "../Utils/Common";
 import { Helmet } from "react-helmet";
 
 class ChoixTypeDenree extends Component {
   constructor() {
     super();
+
     this.state = {
       UtilisateurID: "",
-      Pseudo: "",
-      Types: [],
-      TypesSelect: [],
-      Denrees: [],
-      DenreesSelect: [],
+      Types: [
+        { TypeID: 1, TypeNom: "Hygiène" },
+        { TypeID: 2, TypeNom: "Viandes-Poissons-Oeufs" },
+        { TypeID: 3, TypeNom: "Fruits & légumes" },
+        { TypeID: 4, TypeNom: "Conserves" },
+        { TypeID: 5, TypeNom: "Produits surgelés" },
+        { TypeID: 6, TypeNom: "Lait" },
+        { TypeID: 7, TypeNom: "Pain" },
+        { TypeID: 8, TypeNom: "Boissons non alcoolisées" },
+        { TypeID: 9, TypeNom: "Alcools" },
+      ],
+      userTypes: [],
+      valuesT: [],
     };
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
   }
 
-  getTypes() {
-    fetch(`/api/typesSelect`)
-      .then((res) => res.json())
-      .then((res) => this.setState({ Types: res.data }))
-      .catch((err) => console.log(err));
-  }
+  handleChange1 = (e) => {
+    let options = e.target.options;
+    let selectedOptions = [];
 
-  addTypes() {}
+    for (let i = 0; i < options.length; i++) {
+      if (options[i].selected) {
+        selectedOptions.push(options[i].value);
+      }
+    }
 
-  getDenrees() {
-    fetch(`/api/denreesSelect`)
-      .then((res) => res.json())
-      .then((res) => this.setState({ Denrees: res.data }))
-      .catch((err) => console.log(err));
-  }
+    this.setState({ valuesT: selectedOptions });
+  };
 
-  onChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
-  }
-  onSubmit(e) {
+  handleSubmit = (e) => {
     e.preventDefault();
-    /*
-    const myChoices = {
-      MyTypes: this.state.TypesSelect,
-      myDenrees: this.state.DenreesSelect,
-    };
-    */
-    this.props.history.push(`/profile`);
+    console.log(this.state.valuesT);
+  };
+
+  getUserTypes(user) {
+    fetch(`/api/userTypes/${user}`)
+      .then((res) => res.json())
+      .then((res) => this.setState({ userTypes: res.data }))
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   componentDidMount() {
-    const token = localStorage.usertoken;
-    const decoded = jwt_decode(token);
+    const UtilisateurID = jwt_decode(getToken()).UtilisateurID;
     this.setState({
-      UtilisateurID: decoded.UtilisateurID,
-      Pseudo: decoded.Pseudo,
+      UtilisateurID: UtilisateurID,
     });
-    this.getTypes();
-    this.getDenrees();
+    console.log(this.state.UtilisateurID);
+    this.getUserTypes(this.state.UtilisateurID);
   }
 
   render() {
@@ -64,44 +66,29 @@ class ChoixTypeDenree extends Component {
       <div className="container">
         <div className="jumbotron mt-2">
           <div className="row">
-            <div className="col-md-6 mt-2 mx-auto">
+            <div className="mx-auto">
               <Helmet>
                 <title>Choix de types et denrées</title>
               </Helmet>
-              <form noValidate onSubmit={this.onSubmit}>
-                <p>Choisissez vos types et denrées, {this.state.Pseudo}</p>
-                <div className="form-group">
-                  <label htmlFor="TypesSelect">Types</label>
-                  <Select
-                    className="mb-3"
-                    options={this.state.Types}
-                    name="TypeSelect"
-                    id="TypesSelect"
-                    onChange={this.state.TypesSelect}
-                    isMulti
-                    placeholder="Choissez les types de denrées qui vous intéressent"
-                    noOptionsMessage={() => "Pas d'autres types"}
-                  ></Select>
+              <form onSubmit={this.handleSubmit}>
+                <div>
+                  <h2>Types</h2>
+                  <select
+                    multiple={true}
+                    value={this.state.valuesT}
+                    onChange={this.handleChange1}
+                  >
+                    {this.state.Types.map((type) => (
+                      <option value={type.TypeID} key={type.TypeNom}>
+                        {type.TypeNom}
+                      </option>
+                    ))}
+                  </select>
                 </div>
-                <div className="form-group">
-                  <label htmlFor="DenreesSelect">Denrées</label>
-                  <Select
-                    className="mb-3"
-                    options={this.state.Denrees}
-                    name="DenreesSelect"
-                    id="DenreesSelect"
-                    onChange={this.state.DenreesSelect}
-                    isMulti
-                    placeholder="Choissez les denrées qui vous intéressent"
-                    noOptionsMessage={() => "Pas d'autres denrées"}
-                  ></Select>
+                <div>
+                  <h2>Denrées</h2>
                 </div>
-                <button
-                  type="submit"
-                  className="btn btn-lg btn-primary btn-block"
-                >
-                  Enregistrer vos choix
-                </button>
+                <button type="submit">Envoyer</button>
               </form>
             </div>
           </div>
