@@ -3,6 +3,7 @@ import jwt_decode from "jwt-decode";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import axios from "axios";
+import { getToken, isAdmin } from "../Utils/Common";
 import "./Profile.css";
 
 class Profile extends Component {
@@ -109,6 +110,11 @@ class Profile extends Component {
   }
 
   render() {
+    const pageAdmin = (
+      <Link to="/admin">
+        <button className="btn btn-lg btn-primary">Accès page admin</button>
+      </Link>
+    );
     return (
       <div className="container">
         <div className="jumbotron mt-4">
@@ -146,9 +152,12 @@ class Profile extends Component {
               </tr>
             </tbody>
           </table>
+          {isAdmin(getToken()) ? pageAdmin : ""}
           <h2 className="text-center">Mes préférences</h2>
           <Link to="/choicetd">
-            <button>Ajouter des préférences</button>
+            <button className="btn btn-lg btn-primary">
+              Ajouter des préférences
+            </button>
           </Link>
           <br />
           <br />

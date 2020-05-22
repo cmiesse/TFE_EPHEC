@@ -15,6 +15,7 @@ import AnnoncesProvince from "./components/AnnoncesProvince";
 import AnnoncesMagasin from "./components/AnnoncesMagasin";
 import Admin from "./components/Admin";
 import PrivateRoute from "./Utils/PrivateRoute";
+import AdminRoute from "./Utils/AdminRoute";
 
 class App extends Component {
   render() {
@@ -46,7 +47,7 @@ class App extends Component {
               component={AnnoncesProvince}
             />
             <Route exact path="/annoncesMagasin" component={AnnoncesMagasin} />
-            <PrivateRoute exact path="/admin" component={Admin} />
+            <AdminRoute exact path="/admin" component={Admin} />
           </div>
         </div>
       </Router>
