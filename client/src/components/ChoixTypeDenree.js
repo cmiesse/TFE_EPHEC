@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import jwt_decode from "jwt-decode";
-import { getToken } from "../Utils/Common";
+import { getToken, isAdmin } from "../Utils/Common";
 import { Helmet } from "react-helmet";
 import { userTypes } from "./UserTypesFunctions";
 import { userDenrees } from "./UserDenreesFunctions";
@@ -134,6 +134,7 @@ class ChoixTypeDenree extends Component {
     this.setState({
       UtilisateurID: UtilisateurID,
     });
+    console.log(isAdmin(getToken()));
     this.getTypes();
     this.getUserTypes(this.state.UtilisateurID);
     this.getDenrees();
@@ -181,7 +182,12 @@ class ChoixTypeDenree extends Component {
                   </select>
                 </div>
                 <br />
-                <button type="submit">Envoyer</button>
+                <button
+                  className="btn btn-lg btn-primary btn-block"
+                  type="submit"
+                >
+                  Envoyer
+                </button>
               </form>
             </div>
           </div>
