@@ -198,19 +198,6 @@ app.get("/api/annoncesUser/:id", (req, res) => {
   });
 });
 
-app.get("/api/annoncesLanding", (req, res) => {
-  const SELECT_ANNONCE_LANDING_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m WHERE a.DenreeID = d.DenreeID AND a.MagasinID=m.MagasinID`;
-  connection.query(SELECT_ANNONCE_LANDING_QUERY, (err, results) => {
-    if (err) {
-      return res.send(err);
-    } else {
-      return res.json({
-        data: results,
-      });
-    }
-  });
-});
-
 app.get("/api/annoncesProvince/:id", (req, res) => {
   const ProvinceID = req.params.id;
   const SELECT_ANNONCES_BY_PROVINCE_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND m.ProvinceID=${ProvinceID}`;

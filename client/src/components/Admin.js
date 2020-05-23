@@ -9,12 +9,12 @@ class Admin extends Component {
       Annonces: [],
     };
   }
-  getAnnonces() {
-    fetch(`/api/annonces`)
+  getAnnonces = (_) => {
+    fetch("/api/annonces")
       .then((res) => res.json())
       .then((res) => this.setState({ Annonces: res.data }))
       .catch((err) => console.log(err));
-  }
+  };
 
   deleteAnnonce = (AnnonceID) => {
     fetch(`/api/annonces/${AnnonceID.AnnonceID}`, {

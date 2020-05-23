@@ -26,66 +26,101 @@ class Profile extends Component {
       errors: {},
     };
   }
-  getVilleNom(id) {
+  getVilleNom = (id) => {
     fetch(`/api/villeNom/${id}`)
       .then((res) => res.json())
       .then((res) => this.setState({ VilleNom: res.data.VilleNom }))
       .catch((error) => {
         console.log(error);
       });
-  }
+  };
 
-  getProvinceName(id) {
+  getProvinceName = (id) => {
     fetch(`/api/provinceNom/${id}`)
       .then((res) => res.json())
       .then((res) => this.setState({ ProvinceNom: res.data.ProvinceNom }))
       .catch((error) => {
         console.log(error);
       });
-  }
+  };
 
-  getAnnoncesUser(user) {
+  getAnnoncesUser = (user) => {
     fetch(`/api/annoncesUser/${user}`)
       .then((res) => res.json())
       .then((res) => this.setState({ Annonces: res.data }))
       .catch((error) => {
         console.log(error);
       });
-  }
+  };
 
-  getUserTypes(user) {
+  getUserTypes = (user) => {
     fetch(`/api/userTypes/${user}`)
       .then((res) => res.json())
       .then((res) => this.setState({ Types: res.data }))
       .catch((error) => {
         console.log(error);
       });
-  }
+  };
 
-  deleteUserType(user, type) {
-    axios.delete("/api/userTypes", {
-      User: user,
-      Type: type,
-    });
-    this.getUserTypes(user);
-  }
+  deleteUserType = (user, type) => {
+    axios
+      .delete("/api/userTypes", {
+        User: user,
+        Type: type,
+      })
+      .then(this.getUserTypes(user));
+  };
 
-  getUserDenrees(user) {
+  getUserDenrees = (user) => {
     fetch(`/api/userDenrees/${user}`)
       .then((res) => res.json())
       .then((res) => this.setState({ Denrees: res.data }))
       .catch((error) => {
         console.log(error);
       });
-  }
+  };
 
-  deleteUserDenree(user, denree) {
+  deleteUserDenree = (user, denree) => {
     axios.delete("/api/userDenrees", {
       User: user,
       Denree: denree,
     });
     this.getUserDenrees(user);
-  }
+  };
+
+  renderUserTypes = ({ TypeID, TypeNom }) => (
+    <tr key={TypeID}>
+      <td>{TypeNom}</td>
+      <td>
+        <button
+          onClick={() => this.deleteUserType(this.state.UtilisateurID, TypeID)}
+        >
+          Supprimer type
+        </button>
+      </td>
+    </tr>
+  );
+
+  renderUserDenrees = ({ DenreeID, DenreeNom }) => (
+    <tr key={DenreeID}>
+      <td>{DenreeNom}</td>
+      <td>
+        <button
+          onClick={() =>
+            /*console.log(
+              "Bouton pour supprimer la denrée " +
+                { DenreeID } +
+                " de l'utilisateur " +
+                this.state.UtilisateurID
+            )*/
+            this.deleteUserDenree(this.state.UtilisateurID, DenreeID)
+          }
+        >
+          Supprimer type
+        </button>
+      </td>
+    </tr>
+  );
 
   componentDidMount() {
     const token = localStorage.usertoken;
@@ -168,25 +203,7 @@ class Profile extends Component {
                 <th>Supprimer</th>
               </tr>
             </thead>
-            <tbody>
-              {this.state.Types.map((type) => (
-                <tr key={type.TypeNom}>
-                  <td>{type.TypeNom}</td>
-                  <td>
-                    <button
-                      onClick={() =>
-                        this.deleteUserType(
-                          this.state.UtilisateurID,
-                          type.TypeID
-                        )
-                      }
-                    >
-                      Supprimer type
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
+            <tbody>{this.state.Types.map(this.renderUserTypes)}</tbody>
           </table>
           <table className="table mx-auto">
             <thead>

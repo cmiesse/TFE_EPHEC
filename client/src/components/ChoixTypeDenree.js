@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import jwt_decode from "jwt-decode";
-import { getToken, isAdmin } from "../Utils/Common";
+import { getToken } from "../Utils/Common";
 import { Helmet } from "react-helmet";
 import { userTypes } from "./UserTypesFunctions";
 import { userDenrees } from "./UserDenreesFunctions";
@@ -8,17 +8,6 @@ import { userDenrees } from "./UserDenreesFunctions";
 class ChoixTypeDenree extends Component {
   constructor() {
     super();
-    /*
-      { TypeID: 1, TypeNom: "Hygiène" },
-        { TypeID: 2, TypeNom: "Viandes-Poissons-Oeufs" },
-        { TypeID: 3, TypeNom: "Fruits & légumes" },
-        { TypeID: 4, TypeNom: "Conserves" },
-        { TypeID: 5, TypeNom: "Produits surgelés" },
-        { TypeID: 6, TypeNom: "Lait" },
-        { TypeID: 7, TypeNom: "Pain" },
-        { TypeID: 8, TypeNom: "Boissons non alcoolisées" },
-        { TypeID: 9, TypeNom: "Alcools" },
-      */
     this.state = {
       UtilisateurID: "",
       Types: [],
@@ -94,7 +83,7 @@ class ChoixTypeDenree extends Component {
   handleSubmit = (e) => {
     e.preventDefault();
     if (this.state.valuesT.length !== 0) {
-      this.state.valuesT.map((value) => {
+      this.state.valuesT.forEach((value) => {
         const usertype = {
           User: this.state.UtilisateurID,
           Type: value,
@@ -110,7 +99,7 @@ class ChoixTypeDenree extends Component {
       });
     }
     if (this.state.valuesD.length !== 0) {
-      this.state.valuesD.map((value) => {
+      this.state.valuesD.forEach((value) => {
         const userdenree = {
           User: this.state.UtilisateurID,
           Denree: value,
@@ -130,11 +119,9 @@ class ChoixTypeDenree extends Component {
 
   componentDidMount() {
     const UtilisateurID = jwt_decode(getToken()).UtilisateurID;
-    console.log("Utilisateur " + UtilisateurID);
     this.setState({
       UtilisateurID: UtilisateurID,
     });
-    console.log(isAdmin(getToken()));
     this.getTypes();
     this.getUserTypes(this.state.UtilisateurID);
     this.getDenrees();
