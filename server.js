@@ -276,6 +276,53 @@ app.get("/api/annoncesVille/:nom", (req, res) => {
   });
 });
 
+app.get("/api/annoncesVille/:nom/Type/:TypeID", (req, res) => {
+  const VilleNom = req.params.nom;
+  const TypeID = req.params.TypeID;
+  const SELECT_ANNONCES_BY_VILLE_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m, villes v WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND v.VilleID=m.VilleID AND v.VilleNom='${VilleNom}' AND d.TypeID=${TypeID}`;
+  connection.query(SELECT_ANNONCES_BY_VILLE_QUERY, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.json({
+        data: results,
+      });
+    }
+  });
+});
+
+app.get("/api/annoncesVille/:nom/Denree/:DenreeID", (req, res) => {
+  const VilleNom = req.params.nom;
+  const DenreeID = req.params.DenreeID;
+  const SELECT_ANNONCES_BY_VILLE_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m, villes v WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND v.VilleID=m.VilleID AND v.VilleNom='${VilleNom}' AND a.DenreeID=${DenreeID}`;
+  connection.query(SELECT_ANNONCES_BY_VILLE_QUERY, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.json({
+        data: results,
+      });
+    }
+  });
+});
+
+app.get("/api/annoncesVille/:nom/Type/:TypeID/Denree/:DenreeID", (req, res) => {
+  const VilleNom = req.params.nom;
+  const TypeID = req.params.TypeID;
+  const DenreeID = req.params.DenreeID;
+  const SELECT_ANNONCES_BY_VILLE_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m, villes v WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND v.VilleID=m.VilleID AND v.VilleNom='${VilleNom}' AND (d.TypeID=${TypeID} OR a.DenreeID=${DenreeID})`;
+  connection.query(SELECT_ANNONCES_BY_VILLE_QUERY, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.json({
+        data: results,
+      });
+    }
+  });
+});
+
+// Annonces par code postal classique
 app.get("/api/annoncesCodePostal/:id", (req, res) => {
   const CodePostal = req.params.id;
   const SELECT_ANNONCES_BY_CODEPOSTAL_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m, villes v WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND v.VilleID=m.VilleID AND v.CodePostal=${CodePostal}`;
@@ -290,6 +337,59 @@ app.get("/api/annoncesCodePostal/:id", (req, res) => {
   });
 });
 
+// Annonces par code postal + Type
+app.get("/api/annoncesCodePostal/:id/Type/:TypeID", (req, res) => {
+  const CodePostal = req.params.id;
+  const TypeID = req.params.TypeID;
+  const SELECT_ANNONCES_BY_CODEPOSTAL_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m, villes v WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND v.VilleID=m.VilleID AND v.CodePostal=${CodePostal} AND d.TypeID=${TypeID}`;
+  connection.query(SELECT_ANNONCES_BY_CODEPOSTAL_QUERY, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.json({
+        data: results,
+      });
+    }
+  });
+});
+
+// Annonces par code postal + Denrée
+app.get("/api/annoncesCodePostal/:id/Denree/:DenreeID", (req, res) => {
+  const CodePostal = req.params.id;
+  const DenreeID = req.params.DenreeID;
+  const SELECT_ANNONCES_BY_CODEPOSTAL_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m, villes v WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND v.VilleID=m.VilleID AND v.CodePostal=${CodePostal} AND a.DenreeID=${DenreeID}`;
+  connection.query(SELECT_ANNONCES_BY_CODEPOSTAL_QUERY, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.json({
+        data: results,
+      });
+    }
+  });
+});
+
+// Annonces par code postal + Type + Denrée
+app.get(
+  "/api/annoncesCodePostal/:id/Type/:TypeID/Denree/:DenreeID",
+  (req, res) => {
+    const CodePostal = req.params.id;
+    const TypeID = req.params.TypeID;
+    const DenreeID = req.params.DenreeID;
+    const SELECT_ANNONCES_BY_CODEPOSTAL_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m, villes v WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND v.VilleID=m.VilleID AND v.CodePostal=${CodePostal} AND (d.TypeID=${TypeID} OR a.DenreeID=${DenreeID})`;
+    connection.query(SELECT_ANNONCES_BY_CODEPOSTAL_QUERY, (err, results) => {
+      if (err) {
+        return res.send(err);
+      } else {
+        return res.json({
+          data: results,
+        });
+      }
+    });
+  }
+);
+
+// Annonces par magasin classique
 app.get("/api/annoncesMagasin/:id", (req, res) => {
   const MagasinID = req.params.id;
   const SELECT_ANNONCES_BY_MAGASIN_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND a.MagasinID=${MagasinID}`;
@@ -303,6 +403,58 @@ app.get("/api/annoncesMagasin/:id", (req, res) => {
     }
   });
 });
+
+// Annonces par magasin + type
+app.get("/api/annoncesMagasin/:id/Type/:TypeID", (req, res) => {
+  const MagasinID = req.params.id;
+  const TypeID = req.params.TypeID;
+  const SELECT_ANNONCES_BY_MAGASIN_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND a.MagasinID=${MagasinID} AND d.TypeID=${TypeID}`;
+  connection.query(SELECT_ANNONCES_BY_MAGASIN_QUERY, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.json({
+        data: results,
+      });
+    }
+  });
+});
+
+// Annonces par magasin + denrée
+app.get("/api/annoncesMagasin/:id/Denree/:DenreeID", (req, res) => {
+  const MagasinID = req.params.id;
+  const DenreeID = req.params.DenreeID;
+  const SELECT_ANNONCES_BY_MAGASIN_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND a.MagasinID=${MagasinID} AND a.DenreeID=${DenreeID}`;
+  connection.query(SELECT_ANNONCES_BY_MAGASIN_QUERY, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.json({
+        data: results,
+      });
+    }
+  });
+});
+
+// Annonces par magasin + type + denrée
+app.get(
+  "/api/annoncesMagasin/:id/Type/:TypeID/Denree/:DenreeID",
+  (req, res) => {
+    const MagasinID = req.params.id;
+    const TypeID = req.params.TypeID;
+    const DenreeID = req.params.DenreeID;
+    const SELECT_ANNONCES_BY_MAGASIN_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND a.MagasinID=${MagasinID} AND (d.TypeID=${TypeID} OR a.DenreeID=${DenreeID})`;
+    connection.query(SELECT_ANNONCES_BY_MAGASIN_QUERY, (err, results) => {
+      if (err) {
+        return res.send(err);
+      } else {
+        return res.json({
+          data: results,
+        });
+      }
+    });
+  }
+);
 
 // Ajouter une annonce
 app.post("/api/annonces", (req, res) => {
