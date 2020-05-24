@@ -198,6 +198,7 @@ app.get("/api/annoncesUser/:id", (req, res) => {
   });
 });
 
+// Obtenir les annonces par provinces (classique)
 app.get("/api/annoncesProvince/:id", (req, res) => {
   const ProvinceID = req.params.id;
   const SELECT_ANNONCES_BY_PROVINCE_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND m.ProvinceID=${ProvinceID}`;
@@ -211,6 +212,55 @@ app.get("/api/annoncesProvince/:id", (req, res) => {
     }
   });
 });
+
+app.get("/api/annoncesProvince/:ProvinceID/Type/:TypeID", (req, res) => {
+  const ProvinceID = req.params.ProvinceID;
+  const TypeID = req.params.TypeID;
+  const SELECT_ANNONCES_BY_PROVINCE_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND m.ProvinceID=${ProvinceID} AND d.TypeID=${TypeID}`;
+  connection.query(SELECT_ANNONCES_BY_PROVINCE_QUERY, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.json({
+        data: results,
+      });
+    }
+  });
+});
+
+app.get("/api/annoncesProvince/:ProvinceID/Denree/:DenreeID", (req, res) => {
+  const ProvinceID = req.params.ProvinceID;
+  const DenreeID = req.params.DenreeID;
+  const SELECT_ANNONCES_BY_PROVINCE_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND m.ProvinceID=${ProvinceID} AND a.DenreeID=${DenreeID}`;
+  connection.query(SELECT_ANNONCES_BY_PROVINCE_QUERY, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.json({
+        data: results,
+      });
+    }
+  });
+});
+
+app.get(
+  "/api/annoncesProvince/:ProvinceID/Type/:TypeID/Denree/:DenreeID",
+  (req, res) => {
+    const ProvinceID = req.params.ProvinceID;
+    const TypeID = req.params.TypeID;
+    const DenreeID = req.params.DenreeID;
+    const SELECT_ANNONCES_BY_PROVINCE_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND m.ProvinceID=${ProvinceID} AND (d.TypeID=${TypeID} OR a.DenreeID=${DenreeID})`;
+    connection.query(SELECT_ANNONCES_BY_PROVINCE_QUERY, (err, results) => {
+      if (err) {
+        return res.send(err);
+      } else {
+        return res.json({
+          data: results,
+        });
+      }
+    });
+  }
+);
 
 app.get("/api/annoncesVille/:nom", (req, res) => {
   const VilleNom = req.params.nom;
@@ -437,7 +487,7 @@ app.post("/api/magasins", (req, res) => {
 /***********UtilisateursTypes********* */
 // Obtenir toutes les liens utilisateur-type
 app.get("/api/userTypes", (req, res) => {
-  const SELECT_USER_TYPE_QUERY = `SELECT * FROM utilisateurstypes`;
+  const SELECT_USER_TYPE_QUERY = `ut.TypeID, t.TypeNom FROM utilisateurstypes ut, types t WHERE t.TypeID=ut.TypeID`;
   connection.query(SELECT_USER_TYPE_QUERY, (err, results) => {
     if (err) {
       return res.send(err);

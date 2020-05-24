@@ -7,6 +7,8 @@ export default class AnnoncesVille extends Component {
     this.state = {
       AnnoncesVille: [],
       VilleNom: "",
+      TypeID: "",
+      DenreeID: "",
     };
     this.onChange = this.onChange.bind(this);
   }

@@ -8,6 +8,8 @@ export default class AnnoncesMagasin extends Component {
       Magasins: [],
       AnnoncesMagasin: [],
       MagasinID: "",
+      TypeID: "",
+      DenreeID: "",
     };
     this.onChange = this.onChange.bind(this);
   }
