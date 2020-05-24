@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { annonces } from "./AnnonceFunctions";
 import jwt_decode from "jwt-decode";
+import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import "../App.css";
 
@@ -174,6 +175,12 @@ class NewAnnonce extends Component {
                 >
                   Ajouter
                 </button>
+                <br></br>
+                <Link to={"/ajoutMagasin"}>
+                  <button type="button">
+                    Vous ne trouvez pas le magasin ? Ajoutez le
+                  </button>
+                </Link>
               </form>
             </div>
           </div>

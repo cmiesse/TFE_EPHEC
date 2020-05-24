@@ -406,6 +406,34 @@ app.get("/api/magasins/:id", (req, res) => {
   });
 });
 
+// Ajouter un magasin
+app.post("/api/magasins", (req, res) => {
+  const MagasinData = {
+    MagasinNom: req.body.MagasinNom,
+    Adresse: req.body.Adresse,
+    ProvinceID: req.body.ProvinceID,
+    VilleID: req.body.VilleID,
+  };
+  if (
+    !MagasinData.MagasinNom ||
+    !MagasinData.Adresse ||
+    !MagasinData.ProvinceID ||
+    !MagasinData.VilleID
+  ) {
+    return res
+      .status(400)
+      .json({ error: "Un ou plusieurs champs sont manquants" });
+  }
+  const ADD_MAGASIN_QUERY = `INSERT INTO magasins(MagasinNom, Adresse, ProvinceID, VilleID) VALUES('${MagasinData.MagasinNom}','${MagasinData.Adresse}','${MagasinData.ProvinceID}','${MagasinData.VilleID}')`;
+  connection.query(ADD_MAGASIN_QUERY, (err, results) => {
+    if (err) {
+      return res.status(401).json({ error: "Une erreur s'est produite" });
+    } else {
+      return res.send("Magasin ajouté");
+    }
+  });
+});
+
 /***********UtilisateursTypes********* */
 // Obtenir toutes les liens utilisateur-type
 app.get("/api/userTypes", (req, res) => {
