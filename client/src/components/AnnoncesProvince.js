@@ -116,8 +116,7 @@ export default class AnnoncesVille extends Component {
       .then((res) => this.setState({ AnnoncesProvince: res.data }))
       .catch((err) => console.log(err));
   }
-  /*
-  {getToken() ? this.renderUserTypes() : ""}
+
   renderUserTypes() {
     return (
       <div className="form-group">
@@ -125,9 +124,9 @@ export default class AnnoncesVille extends Component {
         <select
           className="form-control"
           name="TypeID"
-          id="ID"
+          id="TypeID"
           value={this.state.TypeID}
-          onChange={(e) => this.setState({ TypeID: e.target.value })}
+          onChange={this.onChange}
           required
         >
           <option value="" defaultValue>
@@ -142,14 +141,41 @@ export default class AnnoncesVille extends Component {
       </div>
     );
   }
-  */
+
+  renderUserDenrees() {
+    return (
+      <div className="form-group">
+        <label htmlFor="DenreeID">Vos denrées</label>
+        <select
+          className="form-control"
+          name="DenreeID"
+          id="DenreeID"
+          value={this.state.DenreeID}
+          onChange={this.onChange}
+          required
+        >
+          <option value="" defaultValue>
+            --Choix de denrée à effectuer--
+          </option>
+          {this.state.userDenrees.map((denree) => (
+            <option key={denree.DenreeNom} value={denree.DenreeID}>
+              {denree.DenreeNom}
+            </option>
+          ))}
+        </select>
+      </div>
+    );
+  }
 
   componentDidMount() {
     if (getToken() !== null) {
       const user = jwt_decode(getToken()).UtilisateurID;
       this.setState({ UtilisateurID: user });
     }
-    this.getUserTypes(this.state.UtilisateurID);
+    setTimeout(() => {
+      this.getUserTypes(this.state.UtilisateurID);
+      this.getUserDenrees(this.state.UtilisateurID);
+    }, 1);
     this.getUserDenrees(this.state.UtilisateurID);
     this.getProvinces();
   }
@@ -190,6 +216,8 @@ export default class AnnoncesVille extends Component {
                   ))}
                 </select>
               </div>
+              {getToken() ? this.renderUserTypes() : ""}
+              {getToken() ? this.renderUserDenrees() : ""}
               <table align="center">
                 <thead>
                   <tr>
