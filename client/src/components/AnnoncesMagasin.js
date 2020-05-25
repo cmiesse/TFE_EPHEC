@@ -55,7 +55,7 @@ export default class AnnoncesMagasin extends Component {
       .catch((err) => console.log(err));
   }
   getAnnoncesByMagasinAndTypeAndDenree(id, TypeID, DenreeID) {
-    fetch(`/api/annoncesMagasin/${id}/Type/${TypeID}/Denree/${DenreeID}`)
+    fetch(`/api/annoncesMagasin/${id}/${TypeID}/${DenreeID}`)
       .then((res) => res.json())
       .then((res) => this.setState({ AnnoncesMagasin: res.data }))
       .catch((err) => console.log(err));

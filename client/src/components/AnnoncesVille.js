@@ -48,7 +48,7 @@ export default class AnnoncesVille extends Component {
   }
 
   getAnnoncesByVilleAndTypeAndDenree(nom, TypeID, DenreeID) {
-    fetch(`/api/annoncesVille/${nom}/Type/${TypeID}/Denree/${DenreeID}`)
+    fetch(`/api/annoncesVille/${nom}/${TypeID}/${DenreeID}`)
       .then((res) => res.json())
       .then((res) => this.setState({ AnnoncesVille: res.data }))
       .catch((err) => console.log(err));

@@ -49,7 +49,7 @@ export default class AnnoncesCodePostal extends Component {
   }
 
   getAnnoncesByCodePostalAndTypeAndDenree(id, TypeID, DenreeID) {
-    fetch(`/api/annoncesCodePostal/${id}/Type/${TypeID}/Denree/${DenreeID}`)
+    fetch(`/api/annoncesCodePostal/${id}/${TypeID}/${DenreeID}`)
       .then((res) => res.json())
       .then((res) => this.setState({ AnnoncesCodePostal: res.data }))
       .catch((err) => console.log(err));

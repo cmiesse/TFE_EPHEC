@@ -56,9 +56,7 @@ export default class AnnoncesProvince extends Component {
   }
 
   getAnnoncesByProvinceAndTypeAndDenree(ProvinceID, TypeID, DenreeID) {
-    fetch(
-      `/api/annoncesProvince/${ProvinceID}/Type/${TypeID}/Denree/${DenreeID}`
-    )
+    fetch(`/api/annoncesProvince/${ProvinceID}/${TypeID}/${DenreeID}`)
       .then((res) => res.json())
       .then((res) => this.setState({ AnnoncesProvince: res.data }))
       .catch((err) => console.log(err));
