@@ -1,10 +1,15 @@
 import React, { Component } from "react";
+import { getToken } from "../Utils/Common";
+import jwt_decode from "jwt-decode";
 import { Helmet } from "react-helmet";
 
 export default class AnnoncesVille extends Component {
   constructor() {
     super();
     this.state = {
+      UtilisateurID: "",
+      userTypes: [],
+      userDenrees: [],
       AnnoncesVille: [],
       VilleNom: "",
       TypeID: "",
@@ -15,11 +20,24 @@ export default class AnnoncesVille extends Component {
 
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
-    if (e.target.value !== "") {
-      setTimeout(() => {
-        this.getAnnoncesByVille(this.state.VilleNom);
-      }, 1);
-    }
+  }
+
+  getUserTypes(user) {
+    fetch(`/api/userTypes/${user}`)
+      .then((res) => res.json())
+      .then((res) => this.setState({ userTypes: res.data }))
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  getUserDenrees(user) {
+    fetch(`/api/userDenrees/${user}`)
+      .then((res) => res.json())
+      .then((res) => this.setState({ userDenrees: res.data }))
+      .catch((error) => {
+        console.log(error);
+      });
   }
 
   getAnnoncesByVille(nom) {
@@ -27,6 +45,94 @@ export default class AnnoncesVille extends Component {
       .then((res) => res.json())
       .then((res) => this.setState({ AnnoncesVille: res.data }))
       .catch((err) => console.log(err));
+  }
+
+  getAnnoncesByVilleAndTypeAndDenree(nom, TypeID, DenreeID) {
+    fetch(`/api/annoncesVille/${nom}/Type/${TypeID}/Denree/${DenreeID}`)
+      .then((res) => res.json())
+      .then((res) => this.setState({ AnnoncesVille: res.data }))
+      .catch((err) => console.log(err));
+  }
+
+  renderUserTypes() {
+    return (
+      <div className="form-group">
+        <label htmlFor="TypeID">Vos types</label>
+        <select
+          className="form-control"
+          name="TypeID"
+          id="TypeID"
+          value={this.state.TypeID}
+          onChange={this.onChange}
+          required
+        >
+          <option value="" defaultValue>
+            --Choix de type à effectuer--
+          </option>
+          {this.state.userTypes.map((type) => (
+            <option key={type.TypeNom} value={type.TypeID}>
+              {type.TypeNom}
+            </option>
+          ))}
+        </select>
+      </div>
+    );
+  }
+
+  renderUserDenrees() {
+    return (
+      <div className="form-group">
+        <label htmlFor="DenreeID">Vos denrées</label>
+        <select
+          className="form-control"
+          name="DenreeID"
+          id="DenreeID"
+          value={this.state.DenreeID}
+          onChange={this.onChange}
+          required
+        >
+          <option value="" defaultValue>
+            --Choix de denrée à effectuer--
+          </option>
+          {this.state.userDenrees.map((denree) => (
+            <option key={denree.DenreeNom} value={denree.DenreeID}>
+              {denree.DenreeNom}
+            </option>
+          ))}
+        </select>
+      </div>
+    );
+  }
+
+  componentDidMount() {
+    if (getToken() !== null) {
+      const user = jwt_decode(getToken()).UtilisateurID;
+      this.setState({ UtilisateurID: user });
+    }
+    setTimeout(() => {
+      this.getUserTypes(this.state.UtilisateurID);
+      this.getUserDenrees(this.state.UtilisateurID);
+    }, 1);
+  }
+
+  componentDidUpdate() {
+    if (getToken()) {
+      if (
+        this.state.VilleNom !== "" &&
+        this.state.TypeID !== "" &&
+        this.state.DenreeID !== ""
+      ) {
+        this.getAnnoncesByVilleAndTypeAndDenree(
+          this.state.VilleNom,
+          this.state.TypeID,
+          this.state.DenreeID
+        );
+      }
+    } else {
+      if (this.state.VilleNom !== "") {
+        this.getAnnoncesByVille(this.state.VilleNom);
+      }
+    }
   }
 
   render() {
@@ -52,6 +158,8 @@ export default class AnnoncesVille extends Component {
                   onChange={this.onChange}
                 />
               </div>
+              {getToken() ? this.renderUserTypes() : ""}
+              {getToken() ? this.renderUserDenrees() : ""}
               <table align="center">
                 <thead>
                   <tr>

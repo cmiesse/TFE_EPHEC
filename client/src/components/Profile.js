@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import jwt_decode from "jwt-decode";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import axios from "axios";
 import { getToken, isAdmin } from "../Utils/Common";
 import "./Profile.css";
 
@@ -62,15 +61,6 @@ class Profile extends Component {
       });
   };
 
-  deleteUserType = (user, type) => {
-    axios
-      .delete("/api/userTypes", {
-        User: user,
-        Type: type,
-      })
-      .then(this.getUserTypes(user));
-  };
-
   getUserDenrees = (user) => {
     fetch(`/api/userDenrees/${user}`)
       .then((res) => res.json())
@@ -80,45 +70,9 @@ class Profile extends Component {
       });
   };
 
-  deleteUserDenree = (user, denree) => {
-    axios.delete("/api/userDenrees", {
-      User: user,
-      Denree: denree,
-    });
-    this.getUserDenrees(user);
-  };
-
-  renderUserTypes = ({ TypeID, TypeNom }) => (
-    <tr key={TypeID}>
-      <td>{TypeNom}</td>
-      <td>
-        <button
-          onClick={() => this.deleteUserType(this.state.UtilisateurID, TypeID)}
-        >
-          Supprimer type
-        </button>
-      </td>
-    </tr>
-  );
-
-  renderUserDenrees = ({ DenreeID, DenreeNom }) => (
-    <tr key={DenreeID}>
-      <td>{DenreeNom}</td>
-      <td>
-        <button
-          onClick={() =>
-            /*console.log(
-              "Bouton pour supprimer la denrée " +
-                { DenreeID } +
-                " de l'utilisateur " +
-                this.state.UtilisateurID
-            )*/
-            this.deleteUserDenree(this.state.UtilisateurID, DenreeID)
-          }
-        >
-          Supprimer type
-        </button>
-      </td>
+  renderUserDenrees = ({ DenreeNom }) => (
+    <tr key={DenreeNom} className="no-border">
+      <td className="no-border">{DenreeNom}</td>
     </tr>
   );
 
@@ -147,7 +101,7 @@ class Profile extends Component {
   render() {
     const pageAdmin = (
       <Link to="/admin">
-        <button className="btn btn-lg btn-primary">Accès page admin</button>
+        <button>Accès page admin</button>
       </Link>
     );
     return (
@@ -196,39 +150,30 @@ class Profile extends Component {
           </Link>
           <br />
           <br />
-          <table className="table mx-auto">
+          <table className="table mx-auto no-border">
             <thead>
               <tr>
                 <th>Type</th>
-                <th>Supprimer</th>
               </tr>
             </thead>
-            <tbody>{this.state.Types.map(this.renderUserTypes)}</tbody>
+            <tbody>
+              {this.state.Types.map((type) => (
+                <tr key={type.TypeNom} className="no-border">
+                  <td className="no-border">{type.TypeNom}</td>
+                </tr>
+              ))}
+            </tbody>
           </table>
-          <table className="table mx-auto">
+          <table className="table mx-auto no-border">
             <thead>
               <tr>
                 <th>Denrée</th>
-                <th>Supprimer</th>
               </tr>
             </thead>
             <tbody>
               {this.state.Denrees.map((denree) => (
-                <tr key={denree.DenreeNom}>
-                  <td>{denree.DenreeNom}</td>
-                  <td>
-                    {" "}
-                    <button
-                      onClick={() =>
-                        this.deleteUserDenree(
-                          this.state.UtilisateurID,
-                          denree.DenreeID
-                        )
-                      }
-                    >
-                      Supprimer denree
-                    </button>
-                  </td>
+                <tr key={denree.DenreeNom} className="no-border">
+                  <td className="no-border">{denree.DenreeNom}</td>
                 </tr>
               ))}
             </tbody>

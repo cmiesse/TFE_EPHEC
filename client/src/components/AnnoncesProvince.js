@@ -3,7 +3,7 @@ import { getToken } from "../Utils/Common";
 import jwt_decode from "jwt-decode";
 import { Helmet } from "react-helmet";
 
-export default class AnnoncesVille extends Component {
+export default class AnnoncesProvince extends Component {
   constructor() {
     super();
     this.state = {
@@ -21,45 +21,6 @@ export default class AnnoncesVille extends Component {
 
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
-    if (
-      e.target.value !== "" &&
-      this.state.TypeID !== "" &&
-      this.state.DenreeID !== ""
-    ) {
-      setTimeout(() => {
-        this.getAnnoncesByProvinceAndTypeAndDenree(
-          this.state.ProvinceID,
-          this.state.TypeID,
-          this.state.DenreeID
-        );
-      }, 1);
-    } else if (
-      e.target.value !== "" &&
-      this.state.TypeID !== "" &&
-      this.state.DenreeID === ""
-    ) {
-      setTimeout(() => {
-        this.getAnnoncesByProvinceAndType(
-          this.state.ProvinceID,
-          this.state.TypeID
-        );
-      }, 1);
-    } else if (
-      e.target.value !== "" &&
-      this.state.TypeID === "" &&
-      this.state.DenreeID !== ""
-    ) {
-      setTimeout(() => {
-        this.getAnnoncesByProvinceAndDenree(
-          this.state.ProvinceID,
-          this.state.DenreeID
-        );
-      }, 1);
-    } else if (e.target.value !== "") {
-      setTimeout(() => {
-        this.getAnnoncesByProvince(this.state.ProvinceID);
-      }, 1);
-    }
   }
 
   getUserTypes(user) {
@@ -89,20 +50,6 @@ export default class AnnoncesVille extends Component {
 
   getAnnoncesByProvince(id) {
     fetch(`/api/annoncesProvince/${id}`)
-      .then((res) => res.json())
-      .then((res) => this.setState({ AnnoncesProvince: res.data }))
-      .catch((err) => console.log(err));
-  }
-
-  getAnnoncesByProvinceAndDenree(ProvinceID, DenreeID) {
-    fetch(`/api/annoncesProvince/${ProvinceID}/Denree/${DenreeID}`)
-      .then((res) => res.json())
-      .then((res) => this.setState({ AnnoncesProvince: res.data }))
-      .catch((err) => console.log(err));
-  }
-
-  getAnnoncesByProvinceAndType(ProvinceID, TypeID) {
-    fetch(`/api/annoncesProvince/${ProvinceID}/Type/${TypeID}`)
       .then((res) => res.json())
       .then((res) => this.setState({ AnnoncesProvince: res.data }))
       .catch((err) => console.log(err));
@@ -176,8 +123,27 @@ export default class AnnoncesVille extends Component {
       this.getUserTypes(this.state.UtilisateurID);
       this.getUserDenrees(this.state.UtilisateurID);
     }, 1);
-    this.getUserDenrees(this.state.UtilisateurID);
     this.getProvinces();
+  }
+
+  componentDidUpdate() {
+    if (getToken()) {
+      if (
+        this.state.ProvinceID !== "" &&
+        this.state.TypeID !== "" &&
+        this.state.DenreeID !== ""
+      ) {
+        this.getAnnoncesByProvinceAndTypeAndDenree(
+          this.state.ProvinceID,
+          this.state.TypeID,
+          this.state.DenreeID
+        );
+      }
+    } else {
+      if (this.state.ProvinceID !== "") {
+        this.getAnnoncesByProvince(this.state.ProvinceID);
+      }
+    }
   }
 
   render() {
