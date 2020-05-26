@@ -378,6 +378,27 @@ app.get("/api/denrees/:id", (req, res) => {
   });
 });
 
+// Ajouter une denrée
+app.post("/api/denrees", (req, res) => {
+  const DenreeData = {
+    DenreeNom: req.body.DenreeNom,
+    TypeID: req.body.TypeID,
+  };
+  if (!DenreeData.DenreeNom || !DenreeData.TypeID) {
+    return res
+      .status(400)
+      .json({ error: "Un ou plusieurs champs sont manquants" });
+  }
+  const ADD_DENREE_QUERY = `INSERT INTO denrees(DenreeNom,TypeID) VALUES('${DenreeData.DenreeNom}','${DenreeData.TypeID}')`;
+  connection.query(ADD_DENREE_QUERY, (err, results) => {
+    if (err) {
+      return res.status(401).json({ error: "Une erreur s'est produite" });
+    } else {
+      return res.send("Denrée ajouté");
+    }
+  });
+});
+
 /*************************types********************************************/
 
 // Obtenir tous les types de denrée

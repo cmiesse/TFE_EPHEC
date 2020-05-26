@@ -56,8 +56,8 @@ class NewAnnonce extends Component {
       .catch((err) => console.log(err));
   }
 
-  getDenreesMagasin(magasin) {
-    fetch(`/api/denreesMagasin/${magasin}`)
+  getDenrees() {
+    fetch(`/api/denrees`)
       .then((res) => res.json())
       .then((res) => this.setState({ Denrees: res.data }))
       .catch((err) => console.log(err));
@@ -69,11 +69,7 @@ class NewAnnonce extends Component {
       this.setState({ UtilisateurID: decoded.UtilisateurID });
     }, 1);
     this.getMagasins();
-  }
-  componentDidUpdate() {
-    if (this.state.MagasinID !== "") {
-      this.getDenreesMagasin(this.state.MagasinID);
-    }
+    this.getDenrees();
   }
 
   render() {
@@ -140,6 +136,11 @@ class NewAnnonce extends Component {
                       </option>
                     ))}
                   </select>
+                  <Link to={"/ajoutMagasin"}>
+                    <button type="button">
+                      Vous ne trouvez pas le magasin ? Ajoutez le
+                    </button>
+                  </Link>
                 </div>
                 <div className="form-group">
                   <label htmlFor="DenreeID">Denrée</label>
@@ -160,6 +161,11 @@ class NewAnnonce extends Component {
                       </option>
                     ))}
                   </select>
+                  <Link to={"/ajoutDenree"}>
+                    <button type="button">
+                      Vous ne trouvez pas une denrée ? Ajoutez la
+                    </button>
+                  </Link>
                 </div>
                 {this.state.setError && (
                   <>
@@ -176,11 +182,6 @@ class NewAnnonce extends Component {
                   Ajouter
                 </button>
                 <br></br>
-                <Link to={"/ajoutMagasin"}>
-                  <button type="button">
-                    Vous ne trouvez pas le magasin ? Ajoutez le
-                  </button>
-                </Link>
               </form>
             </div>
           </div>
