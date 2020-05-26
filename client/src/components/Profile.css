@@ -6,3 +6,7 @@ td {
   border: none;
   background-color: #e9ecef;
 }
+
+.no-list-style {
+  list-style: none;
+}

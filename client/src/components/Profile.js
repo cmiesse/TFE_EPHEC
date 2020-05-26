@@ -139,45 +139,39 @@ class Profile extends Component {
                 <td className="no-border">Compte créé le </td>
                 <td className="no-border">{this.state.JourCreation}</td>
               </tr>
+              <tr>
+                <td className="no-border">Types</td>
+                <td className="no-border">
+                  <ul className="no-list-style">
+                    {this.state.Types.map((type) => (
+                      <li key={type.TypeNom}>{type.TypeNom}</li>
+                    ))}
+                  </ul>
+                </td>
+              </tr>
+              <tr>
+                <td className="no-border">Denrées</td>
+                <td className="no-border">
+                  <ul className="no-list-style">
+                    {this.state.Denrees.map((denree) => (
+                      <li key={denree.DenreeNom}>{denree.DenreeNom}</li>
+                    ))}
+                  </ul>
+                </td>
+              </tr>
             </tbody>
           </table>
-          {isAdmin(getToken()) ? pageAdmin : ""}
-          <h2 className="text-center">Mes préférences</h2>
           <Link to="/choicetd">
             <button className="btn btn-lg btn-primary">
-              Ajouter des préférences
+              Modifier les préférences
             </button>
+            <br />
           </Link>
+
           <br />
+          {isAdmin(getToken()) ? pageAdmin : ""}
+
           <br />
-          <table className="table mx-auto no-border">
-            <thead>
-              <tr>
-                <th>Type</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.state.Types.map((type) => (
-                <tr key={type.TypeNom} className="no-border">
-                  <td className="no-border">{type.TypeNom}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <table className="table mx-auto no-border">
-            <thead>
-              <tr>
-                <th>Denrée</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.state.Denrees.map((denree) => (
-                <tr key={denree.DenreeNom} className="no-border">
-                  <td className="no-border">{denree.DenreeNom}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
 
           <h2 className="text-center">Mes annonces</h2>
           <table align="center" className="table mx-auto">

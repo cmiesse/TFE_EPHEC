@@ -75,7 +75,7 @@ export default class AnnoncesProvince extends Component {
           required
         >
           <option value="" defaultValue>
-            --Choix de type à effectuer--
+            --Vos types--
           </option>
           {this.state.userTypes.map((type) => (
             <option key={type.TypeNom} value={type.TypeID}>
@@ -100,7 +100,7 @@ export default class AnnoncesProvince extends Component {
           required
         >
           <option value="" defaultValue>
-            --Choix de denrée à effectuer--
+            --Vos denrées--
           </option>
           {this.state.userDenrees.map((denree) => (
             <option key={denree.DenreeNom} value={denree.DenreeID}>
@@ -145,6 +145,12 @@ export default class AnnoncesProvince extends Component {
   }
 
   render() {
+    const messagePersonnalise = (
+      <p>
+        N'hésitez pas à revenir sur la page après avoir choisi les types et
+        denrées qui vous intéressent pour obtenir des recherches personnalisées
+      </p>
+    );
     return (
       <div className="container">
         <div className="jumbotron mt-2">
@@ -156,7 +162,11 @@ export default class AnnoncesProvince extends Component {
               <h1 className="h3 mb-3 font-weight-normal">
                 Recherche par province
               </h1>
-
+              {getToken() &&
+              this.state.userDenrees.length === 0 &&
+              this.state.userTypes.length === 0
+                ? messagePersonnalise
+                : ""}
               <div className="form-group">
                 <label htmlFor="ProvinceID">Province</label>
                 <select
