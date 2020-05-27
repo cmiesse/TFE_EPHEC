@@ -135,7 +135,7 @@ class ChoixTypeDenree extends Component {
           <div className="row">
             <div className="mx-auto">
               <Helmet>
-                <title>Choix de types et denrées</title>
+                <title>Choix de types et denrées - StockShop</title>
               </Helmet>
               <form onSubmit={this.handleSubmit}>
                 <div>

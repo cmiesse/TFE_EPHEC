@@ -57,7 +57,7 @@ class AjoutDenree extends Component {
           <div className="row">
             <div className="col-md-6 mt-2 mx-auto">
               <Helmet>
-                <title>Ajout de denrée</title>
+                <title>Ajout de denrée - StockShop</title>
               </Helmet>
               <form noValidate onSubmit={this.onSubmit}>
                 <h1 className="h3 mb-3 font-weight-normal">Ajout de denrée</h1>

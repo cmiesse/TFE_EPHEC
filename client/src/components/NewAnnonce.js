@@ -79,7 +79,7 @@ class NewAnnonce extends Component {
           <div className="row">
             <div className="col-md-6 mt-2 mx-auto">
               <Helmet>
-                <title>Ajout d'annonce</title>
+                <title>Ajout d'annonce - StockShop</title>
               </Helmet>
               <form noValidate onSubmit={this.onSubmit}>
                 <h1 className="h3 mb-3 font-weight-normal">Ajout d'annonce</h1>

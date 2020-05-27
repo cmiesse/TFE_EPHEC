@@ -30,7 +30,7 @@ class Landing extends Component {
       <div className="container">
         <div className="jumbotron mt-2">
           <Helmet>
-            <title>Accueil</title>
+            <title>Accueil - StockShop</title>
           </Helmet>
           <h1>Page d'accueil</h1>
           <div className="AnnoncesRecherche">

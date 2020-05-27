@@ -25,7 +25,7 @@ class AnnonceDetails extends Component {
       <div className="container">
         <div className="jumbotron mt-2">
           <Helmet>
-            <title>Détails de l'annonce</title>
+            <title>Détails de l'annonce - StockShop</title>
           </Helmet>
           {this.state.Annonce.map((annonce) => (
             <div key="Annonce">

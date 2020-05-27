@@ -51,7 +51,7 @@ class Login extends Component {
           <div className="row">
             <div className="col-md-6 mt-3 mx-auto">
               <Helmet>
-                <title>Connexion</title>
+                <title>Connexion - StockShop</title>
               </Helmet>
               <form noValidate onSubmit={this.onSubmit}>
                 <h1 className="h3 mb-3 font-weight-normal">

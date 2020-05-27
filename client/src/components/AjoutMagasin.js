@@ -78,7 +78,7 @@ class AjoutMagasin extends Component {
           <div className="row">
             <div className="col-md-6 mt-2 mx-auto">
               <Helmet>
-                <title>Ajout de magasin</title>
+                <title>Ajout de magasin - StockShop</title>
               </Helmet>
               <form noValidate onSubmit={this.onSubmit}>
                 <h1 className="h3 mb-3 font-weight-normal">Ajout de magasin</h1>

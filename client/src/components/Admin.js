@@ -61,7 +61,7 @@ class Admin extends Component {
     return (
       <div className="container">
         <Helmet>
-          <title>Admin</title>
+          <title>Admin - StockShop</title>
         </Helmet>
         <div>
           <h1>Administrateur</h1>

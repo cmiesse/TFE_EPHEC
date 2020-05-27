@@ -149,7 +149,7 @@ export default class AnnoncesCodePostal extends Component {
           <div className="row">
             <div className="col-md-6 mt-3 mx-auto">
               <Helmet>
-                <title>Recherche d'annonces par code postal</title>
+                <title>Recherche d'annonces par code postal - StockShop</title>
               </Helmet>
               <h1 className="h3 mb-3 font-weight-normal">
                 Recherche par code postal
@@ -172,7 +172,7 @@ export default class AnnoncesCodePostal extends Component {
               </div>
               {getToken() ? this.renderUserTypes() : ""}
               {getToken() ? this.renderUserDenrees() : ""}
-              <table align="center">
+              <table align="center" className="table mx-auto">
                 <thead>
                   <tr>
                     <th>Titre</th>

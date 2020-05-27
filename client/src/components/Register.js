@@ -82,7 +82,7 @@ class Register extends Component {
           <div className="row">
             <div className="col-md-6 mx-auto">
               <Helmet>
-                <title>Inscription</title>
+                <title>Inscription - StockShop</title>
               </Helmet>
               <h1 className="h3 mb-3 font-weight-normal">Inscription</h1>
               <form noValidate onSubmit={this.onSubmit}>

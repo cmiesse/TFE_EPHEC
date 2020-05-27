@@ -109,7 +109,7 @@ class Profile extends Component {
         <div className="jumbotron mt-4">
           <div className="col-sm-8 mx-auto">
             <Helmet>
-              <title>Profil</title>
+              <title>Profil - StockShop</title>
             </Helmet>
             <h1 className="text-center">Profil de {this.state.Pseudo}</h1>
           </div>
