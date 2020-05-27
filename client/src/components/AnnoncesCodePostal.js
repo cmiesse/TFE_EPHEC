@@ -170,8 +170,8 @@ export default class AnnoncesCodePostal extends Component {
                   onChange={this.onChange}
                 />
               </div>
-              {getToken() ? this.renderUserTypes() : ""}
-              {getToken() ? this.renderUserDenrees() : ""}
+              {getToken() ? this.renderUserTypes : ""}
+              {getToken() ? this.renderUserDenrees : ""}
               <table align="center">
                 <thead>
                   <tr>
