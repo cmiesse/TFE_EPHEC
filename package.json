@@ -5,10 +5,13 @@
   "main": "server.js",
   "scripts": {
     "client-install": "cd client && npm install",
+    "client-build": "cd client && npm run build",
     "start": "node server.js",
     "server": "nodemon server.js",
     "client": "npm start --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "build": "concurrently \"cd client && serve -s build -l 3000\" \"npm run server\"",
+    "deploy": "concurrently \"cd client && npm run build\""
   },
   "keywords": [
     "nodejs",
