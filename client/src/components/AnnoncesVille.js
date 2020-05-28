@@ -171,29 +171,29 @@ export default class AnnoncesVille extends Component {
               </div>
               {getToken() ? this.renderUserTypes() : ""}
               {getToken() ? this.renderUserDenrees() : ""}
-              <table align="center" className="table mx-auto">
-                <thead>
-                  <tr>
-                    <th>Titre</th>
-                    <th>Quantité</th>
-                    <th>Denrée</th>
-                    <th>Magasin</th>
-                    <th>Créé le </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {this.state.AnnoncesVille.map((annonce) => (
-                    <tr key={annonce.AnnonceID}>
-                      <td>{annonce.Titre}</td>
-                      <td>{annonce.Quantite}</td>
-                      <td>{annonce.DenreeNom}</td>
-                      <td>{annonce.MagasinNom}</td>
-                      <td>{annonce.JourCreation}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
             </div>
+            <table align="center" className="table mx-auto">
+              <thead>
+                <tr>
+                  <th>Titre</th>
+                  <th>Quantité</th>
+                  <th>Denrée</th>
+                  <th>Magasin</th>
+                  <th>Créé le </th>
+                </tr>
+              </thead>
+              <tbody>
+                {this.state.AnnoncesVille.map((annonce) => (
+                  <tr key={annonce.AnnonceID}>
+                    <td>{annonce.Titre}</td>
+                    <td>{annonce.Quantite}</td>
+                    <td>{annonce.DenreeNom}</td>
+                    <td>{annonce.MagasinNom}</td>
+                    <td>{annonce.JourCreation}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
