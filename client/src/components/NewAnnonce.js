@@ -9,7 +9,6 @@ class NewAnnonce extends Component {
   constructor() {
     super();
     this.state = {
-      Titre: "",
       Quantite: "",
       UtilisateurID: "",
       MagasinID: "",
@@ -30,7 +29,6 @@ class NewAnnonce extends Component {
     e.preventDefault();
 
     const annonce = {
-      Titre: this.state.Titre,
       Quantite: this.state.Quantite,
       UtilisateurID: this.state.UtilisateurID,
       MagasinID: this.state.MagasinID,
@@ -84,17 +82,29 @@ class NewAnnonce extends Component {
               <form noValidate onSubmit={this.onSubmit}>
                 <h1 className="h3 mb-3 font-weight-normal">Ajout d'annonce</h1>
                 <div className="form-group">
-                  <label htmlFor="Titre">Titre</label>
-                  <input
-                    type="text"
+                  <label htmlFor="DenreeID">Denrée</label>
+                  <select
                     className="form-control"
-                    name="Titre"
-                    id="Titre"
-                    placeholder="Entrez un titre"
-                    value={this.state.Titre}
+                    name="DenreeID"
+                    id="DenreeID"
+                    value={this.state.DenreeID}
                     onChange={this.onChange}
                     required
-                  />
+                  >
+                    <option value="" defaultValue>
+                      --Choix de denrée à effectuer--
+                    </option>
+                    {this.state.Denrees.map((denree) => (
+                      <option key={denree.DenreeNom} value={denree.DenreeID}>
+                        {denree.DenreeNom}
+                      </option>
+                    ))}
+                  </select>
+                  <Link to={"/ajoutDenree"}>
+                    <button type="button">
+                      Vous ne trouvez pas une denrée ? Ajoutez la
+                    </button>
+                  </Link>
                 </div>
                 <div className="form-group">
                   <label htmlFor="Quantite">Quantité</label>
@@ -139,31 +149,6 @@ class NewAnnonce extends Component {
                   <Link to={"/ajoutMagasin"}>
                     <button type="button">
                       Vous ne trouvez pas le magasin ? Ajoutez le
-                    </button>
-                  </Link>
-                </div>
-                <div className="form-group">
-                  <label htmlFor="DenreeID">Denrée</label>
-                  <select
-                    className="form-control"
-                    name="DenreeID"
-                    id="DenreeID"
-                    value={this.state.DenreeID}
-                    onChange={this.onChange}
-                    required
-                  >
-                    <option value="" defaultValue>
-                      --Choix de denrée à effectuer--
-                    </option>
-                    {this.state.Denrees.map((denree) => (
-                      <option key={denree.DenreeNom} value={denree.DenreeID}>
-                        {denree.DenreeNom}
-                      </option>
-                    ))}
-                  </select>
-                  <Link to={"/ajoutDenree"}>
-                    <button type="button">
-                      Vous ne trouvez pas une denrée ? Ajoutez la
                     </button>
                   </Link>
                 </div>

@@ -26,7 +26,6 @@ class Admin extends Component {
 
   renderAnnonces = ({
     AnnonceID,
-    Titre,
     DenreeNom,
     Quantite,
     MagasinNom,
@@ -34,8 +33,6 @@ class Admin extends Component {
     DateCreation,
   }) => (
     <tr key={AnnonceID}>
-      <td>{AnnonceID}</td>
-      <td>{Titre}</td>
       <td>{DenreeNom}</td>
       <td>{Quantite}</td>
       <td>{MagasinNom}</td>
@@ -47,7 +44,7 @@ class Admin extends Component {
           className="deleteButton"
           onClick={() => this.deleteAnnonce({ AnnonceID })}
         >
-          Supprimer annonce
+          X
         </button>
       </td>
     </tr>
@@ -60,27 +57,27 @@ class Admin extends Component {
   render() {
     return (
       <div className="container">
-        <Helmet>
-          <title>Admin - StockShop</title>
-        </Helmet>
-        <div>
-          <h1>Administrateur</h1>
-          <br />
-          <table align="center" className="">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Titre</th>
-                <th>Denree</th>
-                <th>Quantite</th>
-                <th>Magasin</th>
-                <th>Utilisateur</th>
-                <th>Date de création</th>
-                <th>Supprimer</th>
-              </tr>
-            </thead>
-            <tbody>{this.state.Annonces.map(this.renderAnnonces)}</tbody>
-          </table>
+        <div className="jumbotron mt-4">
+          <Helmet>
+            <title>Admin - StockShop</title>
+          </Helmet>
+          <div>
+            <h1>Administrateur</h1>
+            <br />
+            <table align="center" className="">
+              <thead>
+                <tr>
+                  <th className="colonne-denree">Denree</th>
+                  <th className="colonne-quantite">Quantite</th>
+                  <th className="colonne-magasin">Magasin</th>
+                  <th className="colonne-user">Utilisateur</th>
+                  <th className="colonne-date">Date de création</th>
+                  <th className="colonne-delete"></th>
+                </tr>
+              </thead>
+              <tbody>{this.state.Annonces.map(this.renderAnnonces)}</tbody>
+            </table>
+          </div>
         </div>
       </div>
     );

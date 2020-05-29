@@ -3,6 +3,7 @@ import jwt_decode from "jwt-decode";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import { getToken, isAdmin } from "../Utils/Common";
+import AnnonceDetails from "./AnnonceDetails";
 import "./Profile.css";
 
 class Profile extends Component {
@@ -116,31 +117,45 @@ class Profile extends Component {
           <table className="table col-md-6 mx-auto no-border">
             <tbody>
               <tr className="no-border">
-                <td className="no-border">Prénom</td>
+                <td className="no-border">
+                  <b>Prénom</b>
+                </td>
                 <td className="no-border">{this.state.Prenom}</td>
               </tr>
               <tr className="no-border">
-                <td className="no-border">Nom</td>
+                <td className="no-border">
+                  <b>Nom</b>
+                </td>
                 <td className="no-border">{this.state.Nom}</td>
               </tr>
               <tr className="no-border">
-                <td className="no-border">Email</td>
+                <td className="no-border">
+                  <b>Email</b>
+                </td>
                 <td className="no-border">{this.state.Email}</td>
               </tr>
               <tr className="no-border">
-                <td className="no-border">Ville</td>
+                <td className="no-border">
+                  <b>Ville</b>
+                </td>
                 <td className="no-border">{this.state.VilleNom}</td>
               </tr>
               <tr className="no-border">
-                <td className="no-border">Province</td>
+                <td className="no-border">
+                  <b>Province</b>
+                </td>
                 <td className="no-border">{this.state.ProvinceNom}</td>
               </tr>
               <tr className="no-border">
-                <td className="no-border">Compte créé le </td>
+                <td className="no-border">
+                  <b>Compte créé le</b>
+                </td>
                 <td className="no-border">{this.state.JourCreation}</td>
               </tr>
               <tr>
-                <td className="no-border">Types</td>
+                <td className="no-border">
+                  <b>Types</b>
+                </td>
                 <td className="no-border">
                   <ul className="no-list-style">
                     {this.state.Types.map((type) => (
@@ -150,7 +165,9 @@ class Profile extends Component {
                 </td>
               </tr>
               <tr>
-                <td className="no-border">Denrées</td>
+                <td className="no-border">
+                  <b>Denrées</b>
+                </td>
                 <td className="no-border">
                   <ul className="no-list-style">
                     {this.state.Denrees.map((denree) => (
@@ -170,32 +187,20 @@ class Profile extends Component {
 
           <br />
           {isAdmin(getToken()) ? pageAdmin : ""}
-
           <br />
-
+          <hr></hr>
           <h2 className="text-center">Mes annonces</h2>
-          <table align="center" className="table mx-auto">
-            <thead>
-              <tr>
-                <th>Titre</th>
-                <th>Quantité</th>
-                <th>Denrée</th>
-                <th>Magasin</th>
-                <th>Créé le</th>
-              </tr>
-            </thead>
-            <tbody>
-              {this.state.Annonces.map((annonce) => (
-                <tr key={annonce.AnnonceID}>
-                  <td>{annonce.Titre}</td>
-                  <td>{annonce.Quantite}</td>
-                  <td>{annonce.DenreeNom}</td>
-                  <td>{annonce.MagasinNom}</td>
-                  <td>{annonce.JourCreation}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <div className="col-sm-8 mx-auto">
+            {this.state.Annonces.map((annonce) => (
+              <AnnonceDetails
+                denree={annonce.DenreeNom}
+                quantite={annonce.Quantite}
+                magasin={annonce.MagasinNom}
+                date={annonce.JourCreation}
+                key={annonce.AnnonceID}
+              />
+            ))}
+          </div>
         </div>
       </div>
     );

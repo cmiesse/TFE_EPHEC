@@ -122,7 +122,7 @@ app.post("/api/users/connexion", (req, res) => {
 // Obtenir toutes les annonces
 app.get("/api/annonces", (req, res) => {
   const SELECT_ALL_ANNONCES_QUERY =
-    "SELECT a.AnnonceID, a.Titre, d.DenreeNom, m.MagasinNom, a.Quantite, u.Pseudo, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS DateCreation from annonces a, denrees d, utilisateurs u, magasins m WHERE u.UtilisateurID=a.UtilisateurID AND d.DenreeID=a.DenreeID AND m.MagasinID=a.MagasinID ORDER BY a.DateCreation DESC";
+    "SELECT a.AnnonceID, d.DenreeNom, m.MagasinNom, a.Quantite, u.Pseudo, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS DateCreation from annonces a, denrees d, utilisateurs u, magasins m WHERE u.UtilisateurID=a.UtilisateurID AND d.DenreeID=a.DenreeID AND m.MagasinID=a.MagasinID";
   connection.query(SELECT_ALL_ANNONCES_QUERY, (err, results) => {
     if (err) {
       return res.send(err);
@@ -137,7 +137,7 @@ app.get("/api/annonces", (req, res) => {
 // Obtenir l'annonce avec l'id donné
 app.get("/api/annonces/:id", (req, res) => {
   const AnnonceID = req.params.id;
-  const SELECT_ANNONCE_BY_ID_QUERY = `SELECT a.Titre, a.Quantite, d.DenreeNom, m.MagasinNom, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation from annonces a, denrees d, magasins m WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND AnnonceID=${AnnonceID}`;
+  const SELECT_ANNONCE_BY_ID_QUERY = `SELECT a.Quantite, d.DenreeNom, m.MagasinNom, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation from annonces a, denrees d, magasins m WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND AnnonceID=${AnnonceID}`;
   connection.query(SELECT_ANNONCE_BY_ID_QUERY, (err, results) => {
     if (err) {
       return res.send(err);
@@ -165,7 +165,7 @@ app.delete("/api/annonces/:id", (req, res) => {
 // Obtenir les annonces d'un utilisateur donné
 app.get("/api/annoncesUser/:id", (req, res) => {
   const UtilisateurID = req.params.id;
-  const SELECT_ANNONCE_BY_ID_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m WHERE a.DenreeID = d.DenreeID AND a.MagasinID=m.MagasinID AND UtilisateurID=${UtilisateurID} ORDER BY JourCreation DESC`;
+  const SELECT_ANNONCE_BY_ID_QUERY = `SELECT a.AnnonceID, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m WHERE a.DenreeID = d.DenreeID AND a.MagasinID=m.MagasinID AND UtilisateurID=${UtilisateurID} ORDER BY JourCreation DESC`;
   connection.query(SELECT_ANNONCE_BY_ID_QUERY, (err, results) => {
     if (err) {
       return res.send(err);
@@ -180,7 +180,7 @@ app.get("/api/annoncesUser/:id", (req, res) => {
 // Obtenir les annonces par provinces (classique)
 app.get("/api/annoncesProvince/:ProvinceID", (req, res) => {
   const ProvinceID = req.params.ProvinceID;
-  const SELECT_ANNONCES_BY_PROVINCE_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND m.ProvinceID=${ProvinceID} ORDER BY JourCreation DESC`;
+  const SELECT_ANNONCES_BY_PROVINCE_QUERY = `SELECT a.AnnonceID, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND m.ProvinceID=${ProvinceID} ORDER BY JourCreation DESC`;
   connection.query(SELECT_ANNONCES_BY_PROVINCE_QUERY, (err, results) => {
     if (err) {
       return res.send(err);
@@ -196,7 +196,7 @@ app.get("/api/annoncesProvince/:ProvinceID/:TypeID/:DenreeID", (req, res) => {
   const ProvinceID = req.params.ProvinceID;
   const TypeID = req.params.TypeID;
   const DenreeID = req.params.DenreeID;
-  const SELECT_ANNONCES_BY_PROVINCE_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND m.ProvinceID=${ProvinceID} AND (d.TypeID=${TypeID} OR a.DenreeID=${DenreeID}) ORDER BY JourCreation DESC`;
+  const SELECT_ANNONCES_BY_PROVINCE_QUERY = `SELECT a.AnnonceID, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND m.ProvinceID=${ProvinceID} AND (d.TypeID=${TypeID} OR a.DenreeID=${DenreeID}) ORDER BY JourCreation DESC`;
   connection.query(SELECT_ANNONCES_BY_PROVINCE_QUERY, (err, results) => {
     if (err) {
       return res.send(err);
@@ -210,7 +210,7 @@ app.get("/api/annoncesProvince/:ProvinceID/:TypeID/:DenreeID", (req, res) => {
 
 app.get("/api/annoncesVille/:VilleNom", (req, res) => {
   const VilleNom = req.params.VilleNom;
-  const SELECT_ANNONCES_BY_VILLE_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m, villes v WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND v.VilleID=m.VilleID AND v.VilleNom='${VilleNom}' ORDER BY JourCreation DESC`;
+  const SELECT_ANNONCES_BY_VILLE_QUERY = `SELECT a.AnnonceID, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m, villes v WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND v.VilleID=m.VilleID AND v.VilleNom='${VilleNom}' ORDER BY JourCreation DESC`;
   connection.query(SELECT_ANNONCES_BY_VILLE_QUERY, (err, results) => {
     if (err) {
       return res.send(err);
@@ -226,7 +226,7 @@ app.get("/api/annoncesVille/:VilleNom/:TypeID/:DenreeID", (req, res) => {
   const VilleNom = req.params.VilleNom;
   const TypeID = req.params.TypeID;
   const DenreeID = req.params.DenreeID;
-  const SELECT_ANNONCES_BY_VILLE_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m, villes v WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND v.VilleID=m.VilleID AND v.VilleNom='${VilleNom}' AND (d.TypeID=${TypeID} OR a.DenreeID=${DenreeID}) ORDER BY JourCreation DESC`;
+  const SELECT_ANNONCES_BY_VILLE_QUERY = `SELECT a.AnnonceID, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m, villes v WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND v.VilleID=m.VilleID AND v.VilleNom='${VilleNom}' AND (d.TypeID=${TypeID} OR a.DenreeID=${DenreeID}) ORDER BY JourCreation DESC`;
   connection.query(SELECT_ANNONCES_BY_VILLE_QUERY, (err, results) => {
     if (err) {
       return res.send(err);
@@ -241,7 +241,7 @@ app.get("/api/annoncesVille/:VilleNom/:TypeID/:DenreeID", (req, res) => {
 // Annonces par code postal classique
 app.get("/api/annoncesCodePostal/:CodePostal", (req, res) => {
   const CodePostal = req.params.CodePostal;
-  const SELECT_ANNONCES_BY_CODEPOSTAL_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m, villes v WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND v.VilleID=m.VilleID AND v.CodePostal=${CodePostal} ORDER BY JourCreation DESC`;
+  const SELECT_ANNONCES_BY_CODEPOSTAL_QUERY = `SELECT a.AnnonceID, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m, villes v WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND v.VilleID=m.VilleID AND v.CodePostal=${CodePostal} ORDER BY JourCreation DESC`;
   connection.query(SELECT_ANNONCES_BY_CODEPOSTAL_QUERY, (err, results) => {
     if (err) {
       return res.send(err);
@@ -258,7 +258,7 @@ app.get("/api/annoncesCodePostal/:CodePostal/:TypeID/:DenreeID", (req, res) => {
   const CodePostal = req.params.CodePostal;
   const TypeID = req.params.TypeID;
   const DenreeID = req.params.DenreeID;
-  const SELECT_ANNONCES_BY_CODEPOSTAL_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m, villes v WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND v.VilleID=m.VilleID AND v.CodePostal=${CodePostal} AND (d.TypeID=${TypeID} OR a.DenreeID=${DenreeID}) ORDER BY JourCreation DESC`;
+  const SELECT_ANNONCES_BY_CODEPOSTAL_QUERY = `SELECT a.AnnonceID, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m, villes v WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND v.VilleID=m.VilleID AND v.CodePostal=${CodePostal} AND (d.TypeID=${TypeID} OR a.DenreeID=${DenreeID}) ORDER BY JourCreation DESC`;
   connection.query(SELECT_ANNONCES_BY_CODEPOSTAL_QUERY, (err, results) => {
     if (err) {
       return res.send(err);
@@ -273,7 +273,7 @@ app.get("/api/annoncesCodePostal/:CodePostal/:TypeID/:DenreeID", (req, res) => {
 // Annonces par magasin classique
 app.get("/api/annoncesMagasin/:MagasinID", (req, res) => {
   const MagasinID = req.params.MagasinID;
-  const SELECT_ANNONCES_BY_MAGASIN_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND a.MagasinID=${MagasinID} ORDER BY JourCreation DESC`;
+  const SELECT_ANNONCES_BY_MAGASIN_QUERY = `SELECT a.AnnonceID, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND a.MagasinID=${MagasinID} ORDER BY JourCreation DESC`;
   connection.query(SELECT_ANNONCES_BY_MAGASIN_QUERY, (err, results) => {
     if (err) {
       return res.send(err);
@@ -290,7 +290,7 @@ app.get("/api/annoncesMagasin/:MagasinID/:TypeID/:DenreeID", (req, res) => {
   const MagasinID = req.params.MagasinID;
   const TypeID = req.params.TypeID;
   const DenreeID = req.params.DenreeID;
-  const SELECT_ANNONCES_BY_MAGASIN_QUERY = `SELECT a.AnnonceID, a.Titre, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND a.MagasinID=${MagasinID} AND (d.TypeID=${TypeID} OR a.DenreeID=${DenreeID}) ORDER BY JourCreation DESC`;
+  const SELECT_ANNONCES_BY_MAGASIN_QUERY = `SELECT a.AnnonceID, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND a.MagasinID=${MagasinID} AND (d.TypeID=${TypeID} OR a.DenreeID=${DenreeID}) ORDER BY JourCreation DESC`;
   connection.query(SELECT_ANNONCES_BY_MAGASIN_QUERY, (err, results) => {
     if (err) {
       return res.send(err);
@@ -305,14 +305,12 @@ app.get("/api/annoncesMagasin/:MagasinID/:TypeID/:DenreeID", (req, res) => {
 // Ajouter une annonce
 app.post("/api/annonces", (req, res) => {
   const AnnonceData = {
-    Titre: req.body.Titre,
     Quantite: req.body.Quantite,
     UtilisateurID: req.body.UtilisateurID,
     MagasinID: req.body.MagasinID,
     DenreeID: req.body.DenreeID,
   };
   if (
-    !AnnonceData.Titre ||
     !AnnonceData.Quantite ||
     !AnnonceData.UtilisateurID ||
     !AnnonceData.MagasinID ||
@@ -322,7 +320,7 @@ app.post("/api/annonces", (req, res) => {
       .status(400)
       .json({ error: "Un ou plusieurs champs sont manquants" });
   }
-  const ADD_ANNONCE_QUERY = `INSERT INTO annonces(Titre, Quantite, UtilisateurID, MagasinID, DenreeID) VALUES('${AnnonceData.Titre}','${AnnonceData.Quantite}','${AnnonceData.UtilisateurID}','${AnnonceData.MagasinID}','${AnnonceData.DenreeID}')`;
+  const ADD_ANNONCE_QUERY = `INSERT INTO annonces(Quantite, UtilisateurID, MagasinID, DenreeID) VALUES('${AnnonceData.Quantite}','${AnnonceData.UtilisateurID}','${AnnonceData.MagasinID}','${AnnonceData.DenreeID}')`;
   connection.query(ADD_ANNONCE_QUERY, (err, results) => {
     if (err) {
       return res.status(401).json({ error: "Une erreur s'est produite" });

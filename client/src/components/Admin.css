@@ -17,11 +17,14 @@ table {
   table-layout: fixed;
   width: 100%;
 }
-
-.colonne-dispo {
-  width: 15%;
+.colonne-denree,
+.colonne-quantite,
+.colonne-magasin,
+.colonne-user,
+.colonne-date {
+  width: 18%;
 }
 
-.colonne-annonce {
-  width: 85%;
+.colonne-delete {
+  width: 3%;
 }
