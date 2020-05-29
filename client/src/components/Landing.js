@@ -32,41 +32,32 @@ class Landing extends Component {
           <Helmet>
             <title>Accueil - StockShop</title>
           </Helmet>
-          <h1>Page d'accueil</h1>
+          <h1>Recherche d'annonces </h1>
           <div className="AnnoncesRecherche">
             <Link to={"/annoncesCodePostal"}>
-              <button
-                type="button"
-                className="btn btn-lg btn-primary btn-block"
-              >
-                Recherche d'annonces par code postal
+              <button type="button" className="btn btn-lg btn-primary">
+                par code postal
               </button>
             </Link>
+            <br />
             <br />
             <Link to={"/annoncesVille"}>
-              <button
-                type="button"
-                className="btn btn-lg btn-primary btn-block"
-              >
-                Recherche d'annonces par ville
+              <button type="button" className="btn btn-lg btn-primary">
+                par ville
               </button>
             </Link>
+            <br />
             <br />
             <Link to={"/annoncesProvince"}>
-              <button
-                type="button"
-                className="btn btn-lg btn-primary btn-block"
-              >
-                Recherche d'annonces par province
+              <button type="button" className="btn btn-lg btn-primary">
+                par province
               </button>
             </Link>
             <br />
+            <br />
             <Link to={"/annoncesMagasin"}>
-              <button
-                type="button"
-                className="btn btn-lg btn-primary btn-block"
-              >
-                Recherche d'annonces par magasin
+              <button type="button" className="btn btn-lg btn-primary">
+                par magasin
               </button>
             </Link>
           </div>

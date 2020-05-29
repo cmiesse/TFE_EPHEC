@@ -12,3 +12,8 @@ th {
   background-color: black;
   color: white;
 }
+
+table {
+  table-layout: fixed;
+  width: 100%;
+}
