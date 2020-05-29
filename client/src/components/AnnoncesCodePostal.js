@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "../App.css";
 import { getToken } from "../Utils/Common";
 import jwt_decode from "jwt-decode";
+import AnnonceDetails from "./AnnonceDetails";
 import { Helmet } from "react-helmet";
 
 export default class AnnoncesCodePostal extends Component {
@@ -172,29 +173,18 @@ export default class AnnoncesCodePostal extends Component {
               </div>
               {getToken() ? this.renderUserTypes() : ""}
               {getToken() ? this.renderUserDenrees() : ""}
-            </div>
-            <table align="center" className="table mx-auto">
-              <thead>
-                <tr>
-                  <th>Titre</th>
-                  <th>Quantité</th>
-                  <th>Denrée</th>
-                  <th>Magasin</th>
-                  <th>Créé le </th>
-                </tr>
-              </thead>
-              <tbody>
+              <div>
                 {this.state.AnnoncesCodePostal.map((annonce) => (
-                  <tr key={annonce.AnnonceID}>
-                    <td>{annonce.Titre}</td>
-                    <td>{annonce.Quantite}</td>
-                    <td>{annonce.DenreeNom}</td>
-                    <td>{annonce.MagasinNom}</td>
-                    <td>{annonce.JourCreation}</td>
-                  </tr>
+                  <AnnonceDetails
+                    denree={annonce.DenreeNom}
+                    quantite={annonce.Quantite}
+                    magasin={annonce.MagasinNom}
+                    date={annonce.JourCreation}
+                    key={annonce.AnnonceID}
+                  />
                 ))}
-              </tbody>
-            </table>
+              </div>
+            </div>
           </div>
         </div>
       </div>

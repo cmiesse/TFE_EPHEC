@@ -114,7 +114,7 @@ class ChoixTypeDenree extends Component {
           });
       });
     }
-    this.props.history.push(`/profile`);
+    this.props.history.push(`/profil`);
   };
 
   componentDidMount() {

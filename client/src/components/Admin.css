@@ -17,3 +17,11 @@ table {
   table-layout: fixed;
   width: 100%;
 }
+
+.colonne-dispo {
+  width: 15%;
+}
+
+.colonne-annonce {
+  width: 85%;
+}

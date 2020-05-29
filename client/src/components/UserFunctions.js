@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const register = (newUser) => {
   return axios
-    .post("/api/users/register", {
+    .post("/api/users/inscription", {
       Prenom: newUser.Prenom,
       Nom: newUser.Nom,
       Pseudo: newUser.Pseudo,
@@ -18,7 +18,7 @@ export const register = (newUser) => {
 
 export const login = (user) => {
   return axios
-    .post("/api/users/login", {
+    .post("/api/users/connexion", {
       Pseudo: user.Pseudo,
       MotDePasse: user.MotDePasse,
     })

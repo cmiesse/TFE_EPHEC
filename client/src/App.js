@@ -27,11 +27,15 @@ class App extends Component {
           <Navbar />
           <Route exact path="/" component={Landing} />
           <div className="container">
-            <Route exact path="/register" component={Register} />
-            <Route exact path="/login" component={Login} />
-            <PrivateRoute exact path="/profile" component={Profile} />
-            <PrivateRoute exact path="/choicetd" component={ChoixTypeDenree} />
-            <PrivateRoute exact path="/newAnnonce" component={NewAnnonce} />
+            <Route exact path="/inscription" component={Register} />
+            <Route exact path="/connexion" component={Login} />
+            <PrivateRoute exact path="/profil" component={Profile} />
+            <PrivateRoute
+              exact
+              path="/choixTypesDenrees"
+              component={ChoixTypeDenree}
+            />
+            <PrivateRoute exact path="/ajoutAnnonce" component={NewAnnonce} />
             <PrivateRoute exact path="/ajoutMagasin" component={AjoutMagasin} />
             <PrivateRoute exact path="/ajoutDenree" component={AjoutDenree} />
             <Route

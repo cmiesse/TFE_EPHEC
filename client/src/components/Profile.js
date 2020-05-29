@@ -161,7 +161,7 @@ class Profile extends Component {
               </tr>
             </tbody>
           </table>
-          <Link to="/choicetd">
+          <Link to="/choixTypesDenrees">
             <button className="btn btn-lg btn-primary">
               Modifier les préférences
             </button>

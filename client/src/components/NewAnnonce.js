@@ -39,7 +39,7 @@ class NewAnnonce extends Component {
 
     annonces(annonce)
       .then((res) => {
-        this.props.history.push(`/profile`);
+        this.props.history.push(`/profil`);
       })
       .catch((error) => {
         if (error.response.status === 400) {

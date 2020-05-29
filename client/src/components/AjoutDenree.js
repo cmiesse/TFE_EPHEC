@@ -28,7 +28,7 @@ class AjoutDenree extends Component {
     };
     addDenree(denree)
       .then((res) => {
-        this.props.history.push(`/newAnnonce`);
+        this.props.history.push(`/ajoutAnnonce`);
       })
       .catch((error) => {
         if (error.response.status === 400) {

@@ -1,42 +1,33 @@
 import React, { Component } from "react";
 import "../App.css";
-import { Helmet } from "react-helmet";
 
 class AnnonceDetails extends Component {
   constructor() {
     super();
-    this.state = { Annonce: [] };
+    this.state = {
+      color: "",
+    };
   }
-  getAnnonce(annonce) {
-    fetch(`/api/annonces/${annonce}`)
-      .then((res) => res.json())
-      .then((res) => this.setState({ Annonce: res.data }))
-      .catch((err) => console.log(err));
-  }
+  changeBackgroundColor = (quantite) => {
+    if (quantite === "Vide") {
+      this.setState({ color: "red" });
+    } else if (quantite === "Peu") {
+      this.setState({ color: "orange" });
+    } else {
+      this.setState({ color: "green" });
+    }
+  };
 
   componentDidMount() {
-    const AnnonceID = this.props.match.params.AnnonceID;
-    setTimeout(() => {
-      this.getAnnonce(AnnonceID);
-    }, 1);
+    this.changeBackgroundColor(this.props.quantite);
   }
+
   render() {
     return (
-      <div className="container">
-        <div className="jumbotron mt-2">
-          <Helmet>
-            <title>Détails de l'annonce - StockShop</title>
-          </Helmet>
-          {this.state.Annonce.map((annonce) => (
-            <div key="Annonce">
-              <h1>{annonce.Titre}</h1>
-              <h2>
-                {annonce.Quantite} de {annonce.DenreeNom} à {annonce.MagasinNom}
-              </h2>
-              <h3>Annonce créé le : {annonce.JourCreation}</h3>
-            </div>
-          ))}
-        </div>
+      <div className="Annonce" style={{ backgroundColor: this.state.color }}>
+        <b style={{ fontSize: 20 }}>{this.props.denree}</b>
+        <p>{this.props.magasin}</p>
+        <p>Dernière modification : {this.props.date}</p>
       </div>
     );
   }

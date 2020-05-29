@@ -18,12 +18,12 @@ class Landing extends Component {
     const loginRegLink = (
       <ul className="navbar-nav">
         <li className="nav-item">
-          <Link to="/login" className="nav-link">
+          <Link to="/connexion" className="nav-link">
             Connexion
           </Link>
         </li>
         <li className="nav-item">
-          <Link to="/register" className="nav-link">
+          <Link to="/inscription" className="nav-link">
             Inscription
           </Link>
         </li>
@@ -33,12 +33,12 @@ class Landing extends Component {
     const userLink = (
       <ul className="navbar-nav">
         <li className="nav-item">
-          <Link to="/profile" className="nav-link">
+          <Link to="/profil" className="nav-link">
             Mon profil
           </Link>
         </li>
         <li className="nav-item">
-          <Link to="/newAnnonce" className="nav-link">
+          <Link to="/ajoutAnnonce" className="nav-link">
             Ajout annonce
           </Link>
         </li>
