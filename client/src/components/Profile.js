@@ -197,6 +197,8 @@ class Profile extends Component {
                 quantite={annonce.Quantite}
                 magasin={annonce.MagasinNom}
                 date={annonce.JourCreation}
+                minutes={annonce.nombreMinutes}
+                heures={annonce.nombreHeures}
                 key={annonce.AnnonceID}
               />
             ))}

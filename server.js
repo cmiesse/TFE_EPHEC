@@ -165,7 +165,7 @@ app.delete("/api/annonces/:id", (req, res) => {
 // Obtenir les annonces d'un utilisateur donné
 app.get("/api/annoncesUser/:id", (req, res) => {
   const UtilisateurID = req.params.id;
-  const SELECT_ANNONCE_BY_ID_QUERY = `SELECT a.AnnonceID, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m WHERE a.DenreeID = d.DenreeID AND a.MagasinID=m.MagasinID AND UtilisateurID=${UtilisateurID} ORDER BY JourCreation DESC`;
+  const SELECT_ANNONCE_BY_ID_QUERY = `SELECT a.AnnonceID, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, TIMESTAMPDIFF(HOUR, a.DateCreation, current_timestamp()) AS nombreHeures, TIMESTAMPDIFF(MINUTE, a.DateCreation, current_timestamp()) AS nombreMinutes, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m WHERE a.DenreeID = d.DenreeID AND a.MagasinID=m.MagasinID AND UtilisateurID=${UtilisateurID} ORDER BY JourCreation DESC`;
   connection.query(SELECT_ANNONCE_BY_ID_QUERY, (err, results) => {
     if (err) {
       return res.send(err);

@@ -7,6 +7,7 @@ class AnnonceDetails extends Component {
     this.state = {
       color: "",
       sign: "",
+      temps: "",
     };
   }
   changeBackgroundColorAndSign = (quantite) => {
@@ -22,8 +23,21 @@ class AnnonceDetails extends Component {
     }
   };
 
+  changeTime(heures, minutes) {
+    if (heures >= 24) {
+      this.setState({ temps: this.props.date });
+    } else if (heures === 0 && minutes === 0) {
+      this.setState({ temps: "il y a moins d'une minute" });
+    } else if (heures !== 0) {
+      this.setState({ temps: "il y a " + heures + "h" });
+    } else if (heures === 0 && minutes !== 0) {
+      this.setState({ temps: "il y a " + minutes + " min" });
+    }
+  }
+
   componentDidMount() {
     this.changeBackgroundColorAndSign(this.props.quantite);
+    this.changeTime(this.props.heures, this.props.minutes);
   }
 
   render() {
@@ -32,7 +46,7 @@ class AnnonceDetails extends Component {
         <p className="QuantiteAnnonce">{this.state.sign}</p>
         <b style={{ fontSize: 20 }}>{this.props.denree}</b>
         <p>{this.props.magasin}</p>
-        <p>Dernière modification : {this.props.date}</p>
+        <p>Dernière modification : {this.state.temps}</p>
       </div>
     );
   }
