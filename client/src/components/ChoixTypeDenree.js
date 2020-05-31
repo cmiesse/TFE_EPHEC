@@ -4,6 +4,7 @@ import { getToken } from "../Utils/Common";
 import { Helmet } from "react-helmet";
 import { userTypes } from "./UserTypesFunctions";
 import { userDenrees } from "./UserDenreesFunctions";
+import { Link } from "react-router-dom";
 
 class ChoixTypeDenree extends Component {
   constructor() {
@@ -152,6 +153,11 @@ class ChoixTypeDenree extends Component {
                       </option>
                     ))}
                   </select>
+                  <Link to={"/ajoutType"}>
+                    <button type="button">
+                      Vous ne trouvez pas un type ? Ajoutez le
+                    </button>
+                  </Link>
                 </div>
                 <div>
                   <h2>Denrées</h2>

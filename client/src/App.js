@@ -16,6 +16,7 @@ import AnnoncesMagasin from "./components/AnnoncesMagasin";
 import Admin from "./components/Admin";
 import AjoutMagasin from "./components/AjoutMagasin";
 import AjoutDenree from "./components/AjoutDenree";
+import AjoutType from "./components/AjoutType";
 import PrivateRoute from "./Utils/PrivateRoute";
 import AdminRoute from "./Utils/AdminRoute";
 
@@ -38,6 +39,7 @@ class App extends Component {
             <PrivateRoute exact path="/ajoutAnnonce" component={NewAnnonce} />
             <PrivateRoute exact path="/ajoutMagasin" component={AjoutMagasin} />
             <PrivateRoute exact path="/ajoutDenree" component={AjoutDenree} />
+            <PrivateRoute exact path="/ajoutType" component={AjoutType} />
             <Route
               exact
               path="/annonce/:AnnonceID"

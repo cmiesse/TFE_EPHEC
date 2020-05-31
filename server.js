@@ -334,22 +334,8 @@ app.post("/api/annonces", (req, res) => {
 
 // Obtenir toutes les denrées
 app.get("/api/denrees", (req, res) => {
-  const SELECT_ALL_DENREES_QUERY = "SELECT * from denrees";
-  connection.query(SELECT_ALL_DENREES_QUERY, (err, results) => {
-    if (err) {
-      return res.send(err);
-    } else {
-      return res.json({
-        data: results,
-      });
-    }
-  });
-});
-
-// Obtenir toutes les denrées
-app.get("/api/denreesSelect", (req, res) => {
   const SELECT_ALL_DENREES_QUERY =
-    "SELECT DenreeID AS value, DenreeNom AS label, TypeID from denrees";
+    "SELECT * from denrees ORDER BY DenreeNom ASC";
   connection.query(SELECT_ALL_DENREES_QUERY, (err, results) => {
     if (err) {
       return res.send(err);
@@ -401,22 +387,7 @@ app.post("/api/denrees", (req, res) => {
 
 // Obtenir tous les types de denrée
 app.get("/api/types", (req, res) => {
-  const SELECT_ALL_TYPES_QUERY = "SELECT * from types";
-  connection.query(SELECT_ALL_TYPES_QUERY, (err, results) => {
-    if (err) {
-      return res.send(err);
-    } else {
-      return res.json({
-        data: results,
-      });
-    }
-  });
-});
-
-// Obtenir tous les types de denrée
-app.get("/api/typesSelect", (req, res) => {
-  const SELECT_ALL_TYPES_QUERY =
-    "SELECT TypeID AS value, TypeNom AS label from types";
+  const SELECT_ALL_TYPES_QUERY = "SELECT * from types ORDER BY TypeNom ASC";
   connection.query(SELECT_ALL_TYPES_QUERY, (err, results) => {
     if (err) {
       return res.send(err);
@@ -443,10 +414,31 @@ app.get("/api/types/:id", (req, res) => {
   });
 });
 
+// Ajouter un type
+app.post("/api/types", (req, res) => {
+  const TypeData = {
+    TypeNom: req.body.TypeNom,
+  };
+  if (!TypeData.TypeNom) {
+    return res
+      .status(400)
+      .json({ error: "Un ou plusieurs champs sont manquants" });
+  }
+  const ADD_TYPE_QUERY = `INSERT INTO types(TypeNom) VALUES('${TypeData.TypeNom}')`;
+  connection.query(ADD_TYPE_QUERY, (err, results) => {
+    if (err) {
+      return res.status(401).json({ error: "Une erreur s'est produite" });
+    } else {
+      return res.send("Type ajouté");
+    }
+  });
+});
+
 /*******************magasins*****************************/
 // Obtenir tous les magasins
 app.get("/api/magasins", (req, res) => {
-  const SELECT_ALL_MAGASINS_QUERY = "SELECT * from magasins";
+  const SELECT_ALL_MAGASINS_QUERY =
+    "SELECT * from magasins ORDER BY MagasinNom ASC";
   connection.query(SELECT_ALL_MAGASINS_QUERY, (err, results) => {
     if (err) {
       return res.send(err);
@@ -670,7 +662,7 @@ app.get("/api/provinceNom/:id", (req, res) => {
 
 /*******************************************************/
 app.get("/api/villes", (req, res) => {
-  const SELECT_VILLES_QUERY = `SELECT * FROM villes`;
+  const SELECT_VILLES_QUERY = `SELECT * FROM villes ORDER BY VilleNom ASC`;
   connection.query(SELECT_VILLES_QUERY, (err, results) => {
     if (err) {
       return res.send(err);
@@ -698,7 +690,7 @@ app.get("/api/villeNom/:id", (req, res) => {
 
 app.get("/api/villesProvince/:id", (req, res) => {
   const ProvinceID = req.params.id;
-  const SELECT_VILLE_BY_PROVINCE_QUERY = `SELECT VilleID, VilleNom FROM villes WHERE ProvinceID=${ProvinceID}`;
+  const SELECT_VILLE_BY_PROVINCE_QUERY = `SELECT VilleID, VilleNom FROM villes WHERE ProvinceID=${ProvinceID} ORDER BY VilleNom ASC`;
   connection.query(SELECT_VILLE_BY_PROVINCE_QUERY, (err, results) => {
     if (err) {
       return res.send(err);
