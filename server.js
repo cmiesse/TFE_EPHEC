@@ -180,7 +180,7 @@ app.get("/api/annoncesUser/:id", (req, res) => {
 // Obtenir les annonces par provinces (classique)
 app.get("/api/annoncesProvince/:ProvinceID", (req, res) => {
   const ProvinceID = req.params.ProvinceID;
-  const SELECT_ANNONCES_BY_PROVINCE_QUERY = `SELECT a.AnnonceID, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND m.ProvinceID=${ProvinceID} ORDER BY JourCreation DESC`;
+  const SELECT_ANNONCES_BY_PROVINCE_QUERY = `SELECT a.AnnonceID, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, TIMESTAMPDIFF(HOUR, a.DateCreation, current_timestamp()) AS nombreHeures, TIMESTAMPDIFF(MINUTE, a.DateCreation, current_timestamp()) AS nombreMinutes, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND m.ProvinceID=${ProvinceID} AND TIMESTAMPDIFF(DAY, DateCreation, current_timestamp())=0 ORDER BY JourCreation DESC`;
   connection.query(SELECT_ANNONCES_BY_PROVINCE_QUERY, (err, results) => {
     if (err) {
       return res.send(err);
@@ -196,7 +196,7 @@ app.get("/api/annoncesProvince/:ProvinceID/:TypeID/:DenreeID", (req, res) => {
   const ProvinceID = req.params.ProvinceID;
   const TypeID = req.params.TypeID;
   const DenreeID = req.params.DenreeID;
-  const SELECT_ANNONCES_BY_PROVINCE_QUERY = `SELECT a.AnnonceID, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND m.ProvinceID=${ProvinceID} AND (d.TypeID=${TypeID} OR a.DenreeID=${DenreeID}) ORDER BY JourCreation DESC`;
+  const SELECT_ANNONCES_BY_PROVINCE_QUERY = `SELECT a.AnnonceID, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, TIMESTAMPDIFF(HOUR, a.DateCreation, current_timestamp()) AS nombreHeures, TIMESTAMPDIFF(MINUTE, a.DateCreation, current_timestamp()) AS nombreMinutes d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND m.ProvinceID=${ProvinceID} AND (d.TypeID=${TypeID} OR a.DenreeID=${DenreeID}) AND TIMESTAMPDIFF(DAY, DateCreation, current_timestamp())=0 ORDER BY JourCreation DESC`;
   connection.query(SELECT_ANNONCES_BY_PROVINCE_QUERY, (err, results) => {
     if (err) {
       return res.send(err);
@@ -210,7 +210,7 @@ app.get("/api/annoncesProvince/:ProvinceID/:TypeID/:DenreeID", (req, res) => {
 
 app.get("/api/annoncesVille/:VilleNom", (req, res) => {
   const VilleNom = req.params.VilleNom;
-  const SELECT_ANNONCES_BY_VILLE_QUERY = `SELECT a.AnnonceID, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m, villes v WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND v.VilleID=m.VilleID AND v.VilleNom='${VilleNom}' ORDER BY JourCreation DESC`;
+  const SELECT_ANNONCES_BY_VILLE_QUERY = `SELECT a.AnnonceID, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, TIMESTAMPDIFF(HOUR, a.DateCreation, current_timestamp()) AS nombreHeures, TIMESTAMPDIFF(MINUTE, a.DateCreation, current_timestamp()) AS nombreMinutes, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m, villes v WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND v.VilleID=m.VilleID AND v.VilleNom='${VilleNom}' AND TIMESTAMPDIFF(DAY, DateCreation, current_timestamp())=0 ORDER BY JourCreation DESC`;
   connection.query(SELECT_ANNONCES_BY_VILLE_QUERY, (err, results) => {
     if (err) {
       return res.send(err);
@@ -226,7 +226,7 @@ app.get("/api/annoncesVille/:VilleNom/:TypeID/:DenreeID", (req, res) => {
   const VilleNom = req.params.VilleNom;
   const TypeID = req.params.TypeID;
   const DenreeID = req.params.DenreeID;
-  const SELECT_ANNONCES_BY_VILLE_QUERY = `SELECT a.AnnonceID, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m, villes v WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND v.VilleID=m.VilleID AND v.VilleNom='${VilleNom}' AND (d.TypeID=${TypeID} OR a.DenreeID=${DenreeID}) ORDER BY JourCreation DESC`;
+  const SELECT_ANNONCES_BY_VILLE_QUERY = `SELECT a.AnnonceID, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, TIMESTAMPDIFF(HOUR, a.DateCreation, current_timestamp()) AS nombreHeures, TIMESTAMPDIFF(MINUTE, a.DateCreation, current_timestamp()) AS nombreMinutes, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m, villes v WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND v.VilleID=m.VilleID AND v.VilleNom='${VilleNom}' AND (d.TypeID=${TypeID} OR a.DenreeID=${DenreeID}) AND TIMESTAMPDIFF(DAY, DateCreation, current_timestamp())=0 ORDER BY JourCreation DESC`;
   connection.query(SELECT_ANNONCES_BY_VILLE_QUERY, (err, results) => {
     if (err) {
       return res.send(err);
@@ -241,7 +241,7 @@ app.get("/api/annoncesVille/:VilleNom/:TypeID/:DenreeID", (req, res) => {
 // Annonces par code postal classique
 app.get("/api/annoncesCodePostal/:CodePostal", (req, res) => {
   const CodePostal = req.params.CodePostal;
-  const SELECT_ANNONCES_BY_CODEPOSTAL_QUERY = `SELECT a.AnnonceID, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m, villes v WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND v.VilleID=m.VilleID AND v.CodePostal=${CodePostal} ORDER BY JourCreation DESC`;
+  const SELECT_ANNONCES_BY_CODEPOSTAL_QUERY = `SELECT a.AnnonceID, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, TIMESTAMPDIFF(HOUR, a.DateCreation, current_timestamp()) AS nombreHeures, TIMESTAMPDIFF(MINUTE, a.DateCreation, current_timestamp()) AS nombreMinutes, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m, villes v WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND v.VilleID=m.VilleID AND v.CodePostal=${CodePostal} AND TIMESTAMPDIFF(DAY, DateCreation, current_timestamp())=0 ORDER BY JourCreation DESC`;
   connection.query(SELECT_ANNONCES_BY_CODEPOSTAL_QUERY, (err, results) => {
     if (err) {
       return res.send(err);
@@ -258,7 +258,7 @@ app.get("/api/annoncesCodePostal/:CodePostal/:TypeID/:DenreeID", (req, res) => {
   const CodePostal = req.params.CodePostal;
   const TypeID = req.params.TypeID;
   const DenreeID = req.params.DenreeID;
-  const SELECT_ANNONCES_BY_CODEPOSTAL_QUERY = `SELECT a.AnnonceID, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m, villes v WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND v.VilleID=m.VilleID AND v.CodePostal=${CodePostal} AND (d.TypeID=${TypeID} OR a.DenreeID=${DenreeID}) ORDER BY JourCreation DESC`;
+  const SELECT_ANNONCES_BY_CODEPOSTAL_QUERY = `SELECT a.AnnonceID, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, TIMESTAMPDIFF(HOUR, a.DateCreation, current_timestamp()) AS nombreHeures, TIMESTAMPDIFF(MINUTE, a.DateCreation, current_timestamp()) AS nombreMinutes, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m, villes v WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND v.VilleID=m.VilleID AND v.CodePostal=${CodePostal} AND (d.TypeID=${TypeID} OR a.DenreeID=${DenreeID}) AND TIMESTAMPDIFF(DAY, DateCreation, current_timestamp())=0 ORDER BY JourCreation DESC`;
   connection.query(SELECT_ANNONCES_BY_CODEPOSTAL_QUERY, (err, results) => {
     if (err) {
       return res.send(err);
@@ -273,7 +273,7 @@ app.get("/api/annoncesCodePostal/:CodePostal/:TypeID/:DenreeID", (req, res) => {
 // Annonces par magasin classique
 app.get("/api/annoncesMagasin/:MagasinID", (req, res) => {
   const MagasinID = req.params.MagasinID;
-  const SELECT_ANNONCES_BY_MAGASIN_QUERY = `SELECT a.AnnonceID, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND a.MagasinID=${MagasinID} ORDER BY JourCreation DESC`;
+  const SELECT_ANNONCES_BY_MAGASIN_QUERY = `SELECT a.AnnonceID, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, TIMESTAMPDIFF(HOUR, a.DateCreation, current_timestamp()) AS nombreHeures, TIMESTAMPDIFF(MINUTE, a.DateCreation, current_timestamp()) AS nombreMinutes, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND a.MagasinID=${MagasinID} AND TIMESTAMPDIFF(DAY, DateCreation, current_timestamp())=0 ORDER BY JourCreation DESC`;
   connection.query(SELECT_ANNONCES_BY_MAGASIN_QUERY, (err, results) => {
     if (err) {
       return res.send(err);
@@ -290,7 +290,7 @@ app.get("/api/annoncesMagasin/:MagasinID/:TypeID/:DenreeID", (req, res) => {
   const MagasinID = req.params.MagasinID;
   const TypeID = req.params.TypeID;
   const DenreeID = req.params.DenreeID;
-  const SELECT_ANNONCES_BY_MAGASIN_QUERY = `SELECT a.AnnonceID, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND a.MagasinID=${MagasinID} AND (d.TypeID=${TypeID} OR a.DenreeID=${DenreeID}) ORDER BY JourCreation DESC`;
+  const SELECT_ANNONCES_BY_MAGASIN_QUERY = `SELECT a.AnnonceID, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, TIMESTAMPDIFF(HOUR, a.DateCreation, current_timestamp()) AS nombreHeures, TIMESTAMPDIFF(MINUTE, a.DateCreation, current_timestamp()) AS nombreMinutes, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND a.MagasinID=${MagasinID} AND (d.TypeID=${TypeID} OR a.DenreeID=${DenreeID}) AND TIMESTAMPDIFF(DAY, DateCreation, current_timestamp())=0 ORDER BY JourCreation DESC`;
   connection.query(SELECT_ANNONCES_BY_MAGASIN_QUERY, (err, results) => {
     if (err) {
       return res.send(err);
