@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
+import Logo from "./signs/Logo.png";
 
 class Landing extends Component {
   constructor() {
@@ -71,7 +72,7 @@ class Landing extends Component {
           <ul className="navbar-nav">
             <li className="nav-item">
               <Link to="/" className="nav-link">
-                Accueil
+                <img className="LogoAccueil" src={Logo} alt="StockShop" />
               </Link>
             </li>
           </ul>

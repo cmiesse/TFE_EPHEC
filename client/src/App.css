@@ -62,9 +62,11 @@ a:hover {
   border: 1px solid black;
 }
 .QuantiteAnnonce {
-  border: 1px solid black;
-  float: right;
-  padding: 5px;
+  width: 25px;
+  height: 25px;
+}
+.LogoAccueil {
+  width: 15vh;
 }
 
 @keyframes App-logo-spin {

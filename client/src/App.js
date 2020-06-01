@@ -9,7 +9,6 @@ import Profile from "./components/Profile";
 import ModifMdP from "./components/ModifMdP";
 import NewAnnonce from "./components/NewAnnonce";
 import ChoixTypeDenree from "./components/ChoixTypeDenree";
-import AnnonceDetails from "./components/AnnonceDetails";
 import AnnoncesCodePostal from "./components/AnnoncesCodePostal";
 import AnnoncesVille from "./components/AnnoncesVille";
 import AnnoncesProvince from "./components/AnnoncesProvince";
@@ -42,11 +41,6 @@ class App extends Component {
             <PrivateRoute exact path="/ajoutMagasin" component={AjoutMagasin} />
             <PrivateRoute exact path="/ajoutDenree" component={AjoutDenree} />
             <PrivateRoute exact path="/ajoutType" component={AjoutType} />
-            <Route
-              exact
-              path="/annonce/:AnnonceID"
-              component={AnnonceDetails}
-            />
             <Route
               exact
               path="/annoncesCodePostal"

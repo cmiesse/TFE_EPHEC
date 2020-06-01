@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import { Helmet } from "react-helmet";
+import { getToken } from "../Utils/Common";
 import "../App.css";
 
 class Landing extends Component {
@@ -26,12 +27,19 @@ class Landing extends Component {
   }
 
   render() {
+    const notConnectedMessage = (
+      <p>
+        Pas encore membre ? <a href="/inscription">Cliquez ici</a>. Déjà membre
+        ? <a href="/connexion">Cliquez ici</a>
+      </p>
+    );
     return (
       <div className="container">
         <div className="jumbotron mt-2">
           <Helmet>
             <title>Accueil - StockShop</title>
           </Helmet>
+          {getToken() ? "" : notConnectedMessage}
           <h1>Recherche d'annonces </h1>
           <div className="AnnoncesRecherche">
             <Link to={"/annoncesCodePostal"}>
