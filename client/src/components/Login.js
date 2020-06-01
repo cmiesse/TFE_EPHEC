@@ -33,7 +33,7 @@ class Login extends Component {
         }
       })
       .catch((error) => {
-        if (error.response.status === 401) {
+        if (error.response && error.response.status === 401) {
           this.setState({
             setError: "L'utilisateur n'existe pas",
           });

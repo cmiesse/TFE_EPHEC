@@ -128,10 +128,26 @@ class Profile extends Component {
             <Helmet>
               <title>Profil - StockShop</title>
             </Helmet>
-            <h1 className="text-center">Profil de {this.state.Pseudo}</h1>
+            <h1 className="text-center">Votre profil</h1>
           </div>
           <table className="table col-md-6 mx-auto no-border">
             <tbody>
+              <tr className="no-border">
+                <td className="no-border">
+                  <b>Pseudo</b>
+                </td>
+                <td className="no-border">{this.state.Pseudo}</td>
+              </tr>
+              <tr className="no-border">
+                <td className="no-border">
+                  <b>Mot de passe</b>
+                </td>
+                <td className="no-border">
+                  <Link to="/modifMotdePasse">
+                    <button>Modifier le mot de passe</button>
+                  </Link>
+                </td>
+              </tr>
               <tr className="no-border">
                 <td className="no-border">
                   <b>Prénom</b>

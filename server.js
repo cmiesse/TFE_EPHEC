@@ -32,7 +32,7 @@ app.use(
 );
 
 // Enregister un utilisateur
-app.post("/api/users/inscription", (req, res) => {
+app.post("/api/users/register", (req, res) => {
   const userData = {
     Prenom: req.body.Prenom,
     Nom: req.body.Nom,
@@ -79,7 +79,7 @@ app.post("/api/users/inscription", (req, res) => {
 });
 
 // Login
-app.post("/api/users/connexion", (req, res) => {
+app.post("/api/users/login", (req, res) => {
   const userData = {
     Pseudo: req.body.Pseudo,
     MotDePasse: req.body.MotDePasse,
@@ -115,6 +115,31 @@ app.post("/api/users/connexion", (req, res) => {
       }
     }
   });
+});
+
+// Modifier le mot de passe
+app.put("/api/users/modifyMdP", (req, res) => {
+  const userData = {
+    UtilisateurID: req.body.UtilisateurID,
+    MdP: req.body.MdP,
+  };
+  if (!userData.UtilisateurID || !userData.MdP) {
+    return res
+      .status(400)
+      .json({ error: "Un ou plusieurs champs sont manquants" });
+  } else {
+    bcrypt.hash(req.body.MdP, 10, (err, hashed) => {
+      userData.MdP = hashed;
+      const MODIFY_MDP_QUERY = `UPDATE utilisateurs SET MotDePasse='${userData.MdP}' WHERE UtilisateurID='${userData.UtilisateurID}'`;
+      connection.query(MODIFY_MDP_QUERY, (err, results) => {
+        if (err) {
+          return res.send(err);
+        } else {
+          return res.send("Mot de passe modifié");
+        }
+      });
+    });
+  }
 });
 
 /*******************annonces*********************************/

@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const register = (newUser) => {
   return axios
-    .post("/api/users/inscription", {
+    .post("/api/users/register", {
       Prenom: newUser.Prenom,
       Nom: newUser.Nom,
       Pseudo: newUser.Pseudo,
@@ -18,7 +18,7 @@ export const register = (newUser) => {
 
 export const login = (user) => {
   return axios
-    .post("/api/users/connexion", {
+    .post("/api/users/login", {
       Pseudo: user.Pseudo,
       MotDePasse: user.MotDePasse,
     })
@@ -28,5 +28,16 @@ export const login = (user) => {
     })
     .catch((err) => {
       console.log(err);
+    });
+};
+
+export const modifyMdP = (user) => {
+  return axios
+    .put("/api/users/modifyMdP", {
+      UtilisateurID: user.UtilisateurID,
+      MdP: user.MdP,
+    })
+    .then((response) => {
+      console.log("Mot de passe modfié");
     });
 };

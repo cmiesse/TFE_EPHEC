@@ -11,6 +11,7 @@ class Register extends Component {
       Pseudo: "",
       Email: "",
       MotDePasse: "",
+      MdpConf: "",
       VilleID: "",
       Villes: [],
       ProvinceID: "",
@@ -26,29 +27,34 @@ class Register extends Component {
   }
   onSubmit(e) {
     e.preventDefault();
+    if (this.state.MotDePasse === this.state.MdpConf) {
+      const newUser = {
+        Prenom: this.state.Prenom,
+        Nom: this.state.Nom,
+        Pseudo: this.state.Pseudo,
+        MotDePasse: this.state.MotDePasse,
+        Email: this.state.Email,
+        ProvinceID: this.state.ProvinceID,
+        VilleID: this.state.VilleID,
+      };
 
-    const newUser = {
-      Prenom: this.state.Prenom,
-      Nom: this.state.Nom,
-      Pseudo: this.state.Pseudo,
-      MotDePasse: this.state.MotDePasse,
-      Email: this.state.Email,
-      ProvinceID: this.state.ProvinceID,
-      VilleID: this.state.VilleID,
-    };
-
-    register(newUser)
-      .then((res) => {
-        this.props.history.push(`/connexion`);
-      })
-      .catch((error) => {
-        if (error.response && error.response.status === 401) {
-          this.setState({
-            setError: "L'utilisateur existe déjà",
-          });
-        } else
-          this.setState({ setError: "Un ou plusieurs champs sont manquants" });
-      });
+      register(newUser)
+        .then((res) => {
+          this.props.history.push(`/connexion`);
+        })
+        .catch((error) => {
+          if (error.response && error.response.status === 401) {
+            this.setState({
+              setError: "L'utilisateur existe déjà",
+            });
+          } else
+            this.setState({
+              setError: "Un ou plusieurs champs sont manquants",
+            });
+        });
+    } else {
+      this.setState({ setError: "Les mots de passe sont différents" });
+    }
   }
 
   getProvinces() {
@@ -139,6 +145,20 @@ class Register extends Component {
                     autoComplete="MotDePasse"
                     placeholder="Entrez votre mot de passe"
                     value={this.state.MotDePasse}
+                    onChange={this.onChange}
+                    required
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="MdpConf">Confirmation du mot de passe</label>
+                  <input
+                    type="password"
+                    className="form-control"
+                    name="MdpConf"
+                    id="MdpConf"
+                    autoComplete="MdpConf"
+                    placeholder="Confirmez votre mot de passe"
+                    value={this.state.MdpConf}
                     onChange={this.onChange}
                     required
                   />
