@@ -69,6 +69,11 @@ a:hover {
   width: 15vh;
 }
 
+.LogoMagasin {
+  width: 5vh;
+  padding-right: 5px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
