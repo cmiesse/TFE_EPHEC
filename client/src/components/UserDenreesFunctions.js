@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const userDenrees = (userDenree) => {
+export const addUserDenrees = (userDenree) => {
   return axios.post("api/userDenrees", {
     User: userDenree.User,
     Denree: userDenree.Denree,

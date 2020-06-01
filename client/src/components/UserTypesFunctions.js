@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const userTypes = (userType) => {
+export const addUserTypes = (userType) => {
   return axios.post("api/userTypes", {
     User: userType.User,
     Type: userType.Type,

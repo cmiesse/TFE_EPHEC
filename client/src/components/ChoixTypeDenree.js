@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import jwt_decode from "jwt-decode";
 import { getToken } from "../Utils/Common";
 import { Helmet } from "react-helmet";
-import { userTypes } from "./UserTypesFunctions";
-import { userDenrees } from "./UserDenreesFunctions";
+import { addUserTypes } from "./UserTypesFunctions";
+import { addUserDenrees } from "./UserDenreesFunctions";
 import { Link } from "react-router-dom";
 
 class ChoixTypeDenree extends Component {
@@ -83,38 +83,36 @@ class ChoixTypeDenree extends Component {
 
   handleSubmit = (e) => {
     e.preventDefault();
-    if (this.state.valuesT.length !== 0) {
-      this.state.valuesT.forEach((value) => {
-        const usertype = {
-          User: this.state.UtilisateurID,
-          Type: value,
-        };
+    this.state.valuesT.forEach((value) => {
+      const usertype = {
+        User: this.state.UtilisateurID,
+        Type: value,
+      };
 
-        userTypes(usertype)
-          .then((res) => {
-            console.log("Type ajouté à l'utilisateur");
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      });
-    }
-    if (this.state.valuesD.length !== 0) {
-      this.state.valuesD.forEach((value) => {
-        const userdenree = {
-          User: this.state.UtilisateurID,
-          Denree: value,
-        };
+      addUserTypes(usertype)
+        .then((res) => {
+          console.log("Type ajouté à l'utilisateur");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    });
 
-        userDenrees(userdenree)
-          .then((res) => {
-            console.log("Denree ajouté à l'utilisateur");
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      });
-    }
+    this.state.valuesD.forEach((value) => {
+      const userdenree = {
+        User: this.state.UtilisateurID,
+        Denree: value,
+      };
+
+      addUserDenrees(userdenree)
+        .then((res) => {
+          console.log("Denree ajouté à l'utilisateur");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    });
+
     this.props.history.push(`/profil`);
   };
 
@@ -124,7 +122,9 @@ class ChoixTypeDenree extends Component {
       UtilisateurID: UtilisateurID,
     });
     this.getTypes();
-    this.getUserTypes(this.state.UtilisateurID);
+    setTimeout(() => {
+      this.getUserTypes(this.state.UtilisateurID);
+    }, 1);
     this.getDenrees();
     this.getUserDenrees(this.state.UtilisateurID);
   }

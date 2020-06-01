@@ -77,6 +77,22 @@ class Profile extends Component {
     </tr>
   );
 
+  deleteUserTypes = (user) => {
+    fetch(`/api/userTypes/${user}`, {
+      method: "delete",
+    })
+      .then(this.getUserTypes(user))
+      .catch((err) => console.log(err));
+  };
+
+  deleteUserDenrees = (user) => {
+    fetch(`/api/userDenrees/${user}`, {
+      method: "delete",
+    })
+      .then(this.getUserDenrees(user))
+      .catch((err) => console.log(err));
+  };
+
   componentDidMount() {
     const token = localStorage.usertoken;
     const decoded = jwt_decode(token);
@@ -162,6 +178,13 @@ class Profile extends Component {
                       <li key={type.TypeNom}>{type.TypeNom}</li>
                     ))}
                   </ul>
+                  <button
+                    onClick={() => {
+                      this.deleteUserTypes(this.state.UtilisateurID);
+                    }}
+                  >
+                    Supprimer vos types
+                  </button>
                 </td>
               </tr>
               <tr>
@@ -174,13 +197,20 @@ class Profile extends Component {
                       <li key={denree.DenreeNom}>{denree.DenreeNom}</li>
                     ))}
                   </ul>
+                  <button
+                    onClick={() => {
+                      this.deleteUserDenrees(this.state.UtilisateurID);
+                    }}
+                  >
+                    Supprimer vos denrées
+                  </button>
                 </td>
               </tr>
             </tbody>
           </table>
           <Link to="/choixTypesDenrees">
             <button className="btn btn-lg btn-primary">
-              Modifier les préférences
+              Ajouter vos choix
             </button>
             <br />
           </Link>
