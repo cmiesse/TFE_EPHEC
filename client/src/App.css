@@ -79,6 +79,10 @@ a:hover {
   justify-content: center;
 }
 
+td {
+  overflow: auto;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

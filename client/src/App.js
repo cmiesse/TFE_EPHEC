@@ -34,35 +34,41 @@ class App extends Component {
             path="/rechercheAnnonces"
             component={RechercheAnnonces}
           />
-          <div className="container">
-            <Route exact path="/inscription" component={Register} />
-            <Route exact path="/connexion" component={Login} />
-            <PrivateRoute exact path="/profil" component={Profile} />
-            <PrivateRoute exact path="/modifMotdePasse" component={ModifMdP} />
-            <PrivateRoute
-              exact
-              path="/choixTypesDenrees"
-              component={ChoixTypeDenree}
-            />
-            <PrivateRoute exact path="/ajoutAnnonce" component={NewAnnonce} />
-            <PrivateRoute exact path="/ajoutMagasin" component={AjoutMagasin} />
-            <PrivateRoute exact path="/ajoutDenree" component={AjoutDenree} />
-            <PrivateRoute exact path="/ajoutType" component={AjoutType} />
-            <Route
-              exact
-              path="/annoncesCodePostal"
-              component={AnnoncesCodePostal}
-            />
-            <Route exact path="/annoncesVille" component={AnnoncesVille} />
-            <Route
-              exact
-              path="/annoncesProvince"
-              component={AnnoncesProvince}
-            />
-            <Route exact path="/annoncesMagasin" component={AnnoncesMagasin} />
-            <Route exact path="/annoncesDenree" component={AnnoncesDenree} />
-            <AdminRoute exact path="/admin" component={Admin} />
-          </div>
+          <Route exact path="/inscription" component={Register} />
+          <Route exact path="/connexion" component={Login} />
+          <PrivateRoute exact path="/profil" component={Profile} />
+          <PrivateRoute exact path="/modifMotdePasse" component={ModifMdP} />
+          <PrivateRoute
+            exact
+            path="/choixTypesDenrees"
+            component={ChoixTypeDenree}
+          />
+          <PrivateRoute exact path="/ajoutAnnonce" component={NewAnnonce} />
+          <PrivateRoute exact path="/ajoutMagasin" component={AjoutMagasin} />
+          <PrivateRoute exact path="/ajoutDenree" component={AjoutDenree} />
+          <PrivateRoute exact path="/ajoutType" component={AjoutType} />
+          <PrivateRoute
+            exact
+            path="/annoncesCodePostal"
+            component={AnnoncesCodePostal}
+          />
+          <PrivateRoute exact path="/annoncesVille" component={AnnoncesVille} />
+          <PrivateRoute
+            exact
+            path="/annoncesProvince"
+            component={AnnoncesProvince}
+          />
+          <PrivateRoute
+            exact
+            path="/annoncesMagasin"
+            component={AnnoncesMagasin}
+          />
+          <PrivateRoute
+            exact
+            path="/annoncesDenree"
+            component={AnnoncesDenree}
+          />
+          <AdminRoute exact path="/admin" component={Admin} />
         </div>
       </Router>
     );
