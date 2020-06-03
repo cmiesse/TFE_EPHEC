@@ -196,7 +196,7 @@ export default class AnnoncesMagasin extends Component {
               </div>
               <div className="form-group">
                 <label htmlFor="Personnalisation">
-                  Personnlisation par type et denrée
+                  Personnalisation par type et denrée
                 </label>
                 <input
                   type="checkbox"
