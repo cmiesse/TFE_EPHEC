@@ -73,6 +73,7 @@ export default class AnnoncesDenree extends Component {
                   ))}
                 </select>
               </div>
+
               <div>
                 {this.state.AnnoncesDenree.map((annonce) => (
                   <AnnonceDetails

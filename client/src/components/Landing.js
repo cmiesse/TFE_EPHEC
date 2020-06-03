@@ -27,13 +27,6 @@ class Landing extends Component {
             Déjà membre ?
           </button>
         </Link>
-        <br />
-        <br />
-        <Link to={"/rechercheAnnonces"}>
-          <button type="button" className="btn btn-lg btn-primary">
-            Recherche d'annonces
-          </button>
-        </Link>
       </div>
     );
     const connectedLinks = (

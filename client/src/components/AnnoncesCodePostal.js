@@ -16,12 +16,25 @@ export default class AnnoncesCodePostal extends Component {
       CodePostal: "",
       TypeID: "",
       DenreeID: "",
+      Personnalisation: false,
     };
     this.onChange = this.onChange.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
   }
 
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
+  }
+
+  handleInputChange(event) {
+    const target = event.target;
+    const value =
+      target.name === "Personnalisation" ? target.checked : target.value;
+    const name = target.name;
+
+    this.setState({
+      [name]: value,
+    });
   }
 
   getUserTypes(user) {
@@ -107,10 +120,8 @@ export default class AnnoncesCodePostal extends Component {
   }
 
   componentDidMount() {
-    if (getToken() !== null) {
-      const user = jwt_decode(getToken()).UtilisateurID;
-      this.setState({ UtilisateurID: user });
-    }
+    const user = jwt_decode(getToken()).UtilisateurID;
+    this.setState({ UtilisateurID: user });
     setTimeout(() => {
       this.getUserTypes(this.state.UtilisateurID);
       this.getUserDenrees(this.state.UtilisateurID);
@@ -118,22 +129,22 @@ export default class AnnoncesCodePostal extends Component {
   }
 
   componentDidUpdate() {
-    if (getToken()) {
-      if (
-        this.state.CodePostal !== "" &&
-        this.state.TypeID !== "" &&
-        this.state.DenreeID !== ""
-      ) {
-        this.getAnnoncesByCodePostalAndTypeAndDenree(
-          this.state.CodePostal,
-          this.state.TypeID,
-          this.state.DenreeID
-        );
-      }
-    } else {
-      if (this.state.CodePostal !== "") {
-        this.getAnnoncesByCodePostal(this.state.CodePostal);
-      }
+    if (
+      this.state.Personnalisation === true &&
+      this.state.CodePostal !== "" &&
+      this.state.TypeID !== "" &&
+      this.state.DenreeID !== ""
+    ) {
+      this.getAnnoncesByCodePostalAndTypeAndDenree(
+        this.state.CodePostal,
+        this.state.TypeID,
+        this.state.DenreeID
+      );
+    } else if (
+      this.state.Personnalisation === false &&
+      this.state.CodePostal !== ""
+    ) {
+      this.getAnnoncesByCodePostal(this.state.CodePostal);
     }
   }
 
@@ -155,11 +166,6 @@ export default class AnnoncesCodePostal extends Component {
               <h1 className="h3 mb-3 font-weight-normal">
                 Recherche par code postal
               </h1>
-              {getToken() &&
-              this.state.userDenrees.length === 0 &&
-              this.state.userTypes.length === 0
-                ? messagePersonnalise
-                : ""}
               <div className="form-group">
                 <label htmlFor="CodePostal">Code postal</label>
                 <input
@@ -171,8 +177,30 @@ export default class AnnoncesCodePostal extends Component {
                   onChange={this.onChange}
                 />
               </div>
-              {getToken() ? this.renderUserTypes() : ""}
-              {getToken() ? this.renderUserDenrees() : ""}
+              <div className="form-group">
+                <label htmlFor="Personnalisation">
+                  Personnlisation par type et denrée
+                </label>
+                <input
+                  type="checkbox"
+                  className="form-control"
+                  name="Personnalisation"
+                  id="Personnalisation"
+                  checked={this.state.Personnalisation}
+                  onChange={this.handleInputChange}
+                  required
+                />
+              </div>
+              {this.state.userDenrees.length === 0 &&
+              this.state.userTypes.length === 0
+                ? messagePersonnalise
+                : ""}
+              {this.state.Personnalisation === true
+                ? this.renderUserTypes()
+                : ""}
+              {this.state.Personnalisation === true
+                ? this.renderUserDenrees()
+                : ""}
               <div>
                 {this.state.AnnoncesCodePostal.map((annonce) => (
                   <AnnonceDetails
