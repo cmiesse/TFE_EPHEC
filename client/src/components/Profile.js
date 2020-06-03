@@ -130,7 +130,7 @@ class Profile extends Component {
             </Helmet>
             <h1 className="text-center">Votre profil</h1>
           </div>
-          <table className="table col-md-6 mx-auto no-border">
+          <table className="table mx-auto no-border">
             <tbody>
               <tr className="no-border">
                 <td className="no-border">
@@ -144,7 +144,7 @@ class Profile extends Component {
                 </td>
                 <td className="no-border">
                   <Link to="/modifMotdePasse">
-                    <button>Modifier le mot de passe</button>
+                    <button>Modifier</button>
                   </Link>
                 </td>
               </tr>

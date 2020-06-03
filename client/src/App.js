@@ -9,10 +9,12 @@ import Profile from "./components/Profile";
 import ModifMdP from "./components/ModifMdP";
 import NewAnnonce from "./components/NewAnnonce";
 import ChoixTypeDenree from "./components/ChoixTypeDenree";
+import RechercheAnnonces from "./components/RechercheAnnonces";
 import AnnoncesCodePostal from "./components/AnnoncesCodePostal";
 import AnnoncesVille from "./components/AnnoncesVille";
 import AnnoncesProvince from "./components/AnnoncesProvince";
 import AnnoncesMagasin from "./components/AnnoncesMagasin";
+import AnnoncesDenree from "./components/AnnoncesDenree";
 import Admin from "./components/Admin";
 import AjoutMagasin from "./components/AjoutMagasin";
 import AjoutDenree from "./components/AjoutDenree";
@@ -27,6 +29,11 @@ class App extends Component {
         <div className="App">
           <Navbar />
           <Route exact path="/" component={Landing} />
+          <Route
+            exact
+            path="/rechercheAnnonces"
+            component={RechercheAnnonces}
+          />
           <div className="container">
             <Route exact path="/inscription" component={Register} />
             <Route exact path="/connexion" component={Login} />
@@ -53,6 +60,7 @@ class App extends Component {
               component={AnnoncesProvince}
             />
             <Route exact path="/annoncesMagasin" component={AnnoncesMagasin} />
+            <Route exact path="/annoncesDenree" component={AnnoncesDenree} />
             <AdminRoute exact path="/admin" component={Admin} />
           </div>
         </div>

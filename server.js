@@ -327,6 +327,21 @@ app.get("/api/annoncesMagasin/:MagasinID/:TypeID/:DenreeID", (req, res) => {
   });
 });
 
+// Annonces par denrée
+app.get("/api/annoncesDenree/:DenreeID", (req, res) => {
+  const DenreeID = req.params.DenreeID;
+  const SELECT_ANNONCES_BY_DENREE_QUERY = `SELECT a.AnnonceID, a.Quantite, DATE_FORMAT(a.DateCreation, '%d/%m/%Y %H:%i:%s') AS JourCreation, TIMESTAMPDIFF(HOUR, a.DateCreation, current_timestamp()) AS nombreHeures, TIMESTAMPDIFF(MINUTE, a.DateCreation, current_timestamp()) AS nombreMinutes, d.DenreeNom, m.MagasinNom from annonces a, denrees d, magasins m WHERE a.DenreeID=d.DenreeID AND a.MagasinID=m.MagasinID AND a.DenreeID=${DenreeID} AND TIMESTAMPDIFF(DAY, DateCreation, current_timestamp())=0 ORDER BY JourCreation DESC`;
+  connection.query(SELECT_ANNONCES_BY_DENREE_QUERY, (err, results) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.json({
+        data: results,
+      });
+    }
+  });
+});
+
 // Ajouter une annonce
 app.post("/api/annonces", (req, res) => {
   const AnnonceData = {

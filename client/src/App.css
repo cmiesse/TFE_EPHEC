@@ -66,12 +66,17 @@ a:hover {
   height: 25px;
 }
 .LogoAccueil {
-  width: 15vh;
+  width: 20vh;
 }
 
 .LogoMagasin {
   width: 5vh;
   padding-right: 5px;
+}
+
+.containerCenter {
+  display: flex;
+  justify-content: center;
 }
 
 @keyframes App-logo-spin {
