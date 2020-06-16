@@ -1,0 +1,100 @@
+--*****************Provinces********************
+CREATE TABLE `provinces` (
+  `ProvinceID` int NOT NULL AUTO_INCREMENT,
+  `ProvinceNom` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`ProvinceID`)
+);
+
+--***************Types*****************************
+CREATE TABLE `types` (
+  `TypeID` int NOT NULL AUTO_INCREMENT,
+  `TypeNom` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`TypeID`)
+);
+--*************Villes*********************************
+CREATE TABLE `villes` (
+  `VilleID` int NOT NULL AUTO_INCREMENT,
+  `CodePostal` int NOT NULL DEFAULT '0',
+  `VilleNom` varchar(80) NOT NULL DEFAULT '',
+  `ProvinceID` int DEFAULT NULL,
+  PRIMARY KEY (`VilleID`),
+  KEY `FK_Villes_ProvinceID_idx` (`ProvinceID`),
+  CONSTRAINT `FK_Villes_ProvinceID` FOREIGN KEY (`ProvinceID`) REFERENCES `provinces` (`ProvinceID`)
+);
+--**********Magasins**************************************
+CREATE TABLE `magasins` (
+  `MagasinID` int NOT NULL AUTO_INCREMENT,
+  `MagasinNom` varchar(45) DEFAULT NULL,
+  `Adresse` varchar(45) DEFAULT NULL,
+  `ProvinceID` int DEFAULT NULL,
+  `VilleID` int DEFAULT NULL,
+  PRIMARY KEY (`MagasinID`),
+  KEY `FK_Magasins_ProvinceID_idx` (`ProvinceID`),
+  KEY `FK_Magasins_VilleID_idx` (`VilleID`),
+  CONSTRAINT `FK_Magasins_ProvinceID` FOREIGN KEY (`ProvinceID`) REFERENCES `provinces` (`ProvinceID`),
+  CONSTRAINT `FK_Magasins_VilleID` FOREIGN KEY (`VilleID`) REFERENCES `villes` (`VilleID`)
+);
+--**************Denrees*********************************
+CREATE TABLE `denrees` (
+  `DenreeID` int NOT NULL AUTO_INCREMENT,
+  `DenreeNom` varchar(45) DEFAULT NULL,
+  `TypeID` int DEFAULT NULL,
+  PRIMARY KEY (`DenreeID`),
+  KEY `TypeID_idx` (`TypeID`),
+  CONSTRAINT `FK_Denrees_TypeID` FOREIGN KEY (`TypeID`) REFERENCES `types` (`TypeID`)
+);
+--**************Utilisateurs*****************************************
+CREATE TABLE `utilisateurs` (
+  `UtilisateurID` int NOT NULL AUTO_INCREMENT,
+  `Prenom` varchar(45) DEFAULT NULL,
+  `Nom` varchar(45) DEFAULT NULL,
+  `Pseudo` varchar(45) DEFAULT NULL,
+  `MotDePasse` longtext,
+  `Email` varchar(45) DEFAULT NULL,
+  `ProvinceID` int DEFAULT NULL,
+  `VilleID` int DEFAULT NULL,
+  `Admin` tinyint DEFAULT '0',
+  `JourCreation` timestamp DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`UtilisateurID`),
+  KEY `FK_Utilisateurs_ProvinceID_idx` (`ProvinceID`),
+  KEY `FK_Utilisateurs_VilleID_idx` (`VilleID`),
+  CONSTRAINT `FK_Utilisateurs_ProvinceID` FOREIGN KEY (`ProvinceID`) REFERENCES `provinces` (`ProvinceID`),
+  CONSTRAINT `FK_Utilisateurs_VilleID` FOREIGN KEY (`VilleID`) REFERENCES `villes` (`VilleID`)
+);
+
+--***********************UtilisateursDenrees***********************************************
+CREATE TABLE `utilisateursdenrees` (
+  `UtilisateurID` int NOT NULL,
+  `DenreeID` int NOT NULL,
+  PRIMARY KEY (`UtilisateurID`,`DenreeID`),
+  KEY `KK_UtilisateursDenrees_DenreeID_idx` (`DenreeID`),
+  CONSTRAINT `FK_UtilisateursDenrees_DenreeID` FOREIGN KEY (`DenreeID`) REFERENCES `denrees` (`DenreeID`),
+  CONSTRAINT `FK_UtilisateursDenrees_UtilisateurID` FOREIGN KEY (`UtilisateurID`) REFERENCES `utilisateurs` (`UtilisateurID`)
+);
+
+--*****************UtilisateursTypes******************************************************
+CREATE TABLE `utilisateurstypes` (
+  `UtilisateurID` int NOT NULL,
+  `TypeID` int NOT NULL,
+  PRIMARY KEY (`UtilisateurID`,`TypeID`),
+  KEY `FK_UtilisateursTypes_TypeID_idx` (`TypeID`),
+  CONSTRAINT `FK_UtilisateursTypes_TypeID` FOREIGN KEY (`TypeID`) REFERENCES `types` (`TypeID`),
+  CONSTRAINT `FK_UtilisateursTypes_UtilisateurID` FOREIGN KEY (`UtilisateurID`) REFERENCES `utilisateurs` (`UtilisateurID`)
+);
+--*********************Annonces********************************************************
+CREATE TABLE `annonces` (
+  `AnnonceID` int NOT NULL AUTO_INCREMENT,
+  `Titre` varchar(70) DEFAULT NULL,
+  `Quantite` varchar(45) DEFAULT NULL,
+  `UtilisateurID` int DEFAULT NULL,
+  `MagasinID` int DEFAULT NULL,
+  `DenreeID` int DEFAULT NULL,
+  `DateCreation` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`AnnonceID`),
+  KEY `FK_Annonces_MagasinID_idx` (`MagasinID`),
+  KEY `FK_Annonces_DenreeID_idx` (`DenreeID`),
+  KEY `FK_Annonces_UtilisateurID` (`UtilisateurID`),
+  CONSTRAINT `FK_Annonces_DenreeID` FOREIGN KEY (`DenreeID`) REFERENCES `denrees` (`DenreeID`),
+  CONSTRAINT `FK_Annonces_MagasinID` FOREIGN KEY (`MagasinID`) REFERENCES `magasins` (`MagasinID`),
+  CONSTRAINT `FK_Annonces_UtilisateurID` FOREIGN KEY (`UtilisateurID`) REFERENCES `utilisateurs` (`UtilisateurID`)
+);
